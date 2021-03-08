@@ -9,7 +9,10 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "vue": "^3.0.0"
+    "graceful-fs": "^4.1.0",
+    "vant": "^3.0.9",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-beta.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -24,7 +27,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^7.0.0-0",
-    "lint-staged": "^9.5.0"
+    "lint-staged": "^9.5.0",
+    "postcss-px2rem-exclude": "^0.0.6"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
