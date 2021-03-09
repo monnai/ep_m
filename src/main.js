@@ -4,10 +4,10 @@ import router from './route'
 import {
   Button, Field, Form, Swipe, SwipeItem,
   Grid, GridItem, NavBar, Toast, List, Cell, CellGroup,
-  Sticky, Tabbar, TabbarItem
+  Sticky, Tabbar, TabbarItem, Popup, Divider
 } from 'vant'
 import 'vant/lib/index.css'
-
+import './request/api'
 createApp(App)
   .use(Button)
   .use(Field)
@@ -25,4 +25,6 @@ createApp(App)
   .use(List)
   .use(Tabbar)
   .use(TabbarItem)
+  .use(Popup)
+  .use(Divider)
   .mount('#app')

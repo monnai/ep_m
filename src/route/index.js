@@ -18,6 +18,11 @@ const router = createRouter({
       path: '/index',
       name: 'index',
       component: () => import('page/index/Index')
+    },
+    {
+      path: '/zxList',
+      name: 'zxList',
+      component: () => import('page/zxProject/Zxproject')
     }
   ]
 })

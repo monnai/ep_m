@@ -26,41 +26,76 @@
           :rules="[{ required: true, message: '请填写密码' }]"
         />
         <div class="login-btn-wrapper">
-          <!--          <van-button-->
-          <!--            round block type="info" native-type="submit"-->
-          <!--          >登录-->
-          <!--          </van-button>-->
-          <van-button type="primary" block>登录</van-button>
+          <van-button type="primary" block @click="doLogin">登录</van-button>
         </div>
       </van-form>
+      <login-role-select ref="roleSelect"/>
     </div>
   </div>
 </template>
 
 <script>
+import { doLogin } from '@/request/api'
+import { Toast } from 'vant'
+import LoginRoleSelect from '@/page/login/LoginRoleSelect'
+
 export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      show: false,
+      roleList: {}
     }
   },
+  components: { LoginRoleSelect },
   methods: {
-    doLogin (values) {
-      console.log(values)
+    doLogin () {
+      const that = this
+      doLogin({
+        account: this.username,
+        password: this.password
+      }).then(result => {
+        if (result.body.code === '200') {
+          that.doCache(result.body.data)
+          Toast({
+            message: result.body.message,
+            duration: 1,
+            forbidClick: true
+          })
+          if (result.body.message !== '登录成功,需要选择登陆角色！') {
+            that.$router.push('index')
+            return
+          }
+          that.roleList = result.body.data.userGroups
+          that.$refs.roleSelect.show = true
+          that.$refs.roleSelect.roleList = result.body.data.userGroups
+        } else {
+          Toast({
+            message: result.body.message,
+            duration: 1000,
+            forbidClick: true
+          })
+        }
+      })
+    },
+    doCache (loginData) {
+      if (loginData.key) {
+        sessionStorage.setItem('session_key', loginData.key)
+      }
     }
   }
 }
 </script>
 
-<style >
+<style>
 .login-wrapper {
   width: 375px;
   height: 667px;
   display: block;
   background-image: url("../../image/login/background_login.png");
   background-size: cover;
-  background-position: bottom 0px right -194px;
+  background-position: bottom 0 right -194px;
   background-repeat: no-repeat;
 }
 
@@ -69,7 +104,7 @@ export default {
 }
 
 .login-slogan {
-  //margin-top: 145px;
+  /*margin-top: 145 px;*/
   margin-left: 146px;
   width: 84px;
   height: 84px;
@@ -86,11 +121,12 @@ export default {
 }
 
 .login-btn-wrapper {
-  //width: 100%;
-  //height: 100%;
+  /*/ / width: 100 %;*/
+  /*/ / height: 100 %;*/
   padding-top: 36px;
-  //margin: 16px;
+  /*/ / margin: 16 px;*/
 }
+
 form.van-form {
   padding: 24px;
 }
