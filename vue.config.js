@@ -21,7 +21,7 @@ module.exports = {
   // 开发环境服务配置
   devServer: {
     open: true,
-    host: 'localhost',
+    host: '0.0.0.0',
     port: '8080',
     https: false,
     // 跨域配置

@@ -2,72 +2,30 @@
   <div>
     <van-sticky>
       <van-nav-bar
-        title="标题"
+        title="高校科研创新服务平台"
         left-text="返回"
         right-text="按钮"
         left-arrow
         @click-left="onClickLeft"
         @click-right="onClickRight"
-      />
-      <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-        <van-swipe-item>
-          <van-grid>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-          </van-grid>
-          <van-grid>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-          </van-grid>
-        </van-swipe-item>
-        <van-swipe-item>
-          <van-grid>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-          </van-grid>
-          <van-grid>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-          </van-grid>
-        </van-swipe-item>
-        <van-swipe-item>
-          <van-grid>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-          </van-grid>
-          <van-grid>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-            <van-grid-item icon="photo-o" text="文字"/>
-          </van-grid>
-        </van-swipe-item>
-      </van-swipe>
+        safe-area-inset-top="true">
+        <template #left>
+          <van-icon name="/static/image/icon_ep.png" size="18"/>
+        </template>
+        <template #right>
+          <van-badge dot>
+            <van-icon name="/static/image/icon_bell.png" size="18"/>
+          </van-badge>
+        </template>
+      </van-nav-bar>
+      <index-model-swiper/>
+      <ep-divider/>
+      <index-todo-title/>
     </van-sticky>
-    <van-list
-      v-model:loading="state.loading"
-      :finished="state.finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <van-cell v-for="item in state.list" :key="item" :title="item"/>
-    </van-list>
-
+    <index-todo-list/>
     <van-tabbar v-model="active">
-      <van-tabbar-item icon="home-o">标签</van-tabbar-item>
-      <van-tabbar-item icon="search" dot>标签</van-tabbar-item>
-      <van-tabbar-item icon="friends-o" badge="5">标签</van-tabbar-item>
-      <van-tabbar-item icon="setting-o" badge="20">标签</van-tabbar-item>
+      <van-tabbar-item icon="wap-home-o">首页</van-tabbar-item>
+      <van-tabbar-item icon="contact" dot>我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -75,35 +33,26 @@
 <script>
 
 import { Toast } from 'vant'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
+import IndexModelSwiper from '@/page/index/IndexModelSwiper'
+import EpDivider from '@/components/EpDivider'
+import IndexTodoList from '@/page/index/IndexTodoList'
+import IndexTodoTitle from '@/page/index/IndexTodoTitle'
 
 export default {
+  components: {
+    IndexModelSwiper,
+    EpDivider,
+    IndexTodoList,
+    IndexTodoTitle
+  },
   setup () {
     const onClickLeft = () => Toast('返回')
     const onClickRight = () => Toast('按钮')
-    // 模拟列表
-    const state = reactive({
-      list: [],
-      loading: false,
-      finish: false
-    })
-    const onLoad = () => {
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          state.list.push(state.list.length + 1)
-        }
-        state.loading = false
-        if (state.list.length >= 40) {
-          state.finished = true
-        }
-      }, 1000)
-    }
     const active = ref('home')
     return {
       onClickLeft,
       onClickRight,
-      state,
-      onLoad,
       active
     }
   }
@@ -111,11 +60,5 @@ export default {
 </script>
 
 <style>
-.my-swipe .van-swipe-item {
-  color: #fff;
-  font-size: 20px;
-  line-height: 150px;
-  text-align: center;
-  background-color: #39a9ed;
-}
+
 </style>
