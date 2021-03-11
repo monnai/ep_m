@@ -17,3 +17,9 @@
 .van-nav-bar__content {
   background: #2494F2;
 }
+
+/*详情页信息展示面板*/
+.ep-detail-panel-wrapper{
+  height: 80%;
+  overflow: scroll;
+}

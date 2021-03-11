@@ -23,13 +23,13 @@ import {
   Badge,
   Search,
   DropdownMenu,
-  DropdownItem
+  DropdownItem, NoticeBar, Tab, Tabs, Empty, Step, Steps
 } from 'vant'
 import 'vant/lib/index.css'
 import './request/api'
 import EpDivider from '@/components/EpDivider'
 import '@/assets/css/common.css'
-createApp(App)
+const app = createApp(App)
   .use(Button)
   .use(Field)
   .use(Form)
@@ -53,5 +53,14 @@ createApp(App)
   .use(Search)
   .use(DropdownMenu)
   .use(DropdownItem)
+  .use(NoticeBar)
+  .use(Tab)
+  .use(Tabs)
+  .use(Empty)
+  .use(Step)
+  .use(Steps)
   .use(EpDivider)
-  .mount('#app')
+app.config.devtools = process.env.NODE_ENV === 'development'
+window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor
+app.config.devtools = process.env.NODE_ENV === 'development'
+app.mount('#app')

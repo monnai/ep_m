@@ -1,24 +1,19 @@
 <!--首页代办列表子组件-->
 <template>
   <div class="ep_todo_list_wrapper">
-    <div>
-      <!--代办列表-->
-      <van-list
-        v-model:loading="state.loading"
-        :finished="state.finished"
-        finished-text="没有更多了"
-        @load="onLoad">
-        <van-cell v-for="item in state.list" :key="item" :title="item"/>
-      </van-list>
-    </div>
+    <ep-list/>
   </div>
 
 </template>
 
 <script>
 import { reactive } from 'vue'
+import EpList from '@/components/EpList'
 
 export default {
+  components: {
+    EpList
+  },
   setup () {
     // 模拟列表
     const state = reactive({
@@ -45,8 +40,5 @@ export default {
 }
 </script>
 <style scoped>
-.ep_todo_list_wrapper {
-  /*padding: 12px*/
-}
 
 </style>

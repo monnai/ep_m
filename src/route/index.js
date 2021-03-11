@@ -28,6 +28,11 @@ const router = createRouter({
       path: '/zxDetail',
       name: 'zxDetail',
       component: () => import('page/zxProject/ZxprojectDetail')
+    },
+    {
+      path: '/mine',
+      name: 'mine',
+      component: () => import('page/mine/Mine')
     }
   ]
 })

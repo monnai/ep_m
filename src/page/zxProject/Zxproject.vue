@@ -9,9 +9,6 @@
         @click-left="onClickLeft"
         @click-right="onClickRight"
       >
-        <!--      <template #left>-->
-        <!--        <van-icon name="/static/image/icon_ep.png" size="18"/>-->
-        <!--      </template>-->
         <template #right>
           <van-icon name="wap-home-o" size="18"/>
         </template>
@@ -24,7 +21,7 @@
       </van-dropdown-menu>
       <zxproject-total-bar :total="total"/>
     </van-sticky>
-    <ep-list></ep-list>
+    <ep-list/>
   </div>
 </template>
 
