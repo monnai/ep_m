@@ -20,14 +20,14 @@ const router = createRouter({
       component: () => import('page/index/Index')
     },
     {
-      path: '/zxList',
-      name: 'zxList',
-      component: () => import('page/zxProject/Zxproject')
+      path: '/zxProject',
+      name: 'zxProject',
+      component: () => import('page/zxProject/ZxProject')
     },
     {
       path: '/zxDetail',
       name: 'zxDetail',
-      component: () => import('page/zxProject/ZxprojectDetail')
+      component: () => import('page/zxProject/ZxProjectDetail')
     },
     {
       path: '/mine',

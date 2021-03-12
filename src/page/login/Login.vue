@@ -1,11 +1,16 @@
 <!--用户登录页面-->
 <template>
   <div class="login-wrapper">
+
+    <!--公司图标-->
     <div class="login-slogan-wrapper">
       <div class="login-slogan"></div>
     </div>
+
+    <!--登录信息填写表单-->
     <div class="login-form">
       <van-form @submit="doLogin">
+
         <van-field
           v-model="username"
           name="用户名"
@@ -13,8 +18,8 @@
           left-icon="contact"
           placeholder="请输入用户名"
           clearable
-          :rules="[{ required: true, message: '请填写用户名' }]"
-        />
+          :rules="[{ required: true, message: '请填写用户名' }]"/>
+
         <van-field
           v-model="password"
           type="password"
@@ -23,8 +28,9 @@
           left-icon="closed-eye"
           placeholder="请输入密码"
           clearable
-          :rules="[{ required: true, message: '请填写密码' }]"
-        />
+          :rules="[{ required: true, message: '请填写密码' }]"/>
+
+        <!--登录按钮-->
         <div class="login-btn-wrapper">
           <van-button type="primary" block @click="doLogin">登录</van-button>
         </div>
@@ -35,41 +41,43 @@
 </template>
 
 <script>
-import { doLogin } from '@/request/api'
 import { Toast } from 'vant'
+import { Login } from '@/request/api'
 import LoginRoleSelect from '@/page/login/LoginRoleSelect'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
-  data () {
-    return {
-      username: '',
-      password: '',
-      show: false,
-      roleList: {}
-    }
-  },
   components: { LoginRoleSelect },
-  methods: {
-    doLogin () {
-      const that = this
-      doLogin({
-        account: this.username,
-        password: this.password
+
+  setup () {
+    const username = ref()
+    const password = ref()
+    let roleList = {}
+
+    const router = useRouter()
+
+    const roleSelect = ref()
+
+    const doLogin = function () {
+      Login({
+        account: username.value,
+        password: password.value
       }).then(result => {
         if (result.body.code === '200') {
-          that.doCache(result.body.data)
+          doCache(result.body.data.key)
           Toast({
             message: result.body.message,
             duration: 1,
             forbidClick: true
           })
           if (result.body.message !== '登录成功,需要选择登陆角色！') {
-            that.$router.push('index')
+            router.push('index')
             return
           }
-          that.roleList = result.body.data.userGroups
-          that.$refs.roleSelect.show = true
-          that.$refs.roleSelect.roleList = result.body.data.userGroups
+          roleList = result.body.data.userGroups
+          roleSelect.value.show = true
+          roleSelect.value.roleList = result.body.data.userGroups
         } else {
           Toast({
             message: result.body.message,
@@ -78,11 +86,20 @@ export default {
           })
         }
       })
-    },
-    doCache (loginData) {
-      if (loginData.key) {
-        sessionStorage.setItem('session_key', loginData.key)
+    }
+
+    const doCache = function (key) {
+      if (key) {
+        sessionStorage.setItem('session_key', key)
       }
+    }
+    return {
+      username,
+      password,
+      roleList,
+      doLogin,
+      doCache,
+      roleSelect
     }
   }
 }
@@ -104,7 +121,6 @@ export default {
 }
 
 .login-slogan {
-  /*margin-top: 145 px;*/
   margin-left: 146px;
   width: 84px;
   height: 84px;
@@ -121,13 +137,10 @@ export default {
 }
 
 .login-btn-wrapper {
-  /*/ / width: 100 %;*/
-  /*/ / height: 100 %;*/
   padding-top: 36px;
-  /*/ / margin: 16 px;*/
 }
 
-form.van-form {
+.van-form {
   padding: 24px;
 }
 </style>

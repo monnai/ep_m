@@ -19,8 +19,9 @@
         <van-dropdown-item v-model="state.value2" :options="option2"/>
         <van-dropdown-item v-model="state.value3" :options="option3"/>
       </van-dropdown-menu>
-      <zxproject-total-bar :total="total"/>
+      <zx-project-total-bar :total="total"/>
     </van-sticky>
+
     <ep-list/>
   </div>
 </template>
@@ -29,12 +30,12 @@
 // import { Toast } from 'vant'
 import { useRouter } from 'vue-router'
 import { reactive } from 'vue'
-import ZxprojectTotalBar from '@/page/zxProject/ZxprojectTotalBar'
+import ZxProjectTotalBar from '@/page/zxProject/ZxProjectTotalBar'
 import EpList from '@/components/EpList'
 
 export default {
   components: {
-    ZxprojectTotalBar,
+    ZxProjectTotalBar,
     EpList
   },
   setup () {

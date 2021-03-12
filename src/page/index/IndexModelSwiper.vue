@@ -1,42 +1,55 @@
 <template>
   <van-swipe class="my-swipe" indicator-color="#1989fa" lazy-render>
     <!--    https://vant-contrib.gitee.io/vant/v3/#/zh-CN/grid#grid-props-->
-    <van-swipe-item>
-      <van-grid :column-num="3" :icon-size="45" :border="false" :clickable="true">
-        <van-grid-item icon="/static/image/index/icon_art_product.png" text="文字" to="/zxList"/>
-        <van-grid-item icon="/static/image/index/icon_art_product.png" text="文字"/>
-        <van-grid-item icon="/static/image/index/icon_art_product.png" text="文字"/>
-      </van-grid>
-      <van-grid :column-num="3" :icon-size="45" :border="false">
-        <van-grid-item icon="/static/image/index/icon_art_product.png" text="文字"/>
-        <van-grid-item icon="/static/image/index/icon_art_product.png" text="文字"/>
-        <van-grid-item icon="/static/image/index/icon_art_product.png" text="文字"/>
-      </van-grid>
-    </van-swipe-item>
-    <van-swipe-item>
-      <van-grid :column-num="3" :icon-size="45" :border="false" :clickable="true">
-        <van-grid-item icon="/static/image/index/icon_art_product.png" text="文字"/>
-        <van-grid-item icon="/static/image/index/icon_art_product.png" text="文字"/>
-        <van-grid-item icon="/static/image/index/icon_art_product.png" text="文字"/>
-      </van-grid>
-      <van-grid :column-num="3" :icon-size="45" :border="false">
-        <van-grid-item icon="/static/image/index/icon_art_product.png" text="文字"/>
-        <van-grid-item icon="/static/image/index/icon_art_product.png" text="文字"/>
-        <van-grid-item icon="/static/image/index/icon_art_product.png" text="文字"/>
-      </van-grid>
-    </van-swipe-item>
+    <template v-for="index of Math.ceil(menuData.length / 6)" :key="index">
+      <van-swipe-item>
+        <van-grid :column-num="3" :icon-size="45" :border="true" :clickable="true">
+          <template v-for="menu in menuData.slice((index-1) * 6,(index-1)*6 +3)" :key="menu.name">
+            <van-grid-item :icon="menu.icon" :text="menu.title" :to="menu.router"/>
+          </template>
+        </van-grid>
+        <van-grid :column-num="3" :icon-size="45" :border="true" to="menu.router">
+          <template v-for="menu in menuData.slice((index-1) * 6 +3,(index-1)*6 +6)" :key="menu.name">
+            <van-grid-item :icon="menu.icon" :text="menu.title" :to="menu.router"/>
+          </template>
+        </van-grid>
+      </van-swipe-item>
+    </template>
   </van-swipe>
 </template>
 
 <script>
-export default {}
+import { menu } from '@/request/api'
+import { ref } from 'vue'
+
+export default {
+  setup () {
+    const menuData = ref([])
+    const loadMenu = async function () {
+      // if (sessionStorage.getItem('session_model_authority')) {
+      // todo: 1 加入用户权限筛选  2 加入状态管理，记录用户当前浏览的swiper序号返回后继续展示
+      menuData.value = await menu()
+      // }
+    }
+    loadMenu()
+    return {
+      menuData,
+      loadMenu
+    }
+  }
+}
 </script>
 
-<style>
+<style scoped>
 .my-swipe .van-swipe-item {
   color: #fff;
   font-size: 20px;
   line-height: 150px;
   text-align: center;
+}
+
+.van-swipe.my-swipe {
+  min-height: 200px;
+  background: white;
 }
 </style>

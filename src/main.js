@@ -2,33 +2,16 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './route'
 import {
-  Button,
-  Field,
-  Form,
-  Swipe,
-  SwipeItem,
-  Grid,
-  GridItem,
-  NavBar,
-  Toast,
-  List,
-  Cell,
-  CellGroup,
-  Sticky,
-  Tabbar,
-  TabbarItem,
-  Popup,
-  Divider,
-  Icon,
-  Badge,
-  Search,
-  DropdownMenu,
+  Button, Field, Form, Swipe, SwipeItem, Grid, GridItem, NavBar,
+  Toast, List, Cell, CellGroup, Sticky, Tabbar, TabbarItem,
+  Popup, Divider, Icon, Badge, Search, DropdownMenu,
   DropdownItem, NoticeBar, Tab, Tabs, Empty, Step, Steps
 } from 'vant'
 import 'vant/lib/index.css'
 import './request/api'
 import EpDivider from '@/components/EpDivider'
 import '@/assets/css/common.css'
+import 'lib-flexible'
 const app = createApp(App)
   .use(Button)
   .use(Field)
@@ -60,7 +43,14 @@ const app = createApp(App)
   .use(Step)
   .use(Steps)
   .use(EpDivider)
-app.config.devtools = process.env.NODE_ENV === 'development'
-window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor
-app.config.devtools = process.env.NODE_ENV === 'development'
+// app.config.devtools = process.env.NODE_ENV === 'development'
+// window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor
+// app.config.devtools = process.env.NODE_ENV === 'development'
 app.mount('#app')
+// window.onresize = setHtmlFontSize
+// function setHtmlFontSize () {
+//   const htmlWidth = document.documentElement.clientWidth || document.body.clientWidth
+//   const htmlDom = document.getElementsByTagName('html')[0]
+//   htmlDom.style.fontSize = htmlWidth / 10 + 'px'
+// }
+// setHtmlFontSize()
