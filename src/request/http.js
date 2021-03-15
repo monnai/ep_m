@@ -117,7 +117,11 @@ axios.interceptors.response.use(
 export function get (url, params) {
   return new Promise((resolve, reject) => {
     axios.get(url, {
-      params: params
+      params: params,
+      headers: {
+        'token-key': sessionStorage.getItem('session_key') ? sessionStorage.getItem('session_key')
+          : ''
+      }
     }).then(res => {
       resolve(res.data)
     }).catch(err => {

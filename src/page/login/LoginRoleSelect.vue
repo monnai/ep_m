@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { ref } from '@vue/reactivity'
+import { ref } from 'vue'
 import { selectRole } from '@/request/api'
 import Toast from 'vant'
 import { useRouter } from 'vue-router'

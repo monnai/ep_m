@@ -1,11 +1,11 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './route'
-import {
+import Tag, {
   Button, Field, Form, Swipe, SwipeItem, Grid, GridItem, NavBar,
   Toast, List, Cell, CellGroup, Sticky, Tabbar, TabbarItem,
   Popup, Divider, Icon, Badge, Search, DropdownMenu,
-  DropdownItem, NoticeBar, Tab, Tabs, Empty, Step, Steps
+  DropdownItem, NoticeBar, Tab, Tabs, Empty, Step, Steps, PullRefresh, DatetimePicker
 } from 'vant'
 import 'vant/lib/index.css'
 import './request/api'
@@ -39,9 +39,12 @@ const app = createApp(App)
   .use(NoticeBar)
   .use(Tab)
   .use(Tabs)
+  .use(Tag)
   .use(Empty)
   .use(Step)
   .use(Steps)
+  .use(PullRefresh)
+  .use(DatetimePicker)
   .use(EpDivider)
 // app.config.devtools = process.env.NODE_ENV === 'development'
 // window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor

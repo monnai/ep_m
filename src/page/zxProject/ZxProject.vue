@@ -7,91 +7,73 @@
         right-text="首页"
         left-arrow
         @click-left="onClickLeft"
-        @click-right="onClickRight"
-      >
+        @click-right="onClickRight">
         <template #right>
           <van-icon name="wap-home-o" size="18"/>
         </template>
       </van-nav-bar>
-      <van-search v-model="name" placeholder="项目名称/编号"/>
-      <van-dropdown-menu>
-        <van-dropdown-item v-model="state.value1" :options="option1"/>
-        <van-dropdown-item v-model="state.value2" :options="option2"/>
-        <van-dropdown-item v-model="state.value3" :options="option3"/>
-      </van-dropdown-menu>
+      <van-search v-model="name" placeholder="项目名称/编号" show-action>
+        <template #action>
+          <div @click="onSearch">搜索</div>
+        </template>
+      </van-search>
+      <ep-screen ref="epScreen"/>
       <zx-project-total-bar :total="total"/>
     </van-sticky>
-
-    <ep-list/>
+    <ep-list :request="loadFn" ref="epList"/>
   </div>
 </template>
 
 <script>
-// import { Toast } from 'vant'
 import { useRouter } from 'vue-router'
-import { reactive } from 'vue'
+// import { ref } from 'vue'
 import ZxProjectTotalBar from '@/page/zxProject/ZxProjectTotalBar'
+import EpScreen from '@/components/EpScreen'
 import EpList from '@/components/EpList'
+import { zxProject } from '@/request/api'
 
 export default {
   components: {
     ZxProjectTotalBar,
-    EpList
+    EpList,
+    EpScreen
   },
   setup () {
     const name = ''
     const total = '22'
-    const state = reactive({
-      value1: 0,
-      value2: 'a',
-      value3: 'b'
-    })
-    const option1 = [
-      {
-        text: '排序',
-        value: 0
-      },
-      {
-        text: '全部商品',
-        value: 0
-      },
-      {
-        text: '新款商品',
-        value: 1
-      },
-      {
-        text: '活动商品',
-        value: 2
+    // const epList = ref()
+    // const epScreen = ref()
+    // 子组件记录基本的total finish等 父组件记录 筛选条件
+    const loadFn = async function (state) {
+      const result = await zxProject({
+        pageNo: state.pageNo,
+        pageSize: state.pageSize
+      })
+      if (result.body.code === '200') {
+        const total = result.body.data.totals
+        const data = result.body.data.items
+        state.total = total
+        // 数据个性化处理
+        for (let i = 0; i < data.length; i++) {
+          const dataNode = {
+            v1: '',
+            v2: '',
+            v3: '',
+            v4: '',
+            v5: ''
+          }
+          dataNode.v1 = data[i].chargerName
+          dataNode.v2 = data[i].createUserName
+          dataNode.v3 = data[i].unitId
+          dataNode.v4 = data[i].createDate
+          dataNode.checkStatus = data[i].checkStatus
+          state.list.push(dataNode)
+        }
       }
-    ]
-    const option2 = [
-      {
-        text: '年份',
-        value: 'a'
-      },
-      {
-        text: '好评排序',
-        value: 'b'
-      },
-      {
-        text: '销量排序',
-        value: 'c'
-      }
-    ]
-    const option3 = [
-      {
-        text: '筛选',
-        value: 'a'
-      },
-      {
-        text: '好评排序',
-        value: 'b'
-      },
-      {
-        text: '销量排序',
-        value: 'c'
-      }
-    ]
+    }
+    const onSearch = () => {
+      // todo
+    }
     const router = useRouter()
     const onClickLeft = () => {
       router.go(-1)
@@ -102,12 +84,12 @@ export default {
     return {
       name,
       total,
-      state,
-      option1,
-      option2,
-      option3,
       onClickLeft,
-      onClickRight
+      onClickRight,
+      loadFn,
+      onSearch
+      // test
+      // epList
     }
   }
 }

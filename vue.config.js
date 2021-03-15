@@ -20,14 +20,14 @@ module.exports = {
   },
   // 开发环境服务配置
   devServer: {
-    open: true,
+    open: false,
     host: '0.0.0.0',
     port: '8080',
     https: false,
     // 跨域配置
     proxy: {
       '/api': {
-        target: 'http://localhost:8082/test/mobileTerminal/',
+        target: 'http://172.16.2.143:8083/test/mobileTerminal/',
         ws: true,
         changeOrigin: true, // 允许跨域
         pathRewrite: {

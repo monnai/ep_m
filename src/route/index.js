@@ -33,6 +33,11 @@ const router = createRouter({
       path: '/mine',
       name: 'mine',
       component: () => import('page/mine/Mine')
+    }, {
+      path: '/test',
+      name: 'test',
+      component: () => import('page/test/Test1')
+
     }
   ]
 })

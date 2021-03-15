@@ -6,21 +6,20 @@
       finished-text="没有更多了"
       @load="onLoad">
       <div>
-        <van-cell-group v-for="item in state.list" :key="item">
+        <van-cell-group v-for="(item,index) in state.list" :key="item">
           <van-cell is-link to="/zxDetail">
             <template #title>
               <div class="ep-list-wrapper">
-                <div>南开大学</div>
-                <div>Acat Biochimica et Biophysica</div>
-                <div>张三</div>
-                <div>电影学,2020/08/17,学校通过</div>
+                <div>{{item.v1}}</div>
+                <div>{{item.v2}}</div>
+                <div>{{item.v3}} {{item.v4}}</div>
               </div>
             </template>
             <template #icon>
-              <div>121</div>
+              <div><van-tag mark type="primary">{{index + 1}}</van-tag></div>
             </template>
             <template #right-icon>
-              <div>待审核 ></div>
+              <div><van-tag type="primary">{{item.checkStatus}}</van-tag></div>
             </template>
           </van-cell>
         </van-cell-group>
@@ -33,40 +32,48 @@
 import { reactive } from 'vue'
 
 export default {
-  setup () {
+  props: {
+    params: Object,
+    request: Function
+  },
+  setup (props) {
     const state = reactive({
+      total: 0,
       list: [],
+      pageNo: 1,
+      pageSize: 10,
       loading: false,
       finished: false,
       refreshing: false
     })
 
-    const onLoad = () => {
-      setTimeout(() => {
-        if (state.refreshing) {
-          state.list = []
-          state.refreshing = false
-        }
-
-        for (let i = 0; i < 10; i++) {
-          state.list.push(state.list.length + 1)
-        }
-        state.loading = false
-
-        if (state.list.length >= 40) {
-          state.finished = true
-        }
-      }, 1000)
+    const onLoad = async () => {
+      if (state.refreshing) {
+        state.list = []
+        state.refreshing = false
+      }
+      await props.request(state)
+      state.pageNo++
+      // for (let i = 0; i < 10; i++) {
+      //   state.list.push(state.list.length + 1)
+      // }
+      state.loading = false
+      debugger
+      if (state.list.length >= state.total) {
+        state.finished = true
+      }
     }
 
-    const onRefresh = () => {
+    const onRefresh = async () => {
       // 清空列表数据
       state.finished = false
 
       // 重新加载数据
       // 将 loading 设置为 true，表示处于加载状态
       state.loading = true
-      onLoad()
+      state.pageNo = 1
+      debugger
+      await onLoad()
     }
 
     return {

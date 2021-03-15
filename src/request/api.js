@@ -17,3 +17,12 @@ async function menu_ () {
   })
 }
 export const menu = menu_
+
+// 纵向项目列表
+async function zxProject_ (p) {
+  return await get('zxproject/list.json', p).then(r => {
+    return r
+  })
+}
+
+export const zxProject = zxProject_

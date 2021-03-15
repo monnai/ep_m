@@ -56,7 +56,6 @@ export default {
     let roleList = {}
 
     const router = useRouter()
-
     const roleSelect = ref()
 
     const doLogin = function () {
