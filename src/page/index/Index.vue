@@ -10,11 +10,11 @@
         @click-right="onClickRight"
         safe-area-inset-top="true">
         <template #left>
-          <van-icon name="/static/image/icon_ep.png" size="18"/>
+          <van-icon :name="require('../../../public/static/image/icon_ep.png')" size="18"/>
         </template>
         <template #right>
           <van-badge dot>
-            <van-icon name="/static/image/icon_bell.png" size="18"/>
+            <van-icon :name="require('../../../public/static/image/icon_bell.png')" size="18"/>
           </van-badge>
         </template>
       </van-nav-bar>
@@ -24,7 +24,7 @@
     </van-sticky>
     <index-todo-list/>
     <van-tabbar v-model="active" route>
-      <van-tabbar-item icon="wap-home-o" to="/index"  >首页</van-tabbar-item>
+      <van-tabbar-item icon="wap-home-o" to="/index">首页</van-tabbar-item>
       <van-tabbar-item icon="contact" dot to="/mine">我的</van-tabbar-item>
     </van-tabbar>
   </div>

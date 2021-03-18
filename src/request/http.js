@@ -9,9 +9,9 @@ import { Toast } from 'vant'
 if (process.env.NODE_ENV === 'development') {
   axios.defaults.baseURL = '/api'
 } else if (process.env.NODE_ENV === 'debug') {
-  axios.defaults.baseURL = 'https://www.ceshi.com'
+  axios.defaults.baseURL = '/api'
 } else if (process.env.NODE_ENV === 'production') {
-  axios.defaults.baseURL = 'https://www.production.com'
+  axios.defaults.baseURL = 'http://localhost:8080/RDSYSEDUV8-8.5.0/mobileTerminal/'
 }
 
 // 默认十秒超时
@@ -111,7 +111,7 @@ axios.interceptors.response.use(
 
 /**
  * get方法，对应get请求
- * @param {String} url [请求的url地址]
+ * @param {string} url [请求的url地址]
  * @param {Object} params [请求时携带的参数]
  */
 export function get (url, params) {
@@ -136,7 +136,6 @@ export function get (url, params) {
  * @param {Object} params [请求时携带的参数]
  */
 export function post (url, params) {
-  debugger
   return new Promise((resolve, reject) => {
     axios.post(url, QueryString.stringify(params))
       .then(res => {

@@ -58,7 +58,6 @@ export default {
       //   state.list.push(state.list.length + 1)
       // }
       state.loading = false
-      debugger
       if (state.list.length >= state.total) {
         state.finished = true
       }
@@ -67,12 +66,11 @@ export default {
     const onRefresh = async () => {
       // 清空列表数据
       state.finished = false
-
+      state.refreshing = true
       // 重新加载数据
       // 将 loading 设置为 true，表示处于加载状态
       state.loading = true
       state.pageNo = 1
-      debugger
       await onLoad()
     }
 

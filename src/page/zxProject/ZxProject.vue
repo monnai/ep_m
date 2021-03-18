@@ -14,19 +14,21 @@
       </van-nav-bar>
       <van-search v-model="name" placeholder="项目名称/编号" show-action>
         <template #action>
-          <div @click="onSearch">搜索</div>
+          <div>
+            <span @click="onSearch">搜索</span>
+          </div>
         </template>
       </van-search>
-      <ep-screen ref="epScreen"/>
+      <ep-screen ref="epScreen" :begin="begin" :end="end"/>
       <zx-project-total-bar :total="total"/>
     </van-sticky>
-    <ep-list :request="loadFn" ref="epList"/>
+    <ep-list :request="loadFn" ref="list"/>
   </div>
 </template>
 
 <script>
 import { useRouter } from 'vue-router'
-// import { ref } from 'vue'
+import { ref, provide } from 'vue'
 import ZxProjectTotalBar from '@/page/zxProject/ZxProjectTotalBar'
 import EpScreen from '@/components/EpScreen'
 import EpList from '@/components/EpList'
@@ -35,19 +37,26 @@ import { zxProject } from '@/request/api'
 export default {
   components: {
     ZxProjectTotalBar,
-    EpList,
-    EpScreen
+    EpScreen,
+    EpList
   },
   setup () {
-    const name = ''
+    const name = ref('')
     const total = '22'
-    // const epList = ref()
+    const list = ref()
+    const begin = ref(new Date())
+    const end = ref(new Date())
+    provide('begin', begin)
+    provide('end', end)
     // const epScreen = ref()
     // 子组件记录基本的total finish等 父组件记录 筛选条件
     const loadFn = async function (state) {
       const result = await zxProject({
         pageNo: state.pageNo,
-        pageSize: state.pageSize
+        pageSize: state.pageSize,
+        name: name.value,
+        begin: begin.value.getFullYear(),
+        end: end.value.getFullYear()
       })
       if (result.body.code === '200') {
         const total = result.body.data.totals
@@ -73,6 +82,7 @@ export default {
     }
     const onSearch = () => {
       // todo
+      list.value.onRefresh()
     }
     const router = useRouter()
     const onClickLeft = () => {
@@ -87,9 +97,10 @@ export default {
       onClickLeft,
       onClickRight,
       loadFn,
-      onSearch
-      // test
-      // epList
+      onSearch,
+      list,
+      begin,
+      end
     }
   }
 }

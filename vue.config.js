@@ -1,3 +1,9 @@
+const path = require('path')
+
+function resolve (dir) {
+  return path.join(__dirname, dir)
+}
+
 module.exports = {
   runtimeCompiler: true,
   // todo 全局sass公共样式，现在直接使用没装sass-loader和node-sass 安装报
@@ -14,7 +20,8 @@ module.exports = {
       alias: {
         assets: '@/assets',
         components: '@/components',
-        page: '@/page'
+        page: '@/page',
+        static: resolve('public/static')
       }
     }
   },
@@ -27,7 +34,7 @@ module.exports = {
     // 跨域配置
     proxy: {
       '/api': {
-        target: 'http://172.16.2.143:8083/test/mobileTerminal/',
+        target: 'http://172.16.3.143:8083/test/mobileTerminal/',
         ws: true,
         changeOrigin: true, // 允许跨域
         pathRewrite: {

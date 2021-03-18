@@ -3,6 +3,9 @@
  */
 import { get } from './http'
 
+// 菜单获取
+import * as config from '../../public/static/config/serverConfig.json'
+
 export const apiAddress = p => get(
   'https://www.baidu.com')
 // 登录
@@ -10,12 +13,10 @@ export const Login = loginParams => get('login.json', loginParams)
 // 角色选择
 export const selectRole = p => get('login/switchGroup.json', p)
 
-// 菜单获取
 async function menu_ () {
-  return await get('../static/config/serverConfig.json', {}).then(r => {
-    return r.menu
-  })
+  return config.menu
 }
+
 export const menu = menu_
 
 // 纵向项目列表
@@ -26,3 +27,52 @@ async function zxProject_ (p) {
 }
 
 export const zxProject = zxProject_
+
+// 详情页 基础信息
+export const base = (modelId) => {
+  if (!modelId) {
+    console.error('modelId 格式不正确')
+  }
+  const url = 'zxproject/' + modelId + '/get.json'
+  // get(url, {}).then(res => fn(res))
+  return get(url, {})
+}
+
+// 详情页 人员信息
+
+export const member = (modelId) => {
+  if (!modelId) {
+    console.error('modelId 格式不正确')
+  }
+  const url = 'zxproject-member/list.json'
+  return get(url, { projectId: modelId })
+}
+
+// 详情页 预算信息
+
+export const budget = (modelId) => {
+  if (!modelId) {
+    console.error('modelId格式不正确')
+  }
+  const url = 'zxproject/getBudget.json'
+  return get(url, { projectId: modelId })
+}
+
+// 详情页 文档
+
+export const document = (modelId) => {
+  if (!modelId) {
+    console.error('modelId格式不正确')
+  }
+  const url = 'zxproject-document/list.json'
+  return get(url, { projectId: modelId })
+}
+
+// 审核流程
+
+export const workflow = (modelId) => {
+  if (!modelId) {
+    console.error('modelId格式不正确')
+  }
+  return get('zxproject/getWrokFlow.json', { id: modelId })
+}

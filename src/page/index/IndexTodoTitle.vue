@@ -1,14 +1,13 @@
 <template>
   <!--标题-->
   <div class="ep_todo_title_wrapper">
-    <img class="ep_todo_icon" src="/static/image/icon_clock.png" alt="代办"/>
+    <img class="ep_todo_icon" :src="require('../../../public/static/image/icon_clock.png')" alt="代办"/>
     <span class="ep_todo_title">代办事项</span>
   </div>
 </template>
 
 <script>
-export default {
-}
+export default {}
 </script>
 
 <style scoped>

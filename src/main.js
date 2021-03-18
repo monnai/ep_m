@@ -1,17 +1,51 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './route'
-import Tag, {
-  Button, Field, Form, Swipe, SwipeItem, Grid, GridItem, NavBar,
-  Toast, List, Cell, CellGroup, Sticky, Tabbar, TabbarItem,
-  Popup, Divider, Icon, Badge, Search, DropdownMenu,
-  DropdownItem, NoticeBar, Tab, Tabs, Empty, Step, Steps, PullRefresh, DatetimePicker
+import {
+  Button,
+  Field,
+  Form,
+  Swipe,
+  SwipeItem,
+  Grid,
+  GridItem,
+  NavBar,
+  Toast,
+  List,
+  Cell,
+  CellGroup,
+  Sticky,
+  Tabbar,
+  TabbarItem,
+  Popup,
+  Divider,
+  Icon,
+  Badge,
+  Search,
+  DropdownMenu,
+  DropdownItem,
+  NoticeBar,
+  Tab,
+  Tabs,
+  Tag,
+  Empty,
+  Step,
+  Steps,
+  PullRefresh,
+  DatetimePicker,
+  Checkbox,
+  CheckboxGroup,
+  IndexBar,
+  IndexAnchor,
+  ContactCard
 } from 'vant'
 import 'vant/lib/index.css'
 import './request/api'
 import EpDivider from '@/components/EpDivider'
 import '@/assets/css/common.css'
 import 'lib-flexible'
+import '@vant/touch-emulator'
+
 const app = createApp(App)
   .use(Button)
   .use(Field)
@@ -45,6 +79,11 @@ const app = createApp(App)
   .use(Steps)
   .use(PullRefresh)
   .use(DatetimePicker)
+  .use(Checkbox)
+  .use(CheckboxGroup)
+  .use(IndexBar)
+  .use(IndexAnchor)
+  .use(ContactCard)
   .use(EpDivider)
 // app.config.devtools = process.env.NODE_ENV === 'development'
 // window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor

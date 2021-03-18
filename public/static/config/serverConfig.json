@@ -4,98 +4,98 @@
     {
       "name": "zxProject",
       "title": "纵向项目",
-      "icon": "/static/image/index/icon_zx_project.png",
+      "icon": "static/image/index/icon_zx_project.png",
       "router": "/zxProject"
     },
     {
       "name": "yfProject",
       "title": "横向项目",
-      "icon": "/static/image/index/icon_hx_project.png"
+      "icon": "static/image/index/icon_hx_project.png"
     },
     {
       "name": "xJProject",
       "title": "校级项目",
-      "icon": "/static/image/index/icon_xj_project.png"
+      "icon": "static/image/index/icon_xj_project.png"
     },
     {
       "name": "paper",
       "title": "论文",
-      "icon": "/static/image/index/icon_paper.png"
+      "icon": "static/image/index/icon_paper.png"
     },
     {
       "name": "patent",
       "title": "专利",
-      "icon": "/static/image/index/icon_patent.png"
+      "icon": "static/image/index/icon_patent.png"
     },
     {
       "name": "award",
       "title": "获奖",
-      "icon": "/static/image/index/icon_award.png"
+      "icon": "static/image/index/icon_award.png"
     },
     {
       "name": "book",
       "title": "著作",
-      "icon": "/static/image/index/icon_book.png"
+      "icon": "static/image/index/icon_book.png"
     },
     {
       "name": "copyRight",
       "title": "著作权",
-      "icon": "/static/image/index/icon_copyright.png"
+      "icon": "static/image/index/icon_copyright.png"
     },
     {
       "name": "researchReport",
       "title": "研究报告",
-      "icon": "/static/image/index/icon_research_report.png"
+      "icon": "static/image/index/icon_research_report.png"
     },
     {
       "name": "jdProduct",
       "title": "鉴定成果",
-      "icon": "/static/image/index/icon_jd_product.png"
+      "icon": "static/image/index/icon_jd_product.png"
     },
     {
       "name": "artProduct",
       "title": "艺术作品",
-      "icon": "/static/image/index/icon_art_product.png"
+      "icon": "static/image/index/icon_art_product.png"
     },
     {
       "name": "standard",
       "title": "标准",
-      "icon": "/static/image/index/icon_standard.png"
+      "icon": "static/image/index/icon_standard.png"
     },
     {
       "name": "medicine",
       "title": "药证",
-      "icon": "/static/image/index/icon_medicine.png"
+      "icon": "static/image/index/icon_medicine.png"
     },
     {
       "name": "breed",
       "title": "新品种",
-      "icon": "/static/image/index/icon_breed.png"
+      "icon": "static/image/index/icon_breed.png"
     },
     {
       "name": "meeting",
       "title": "主办会议",
-      "icon": "/static/image/index/icon_meeting.png"
+      "icon": "static/image/index/icon_meeting.png"
     },
     {
       "name": "lecture",
       "title": "学术讲座",
-      "icon": "/static/image/index/icon_lecture.png"
+      "icon": "static/image/index/icon_lecture.png"
     },
     {
       "name": "joinMeeting",
       "title": "参加会议",
-      "icon": "/static/image/index/icon_join_meeting.png"
+      "icon": "static/image/index/icon_join_meeting.png"
     },
     {
       "name": "chapter",
       "title": "用章申请",
-      "icon": "/static/image/index/icon_chapter.png"
+      "icon": "static/image/index/icon_chapter.png"
     },
     {
       "name": "paperSubmission",
       "title": "论文投稿",
-      "icon": "/static/image/index/icon_paper_submission.png"
+      "icon": "static/image/index/icon_paper_submission.png"
     }
   ]
 }
