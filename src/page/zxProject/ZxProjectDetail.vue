@@ -25,7 +25,10 @@
       <ep-detail-budget :request="getBudget" :callback="callBackBudget"/>
       <ep-detail-document :request="getDocument" :callback="callBackDocument"/>
     </van-tabs>
-    <ep-work-flow-panel ref="flowPanel"/>
+    <!--请求的zxProject接口名能够本地存储或者传递参数，可是因为数据不规范需要特殊处理-->
+    <ep-work-flow-panel ref="flowPanel" :request="getWorkFlow" :callback="callBackWorkFlow"
+                        :request-log="getWorkFlowLog"
+                        :callback-log="callBackWorkFlowLog"/>
   </div>
 </template>
 
@@ -36,8 +39,8 @@ import EpDetailMember from '@/components/EpDetailMember'
 import EpDetailBudget from '@/components/EpDetailBudget'
 import EpDetailDocument from '@/components/EpDetailDocument'
 import EpWorkFlowPanel from '@/components/EpWorkFlowPanel'
-import { ref } from 'vue'
-import { base, member, budget, document } from '@/request/api'
+import { provide, ref } from 'vue'
+import { base, member, budget, document, workflow, workflowLog } from '@/request/api'
 
 export default {
   components: {
@@ -128,6 +131,37 @@ export default {
       }
     }
 
+    const getWorkFlow = () => {
+      return workflow('2c908ae873e019360173e0891fd60003')
+    }
+    const callBackWorkFlow = (res, dataArray) => {
+      const resArray = JSON.parse(res.body.data)
+      for (let i = 0; i < resArray.length; i++) {
+        dataArray.push({
+          name: resArray[i].name,
+          checkStatus: resArray[i].type
+        })
+      }
+    }
+    const getWorkFlowLog = () => {
+      debugger
+      return workflowLog('2c908ae873e019360173e0891fd60003')
+    }
+    const callBackWorkFlowLog = (res, dataArray) => {
+      const resArray = res.body.data
+      for (let i = 0; i < resArray.length; i++) {
+        dataArray.push({
+          // 结果
+          v0: resArray[i].id,
+          v1: resArray[i].checkState,
+          v2: '审核人:' + resArray[i].checker,
+          v3: resArray[i].checkDate,
+          v4: resArray[i].checkInfo ? '审核意见：' + resArray[i].checkInfo : '无'
+        })
+      }
+    }
+    provide('log', getWorkFlowLog)
+    provide('logCallback', callBackWorkFlowLog)
     return {
       onClickLeft,
       onClickRight,
@@ -140,7 +174,11 @@ export default {
       getBudget,
       callBackBudget,
       getDocument,
-      callBackDocument
+      callBackDocument,
+      getWorkFlow,
+      callBackWorkFlow,
+      getWorkFlowLog,
+      callBackWorkFlowLog
     }
   }
 }

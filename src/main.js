@@ -45,6 +45,7 @@ import EpDivider from '@/components/EpDivider'
 import '@/assets/css/common.css'
 import 'lib-flexible'
 import '@vant/touch-emulator'
+import '@/common/css/common.css'
 
 const app = createApp(App)
   .use(Button)

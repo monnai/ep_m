@@ -39,7 +39,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .custom-title {
   /*text-align: left;*/
   margin-right: 4px;

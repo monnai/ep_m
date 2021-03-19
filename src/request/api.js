@@ -13,11 +13,9 @@ export const Login = loginParams => get('login.json', loginParams)
 // 角色选择
 export const selectRole = p => get('login/switchGroup.json', p)
 
-async function menu_ () {
+export const menu = () => {
   return config.menu
 }
-
-export const menu = menu_
 
 // 纵向项目列表
 async function zxProject_ (p) {
@@ -75,4 +73,23 @@ export const workflow = (modelId) => {
     console.error('modelId格式不正确')
   }
   return get('zxproject/getWrokFlow.json', { id: modelId })
+}
+
+// 审核流程
+
+export const workflowLog = (modelId) => {
+  if (!modelId) {
+    console.error('modelId格式不正确')
+  }
+  return get('zxproject/getCheckLogs.json', { id: modelId })
+}
+
+// 代办数
+export const todoCount = () => {
+  return get('todo-content/getTodoCount.json', {})
+}
+
+// 代办列表
+export const todoList = () => {
+  return get('todo-content/getTodoList.json', { pageSize: 20000 })
 }

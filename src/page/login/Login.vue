@@ -1,37 +1,43 @@
 <!--用户登录页面-->
+<!--suppress ALL -->
 <template>
-  <div class="login-wrapper">
+  <div class="login-wrap _th_cover-all-show-times">
 
     <!--公司图标-->
-    <div class="login-slogan-wrapper">
+    <div class="login-slogan-wrap">
       <div class="login-slogan"></div>
     </div>
 
     <!--登录信息填写表单-->
     <div class="login-form">
       <van-form @submit="doLogin">
-
         <van-field
           v-model="username"
-          name="用户名"
-          label="用户名"
-          left-icon="contact"
           placeholder="请输入用户名"
           clearable
-          :rules="[{ required: true, message: '请填写用户名' }]"/>
+          :rules="[{ required: true, message: '请填写用户名' }]">
+          <template #left-icon>
+            <div class="icon_wrap">
+              <div class="icon_account login_icon"></div>
+            </div>
+          </template>
+        </van-field>
 
         <van-field
           v-model="password"
           type="password"
-          name="密码"
-          label="密码"
-          left-icon="closed-eye"
           placeholder="请输入密码"
           clearable
-          :rules="[{ required: true, message: '请填写密码' }]"/>
+          :rules="[{ required: true, message: '请填写密码' }]">
+          <template #left-icon>
+            <div class="icon_wrap">
+              <div class="icon_password login_icon"></div>
+            </div>
+          </template>
+        </van-field>
 
         <!--登录按钮-->
-        <div class="login-btn-wrapper">
+        <div class="login-btn-wrap">
           <van-button type="primary" block @click="doLogin">登录</van-button>
         </div>
       </van-form>
@@ -41,23 +47,23 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { Toast } from 'vant'
 import { Login } from '@/request/api'
 import LoginRoleSelect from '@/page/login/LoginRoleSelect'
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 
 export default {
   components: { LoginRoleSelect },
 
   setup () {
+    // 用户名
     const username = ref()
+    // 密码
     const password = ref()
-    let roleList = {}
-
+    // 角色
+    const roleSelect = ref([])
     const router = useRouter()
-    const roleSelect = ref()
-
     const doLogin = function () {
       Login({
         account: username.value,
@@ -74,7 +80,6 @@ export default {
             router.push('index')
             return
           }
-          roleList = result.body.data.userGroups
           roleSelect.value.show = true
           roleSelect.value.roleList = result.body.data.userGroups
         } else {
@@ -95,7 +100,6 @@ export default {
     return {
       username,
       password,
-      roleList,
       doLogin,
       doCache,
       roleSelect
@@ -104,42 +108,90 @@ export default {
 }
 </script>
 
-<style>
-.login-wrapper {
-  width: 375px;
-  height: 667px;
-  display: block;
+<style scoped>
+.login-wrap {
+  /*width: 100%;*/
+  /*height: 667px;*/
+  /*display: block;*/
   background-image: url("../../image/login/background_login.png");
   background-size: cover;
-  background-position: bottom 0 right -194px;
+  background-position: center;
   background-repeat: no-repeat;
 }
 
-.login-slogan-wrapper {
+.login-slogan-wrap {
   padding-top: 145px;
 }
 
 .login-slogan {
-  margin-left: 146px;
   width: 84px;
   height: 84px;
-  background-image: url("../../image/common/logo_company.png");
+  margin: 0 auto;
+  background-image: url("../../image/common/logo_company.png") !important;
   background-size: cover;
 }
 
 .login-form {
   width: 315px;
-  height: 280px;
-  margin-left: 25px;
+  height: auto;
+  margin: 0 auto;
   margin-top: 87px;
   background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 11px 12px 0 0 #77baf5;
 }
 
-.login-btn-wrapper {
-  padding-top: 36px;
+.login-btn-wrap {
+  padding-top: 14px;
 }
 
-.van-form {
-  padding: 24px;
+.login_icon {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-size: cover;
+  margin-top: 14px;
+  margin-left: 14px;
 }
+
+.icon_account {
+  background-image: url("../../../public/static/image/login/icon_account.png");
+}
+
+.icon_password {
+  background-image: url("../../../public/static/image/login/icon_password.png");
+}
+
+.icon_wrap {
+  width: 44px;
+  height: 44px;
+  background: #EDECEF;
+  box-sizing: border-box;
+}
+
+:deep(.van-field__left-icon) {
+  margin-right: unset;
+}
+
+:deep(.van-cell::after) {
+  border-bottom: 0;
+}
+
+:deep(input.van-field__control) {
+  height: 44px;
+  text-indent: 12px;
+  -webkit-box-shadow: 0 0 0 1000px #f5f5f5 inset;
+}
+
+:deep(.van-form) {
+  padding: 44px 12px 44px 12px;
+}
+
+:deep(.van-button--block) {
+  display: block;
+  width: 95%;
+  height: 44px;
+  margin: 0 auto;
+}
+
 </style>

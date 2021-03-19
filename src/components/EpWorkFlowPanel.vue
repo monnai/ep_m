@@ -1,50 +1,26 @@
 <template>
   <van-popup teleport="body" v-model:show="state">
     <div class="ep-workflow-panel-wrapper">
-      <div class="ep-workflow-panel-icon">
-        <img src="xx"/>
-        <div>{{学校通过}}</div>
+      <div class="ep-workflow-panel-title">
+        <div style="color: white">学校通过</div>
       </div>
-      <!--      <div class="ep-workflow-panel-content">-->
-      <!--        <van-steps direction="vertical" :active="3">-->
-      <!--          <van-step>-->
-      <!--            <h3>【城市】物流状态1</h3>-->
-      <!--            <p>2016-07-12 12:40</p>-->
-      <!--          </van-step>-->
-      <!--          <van-step>-->
-      <!--            <h3>【城市】物流状态2</h3>-->
-      <!--            <p>2016-07-11 10:00</p>-->
-      <!--          </van-step>-->
-      <!--          <van-step>-->
-      <!--            <h3>快件已发货</h3>-->
-      <!--            <p>2016-07-10 09:30</p>-->
-      <!--          </van-step>-->
-      <!--        </van-steps>-->
-      <!--      </div>-->
-      <div class="van-steps van-steps--vertical">
-        <div class="van-steps__items">
-          <div class="van-hairline van-step van-step--vertical van-step--finish">
-            <div class="van-step__title"><h3>【城市】物流状态1</h3>
-              <p>2016-07-12 12:40</p></div>
-            <div class="van-step__circle-container"><i class="van-step__circle"></i></div>
-            <div class="van-step__line"></div>
-          </div>
-          <div class="van-hairline van-step van-step--vertical van-step--finish">
-            <div class="van-step__title"><h3>【城市】物流状态2</h3>
-              <p>2016-07-11 10:00</p></div>
-            <div class="van-step__circle-container"><i class="van-step__circle"></i></div>
-            <div class="van-step__line"></div>
-          </div>
-          <div class="van-hairline van-step van-step--vertical van-step--finish">
-            <div class="van-step__title"><h3>快件已发货</h3>
-              <p>2016-07-10 09:30</p></div>
-            <div class="van-step__circle-container"><i class="van-step__circle"></i></div>
-            <div class="van-step__line"></div>
-          </div>
+      <div class="ep-workflow-panel-content">
+        <div class="van-steps van-steps--vertical">
+          <template v-for="flow in flowDataArray" :key="flow.name">
+            <div class="van-hairline van-step van-step--vertical van-step--finish">
+              <div class="van-step__title"><h3>{{flow.name}}</h3>
+                <!--              <p>2016-07-12 12:40</p>-->
+              </div>
+              <div class="van-step__circle-container"><i class="van-step__circle"></i></div>
+              <div class="van-step__line"></div>
+            </div>
+          </template>
         </div>
       </div>
-      <div class="log-btn-wrapper">
-        <van-button type="primary" block @click="openAuditLog()">登录</van-button>
+      <div class="ep-workflow-panel-footer">
+        <div class="log-btn-wrapper">
+          <van-button type="primary" block @click="openAuditLog()">查看审核记录</van-button>
+        </div>
       </div>
     </div>
     <ep-work-flow-log-panel ref="logPanel"/>
@@ -54,13 +30,16 @@
 <script>
 import { ref } from 'vue'
 import EpWorkFlowLogPanel from '@/components/EpWorkFlowLogPanel'
-import { workflow } from '@/request/api'
 
 export default {
   components: {
     EpWorkFlowLogPanel
   },
-  setup () {
+  props: {
+    request: Function,
+    callback: Function
+  },
+  setup (props) {
     const state = ref(false)
     const show = () => {
       state.value = true
@@ -69,9 +48,10 @@ export default {
     const openAuditLog = () => {
       logPanel.value.show()
     }
+    const flowDataArray = ref([])
     const load = () => {
-      workflow('2c908ae873e019360173e0891fd60003').then(res => {
-        console.log(res)
+      props.request('2c908ae873e019360173e0891fd60003').then(res => {
+        props.callback(res, flowDataArray.value)
       })
     }
     load()
@@ -79,13 +59,31 @@ export default {
       state,
       show,
       openAuditLog,
-      logPanel
+      logPanel,
+      flowDataArray
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
+.ep-workflow-panel-title {
+  width: 297px;
+  height: 186px;
+  background-image: url('../../public/static/image/workflow/bg-blue-audit.png');
+}
+
+.ep-workflow-panel-content {
+  width: 297px;
+  height: 245px;
+  overflow: scroll;
+}
+
+.ep-workflow-panel-footer {
+  width: 297px;
+  height: 40px;
+}
+
 .ep-workflow-panel-wrapper {
   width: 297px;
   height: 475px;

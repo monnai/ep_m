@@ -2,7 +2,7 @@
   "baseServer": "localhost:8080",
   "menu": [
     {
-      "name": "zxProject",
+      "name": "zXProject",
       "title": "纵向项目",
       "icon": "static/image/index/icon_zx_project.png",
       "router": "/zxProject"
@@ -28,7 +28,7 @@
       "icon": "static/image/index/icon_patent.png"
     },
     {
-      "name": "award",
+      "name": "honor",
       "title": "获奖",
       "icon": "static/image/index/icon_award.png"
     },

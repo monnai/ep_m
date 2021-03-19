@@ -1,29 +1,33 @@
+<!--首页-->
 <template>
-  <div>
+  <div style="background: #F5F5F5;">
     <van-sticky>
+      <!--      @click-left="onClickLeft"-->
       <van-nav-bar
         title="高校科研创新服务平台"
-        left-text="返回"
-        right-text="按钮"
-        left-arrow
-        @click-left="onClickLeft"
         @click-right="onClickRight"
-        safe-area-inset-top="true">
+        :safe-area-inset-top="true">
+        <!--左侧图标-->
         <template #left>
           <van-icon :name="require('../../../public/static/image/icon_ep.png')" size="18"/>
         </template>
+        <!--右侧图标-->
         <template #right>
           <van-badge dot>
             <van-icon :name="require('../../../public/static/image/icon_bell.png')" size="18"/>
           </van-badge>
         </template>
       </van-nav-bar>
+      <!--模块图标-->
       <index-model-swiper/>
+      <!--分割线-->
       <ep-divider/>
       <index-todo-title/>
+      <ep-divider/>
     </van-sticky>
+    <!--代办组件-->
     <index-todo-list/>
-    <van-tabbar v-model="active" route>
+    <van-tabbar route>
       <van-tabbar-item icon="wap-home-o" to="/index">首页</van-tabbar-item>
       <van-tabbar-item icon="contact" dot to="/mine">我的</van-tabbar-item>
     </van-tabbar>
@@ -33,7 +37,6 @@
 <script>
 
 import { Toast } from 'vant'
-import { ref } from 'vue'
 import IndexModelSwiper from '@/page/index/IndexModelSwiper'
 import EpDivider from '@/components/EpDivider'
 import IndexTodoList from '@/page/index/IndexTodoList'
@@ -47,13 +50,14 @@ export default {
     IndexTodoTitle
   },
   setup () {
-    const onClickLeft = () => Toast('返回')
-    const onClickRight = () => Toast('按钮')
-    const active = ref('home')
+    // const onClickLeft = () => Toast('返回')
+    const onClickRight = () => {
+      Toast('开发中')
+      // todo 提醒模块
+    }
     return {
-      onClickLeft,
-      onClickRight,
-      active
+      // onClickLeft,
+      onClickRight
     }
   }
 }

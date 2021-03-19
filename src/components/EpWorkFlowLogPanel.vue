@@ -1,49 +1,50 @@
 <template>
   <van-popup teleport="body" v-model:show="state">
-    <div class="ep-workflow-panel-wrapper">
-      <div class="ep-workflow-panel-icon">
-        <img src="xx"/>
-        <div>{{学校通过}}</div>
-      </div>
-      <div class="ep-workflow-panel-content">
-        <van-steps direction="vertical" :active="0">
-          <van-step>
-            <h3>【城市】物流状态1</h3>
-            <p>2016-07-12 12:40</p>
-          </van-step>
-          <van-step>
-            <h3>【城市】物流状态2</h3>
-            <p>2016-07-11 10:00</p>
-          </van-step>
-          <van-step>
-            <h3>快件已发货</h3>
-            <p>2016-07-10 09:30</p>
-          </van-step>
-        </van-steps>
-      </div>
+    <div class="ep-workflow-log-panel-wrapper">
+      <van-cell-group v-for="item in dataArray" :key="item.v0">
+        <van-cell >
+          <template #title>
+            <div class="ep-list-wrapper">
+              <div>{{item.v1}}</div>
+              <div>{{item.v2}}</div>
+              <div>{{item.v3}} {{item.v4}}</div>
+            </div>
+          </template>
+        </van-cell>
+      </van-cell-group>
     </div>
   </van-popup>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 
 export default {
-  setup () {
+  setup (props) {
     const state = ref(false)
     const show = () => {
       state.value = true
     }
+    const dataArray = ref([])
+    const log = inject('log')
+    const logCallback = inject('logCallback')
+    const load = () => {
+      log().then(res => {
+        logCallback(res, dataArray.value)
+      })
+    }
+    load()
     return {
       state,
-      show
+      show,
+      dataArray
     }
   }
 }
 </script>
 
 <style>
-.ep-workflow-panel-wrapper {
+.ep-workflow-log-panel-wrapper {
   width: 297px;
   height: 475px;
 }
