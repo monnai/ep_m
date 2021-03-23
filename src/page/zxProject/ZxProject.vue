@@ -30,7 +30,8 @@ import { ref, provide } from 'vue'
 import ZxProjectTotalBar from '@/page/zxProject/ZxProjectTotalBar'
 import EpScreen from '@/components/EpScreen'
 import EpList from '@/components/EpList'
-import { zxProject } from '@/request/api'
+import { getListByModel } from '@/request/api'
+import { dateFormat } from '@/util/formatUtil'
 
 export default {
   components: {
@@ -40,43 +41,45 @@ export default {
   },
   setup () {
     const name = ref('')
-    const total = '22'
+    const total = ref()
     const list = ref()
-    const begin = ref(new Date())
-    const end = ref(new Date())
+    const begin = ref()
+    const end = ref()
     provide('begin', begin)
     provide('end', end)
-    // const epScreen = ref()
     // 子组件记录基本的total finish等 父组件记录 筛选条件
-    const loadFn = async function (state) {
-      const result = await zxProject({
+    const loadFn = (state) => {
+      getListByModel({
         pageNo: state.pageNo,
         pageSize: state.pageSize,
         name: name.value,
-        begin: begin.value.getFullYear(),
-        end: end.value.getFullYear()
-      })
-      if (result.body.code === '200') {
-        const total = result.body.data.totals
-        const data = result.body.data.items
-        state.total = total
-        // 数据个性化处理
-        for (let i = 0; i < data.length; i++) {
-          const dataNode = {
-            v1: '',
-            v2: '',
-            v3: '',
-            v4: '',
-            v5: ''
+        begin: dateFormat(begin.value),
+        end: dateFormat(end.value)
+      }).then(res => {
+        if (res.body.code === '200') {
+          const totals = res.body.data.totals
+          const data = res.body.data.items
+          state.total = totals
+          total.value = res.body.data.totals + ''
+          // 数据个性化处理
+          for (let i = 0; i < data.length; i++) {
+            const dataNode = {
+              v0: data[i].id,
+              v1: data[i].name,
+              v2: data[i].createUserName,
+              v3: data[i].unitId,
+              v4: data[i].createDate,
+              v5: data[i].checkStatus
+            }
+            state.list.push(dataNode)
           }
-          dataNode.v1 = data[i].chargerName
-          dataNode.v2 = data[i].createUserName
-          dataNode.v3 = data[i].unitId
-          dataNode.v4 = data[i].createDate
-          dataNode.checkStatus = data[i].checkStatus
-          state.list.push(dataNode)
+          state.pageNo++
+          state.loading = false
+          if (state.list.length >= state.total) {
+            state.finished = true
+          }
         }
-      }
+      })
     }
     const onSearch = () => {
       // todo
@@ -104,4 +107,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.total {
+  background: white;
+}
+</style>

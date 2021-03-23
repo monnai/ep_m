@@ -5,9 +5,8 @@ import { get } from './http'
 
 // 菜单获取
 import * as config from '../../public/static/config/serverConfig.json'
+import { getSessionStorage } from '@/util/storageUtil'
 
-export const apiAddress = p => get(
-  'https://www.baidu.com')
 // 登录
 export const Login = loginParams => get('login.json', loginParams)
 // 角色选择
@@ -17,71 +16,85 @@ export const menu = () => {
   return config.menu
 }
 
-// 纵向项目列表
-async function zxProject_ (p) {
-  return await get('zxproject/list.json', p).then(r => {
-    return r
-  })
+// 项目列表
+export const getListByModel = (p) => {
+  const apiPrefix = getSessionStorage('apiPrefix')
+  if (!apiPrefix) {
+    console.error('modelId不可为空')
+  }
+  debugger
+  return get(apiPrefix + '/list.json', p)
 }
 
-export const zxProject = zxProject_
-
 // 详情页 基础信息
-export const base = (modelId) => {
-  if (!modelId) {
-    console.error('modelId 格式不正确')
+export const base = () => {
+  const itemId = sessionStorage.getItem('itemId')
+  if (!itemId) {
+    console.error('itemId 格式不正确')
+    return
   }
-  const url = 'zxproject/' + modelId + '/get.json'
-  // get(url, {}).then(res => fn(res))
-  return get(url, {})
+  return get(sessionStorage.getItem('apiPrefix') + '/' + itemId + '/get.json',
+    {})
 }
 
 // 详情页 人员信息
 
-export const member = (modelId) => {
-  if (!modelId) {
-    console.error('modelId 格式不正确')
+export const member = () => {
+  const itemId = sessionStorage.getItem('itemId')
+  if (!itemId) {
+    console.error('itemId 格式不正确')
+    return
   }
-  const url = 'zxproject-member/list.json'
-  return get(url, { projectId: modelId })
+  return get(sessionStorage.getItem('apiPrefix') + '-member/list.json',
+    { projectId: itemId })
 }
 
 // 详情页 预算信息
 
-export const budget = (modelId) => {
-  if (!modelId) {
-    console.error('modelId格式不正确')
+export const budget = () => {
+  const itemId = sessionStorage.getItem('itemId')
+  if (!itemId) {
+    console.error('itemId格式不正确')
+    return
   }
-  const url = 'zxproject/getBudget.json'
-  return get(url, { projectId: modelId })
+  return get(sessionStorage.getItem('apiPrefix') + '/getBudget.json',
+    { projectId: itemId })
 }
 
 // 详情页 文档
 
-export const document = (modelId) => {
-  if (!modelId) {
-    console.error('modelId格式不正确')
+export const document = () => {
+  const itemId = sessionStorage.getItem('itemId')
+  if (!itemId) {
+    console.error('itemId格式不正确')
+    return
   }
-  const url = 'zxproject-document/list.json'
-  return get(url, { projectId: modelId })
+  const url = sessionStorage.getItem('apiPrefix') + '-document/list.json'
+  return get(url, { projectId: itemId })
 }
 
 // 审核流程
 
-export const workflow = (modelId) => {
-  if (!modelId) {
-    console.error('modelId格式不正确')
+export const workflow = () => {
+  const itemId = sessionStorage.getItem('itemId')
+  if (!itemId) {
+    console.error('itemId格式不正确')
+    return
   }
-  return get('zxproject/getWrokFlow.json', { id: modelId })
+  return get(sessionStorage.getItem('apiPrefix') + '/getWrokFlow.json',
+    { id: itemId })
 }
 
 // 审核流程
 
 export const workflowLog = (modelId) => {
-  if (!modelId) {
-    console.error('modelId格式不正确')
+  const itemId = sessionStorage.getItem('itemId')
+  if (!itemId) {
+    console.error('itemId格式不正确')
+    return
   }
-  return get('zxproject/getCheckLogs.json', { id: modelId })
+  return get(sessionStorage.getItem('apiPrefix') + '/getCheckLogs.json',
+    { id: modelId })
 }
 
 // 代办数

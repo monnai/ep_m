@@ -5,7 +5,8 @@
       "name": "zXProject",
       "title": "纵向项目",
       "icon": "static/image/index/icon_zx_project.png",
-      "router": "/zxProject"
+      "router": ["/zxProject","/zxDetail"],
+      "apiPrefix": "zxproject"
     },
     {
       "name": "yfProject",

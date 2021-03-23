@@ -1,20 +1,10 @@
 <template>
   <div>
     <van-tab title="预算">
-      <table>
-        <thead>
-        <th>预算科目</th>
-        <th>预算经费</th>
-        </thead>
-        <tbody>
-        <template v-for="budget in data" :key="budget.v1">
-          <tr>
-            <td>{{budget.v1}}</td>
-            <td>{{budget.v2}}</td>
-          </tr>
-        </template>
-        </tbody>
-      </table>
+      <van-cell title="预算科目" value="预算经费"></van-cell>
+      <template v-for="budget in data" :key="budget.v1">
+        <van-cell :title="budget.v1" :value="budget.v2"></van-cell>
+      </template>
     </van-tab>
   </div>
 </template>
@@ -32,7 +22,6 @@ export default {
     const load = () => {
       props.request().then(res => {
         props.callback(res, data.value)
-        debugger
       })
     }
     load()
@@ -44,6 +33,21 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.van-tab__pane > div:nth-child(1) {
+  padding: 0;
+}
 
+::v-deep(.van-tab__pane >div:nth-child(1)>div) {
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 12px 25px 9px;
+  background: #F7F7F7;
+  color: #999999;
+}
+
+::v-deep(.van-tab__pane >div:nth-child(1)>div:nth-child(1)) {
+ border-right: 1px solid #dedede;
+}
 </style>

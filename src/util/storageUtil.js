@@ -6,7 +6,7 @@
  * @data {all} 对应key的数据
  */
 export function setLocalStorage (name, data) {
-  localStorage.setItem(name, JSON.stringify(data))
+  localStorage.setItem(name, data)
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -15,7 +15,7 @@ export function setLocalStorage (name, data) {
  * @name {String} 数据对象的KEY
  */
 export function getLocalStorage (name) {
-  return JSON.parse(localStorage.getItem(name))
+  return localStorage.getItem(name)
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -25,7 +25,7 @@ export function getLocalStorage (name) {
  * @data {all} 对应key的数据
  */
 export function setSessionStorage (name, data) {
-  sessionStorage.setItem(name, JSON.stringify(data))
+  sessionStorage.setItem(name, data)
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -34,5 +34,5 @@ export function setSessionStorage (name, data) {
  * @name {String} 数据对象的KEY
  */
 export function getSessionStorage (name) {
-  return JSON.parse(sessionStorage.getItem(name))
+  return sessionStorage.getItem(name)
 }

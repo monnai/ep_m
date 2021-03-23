@@ -112,7 +112,7 @@ export default {
   float: right;
 }
 
-:deep(.van-cell-group) {
+::v-deep(.van-cell-group) {
   background-color: #fff;
   /* border: 1px solid red; */
   padding: 7px;

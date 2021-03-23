@@ -24,25 +24,25 @@
       />
     </van-dropdown-item>
     <van-dropdown-item title="筛选" ref="item">
-        <van-checkbox-group v-model="checked">
-          <van-cell-group>
-            <van-cell
-              v-for="(item, index) in list"
-              clickable
-              :key="item"
-              :title="`复选框 ${item}`"
-              @click="toggle(index)"
-            >
-              <template #right-icon>
-                <van-checkbox
-                  :name="item"
-                  :ref="el => checkboxRefs[index] = el"
-                  @click.stop
-                />
-              </template>
-            </van-cell>
-          </van-cell-group>
-        </van-checkbox-group>
+      <van-checkbox-group v-model="checked">
+        <van-cell-group>
+          <van-cell
+            v-for="(item, index) in list"
+            clickable
+            :key="item"
+            :title="`复选框 ${item}`"
+            @click="toggle(index)"
+          >
+            <template #right-icon>
+              <van-checkbox
+                :name="item"
+                :ref="el => checkboxRefs[index] = el"
+                @click.stop
+              />
+            </template>
+          </van-cell>
+        </van-cell-group>
+      </van-checkbox-group>
 
       <van-button type="primary" @click="checkAll">全选</van-button>
       <van-button type="primary" @click="toggleAll">反选</van-button>
@@ -52,6 +52,7 @@
 
 <script>
 import { ref, inject, onBeforeUpdate } from 'vue'
+import { dateFormat } from '@/util/formatUtil'
 
 export default {
   setup () {
@@ -60,14 +61,10 @@ export default {
     const begin = inject('begin')
     const end = inject('end')
     const beginChange = (value) => {
-      beginTitle.value = value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate()
+      beginTitle.value = dateFormat(value)
     }
     const endChange = (value) => {
-      endTitle.value = value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate()
-    }
-    const test = () => {
-      console.log(begin)
-      console.log(inject('begin'))
+      endTitle.value = dateFormat(value)
     }
     const checked = ref([])
     const checkboxRefs = ref([])
@@ -91,12 +88,11 @@ export default {
       endTitle,
       beginChange,
       endChange,
-      test,
       begin,
       end,
       checkAll,
       toggleAll,
-      list: ['a', 'b'],
+      list: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'a', 'b', 'c', 'd', 'e', 'f', 'g'],
       toggle,
       checked,
       checkboxRefs
@@ -104,6 +100,5 @@ export default {
   }
 }
 </script>
-<style>
-
+<style scoped>
 </style>

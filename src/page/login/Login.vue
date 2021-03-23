@@ -169,25 +169,25 @@ export default {
   box-sizing: border-box;
 }
 
-:deep(.van-field__left-icon) {
+::v-deep(.van-field__left-icon) {
   margin-right: unset;
 }
 
-:deep(.van-cell::after) {
+::v-deep(.van-cell::after) {
   border-bottom: 0;
 }
 
-:deep(input.van-field__control) {
+::v-deep(input.van-field__control) {
   height: 44px;
   text-indent: 12px;
   -webkit-box-shadow: 0 0 0 1000px #f5f5f5 inset;
 }
 
-:deep(.van-form) {
+::v-deep(.van-form) {
   padding: 44px 12px 44px 12px;
 }
 
-:deep(.van-button--block) {
+::v-deep(.van-button--block) {
   display: block;
   width: 95%;
   height: 44px;

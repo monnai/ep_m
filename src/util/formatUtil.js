@@ -7,9 +7,9 @@ export function dateFormat (value, format) {
   if (typeof (value) === 'undefined' || value === null || value === '') {
     return value
   }
-  var date = new Date(value)
-  format = format || 'yyyy - MM - dd'
-  var o = {
+  const date = new Date(value)
+  format = format || 'yyyy-MM-dd'
+  const o = {
     'M+': date.getMonth() + 1, // month
     'd+': date.getDate(), // day
     'h+': date.getHours(), // hour
@@ -22,7 +22,7 @@ export function dateFormat (value, format) {
     format = format.replace(RegExp.$1,
       (date.getFullYear() + '').substr(4 - RegExp.$1.length))
   }
-  for (var k in o) {
+  for (const k in o) {
     if (new RegExp('(' + k + ')').test(format)) {
       format = format.replace(RegExp.$1,
         // eslint-disable-next-line eqeqeq
@@ -31,4 +31,12 @@ export function dateFormat (value, format) {
     }
   }
   return format
+}
+
+/**
+ * for vue: 根据文件全名称获取文件扩展名
+ */
+export function fileTypeFormat (fileName) {
+  // const fileType = fileName.split(.)
+  // fileType
 }
