@@ -1,17 +1,63 @@
 <template>
   <van-popup teleport="body" v-model:show="state">
     <div class="ep-workflow-log-panel-wrapper">
-      <van-cell-group v-for="item in dataArray" :key="item.v0">
-        <van-cell >
-          <template #title>
-            <div class="ep-list-wrapper">
-              <div>{{item.v1}}</div>
-              <div>{{item.v2}}</div>
-              <div>{{item.v3}} {{item.v4}}</div>
+      <!--      <van-cell-group v-for="item in dataArray" :key="item.v0">-->
+      <!--        <van-cell>-->
+      <!--          <template #title>-->
+      <!--            <div class="ep-list-wrapper">-->
+      <!--              <div>{{item.v1}}</div>-->
+      <!--              <div>{{item.v2}}</div>-->
+      <!--              <div>{{item.v3}} {{item.v4}}</div>-->
+      <!--            </div>-->
+      <!--          </template>-->
+      <!--        </van-cell>-->
+      <!--      </van-cell-group>-->
+      <!--      <van-cell-group v-for="item in dataArray" :key="item.v0">-->
+      <!--        <van-cell>-->
+      <!--          <template #title>-->
+      <!--            <div class="ep-list-wrapper">-->
+      <!--              <div class="todo_title">{{item.v1}}</div>-->
+      <!--              <div class="todo_content">-->
+      <!--                <div>{{item.v2}}</div>-->
+      <!--                <div-->
+      <!--                  :class="item.v3 === '科研处通过' ? 'ep_pass'-->
+      <!--                    :item.v3 === '审核中'? 'ep_wait'-->
+      <!--                    : item.v3 === '暂存'? 'ep_save'-->
+      <!--                    : 'ep_not_pass'">-->
+      <!--                  {{item.v3}}-->
+      <!--                </div>-->
+      <!--              </div>-->
+      <!--            </div>-->
+      <!--          </template>-->
+      <!--          <template #right-icon>-->
+      <!--            <div>-->
+      <!--              <van-tag type="primary">{{item.checkStatus}}</van-tag>-->
+      <!--            </div>-->
+      <!--          </template>-->
+      <!--        </van-cell>-->
+      <!--      </van-cell-group>-->
+      <h2>审核记录</h2>
+      <template v-if="0===dataArray.length">
+        <van-empty description="无审核日志"></van-empty>
+      </template>
+      <div class="van-steps van-steps--vertical">
+        <template v-for="flow in dataArray" :key="flow.name">
+          <div class="van-hairline van-step van-step--vertical van-step--finish work-flow-list-padding">
+            <div class="van-step__title">
+              <div>{{flow.v1}}</div>
+              <div>{{flow.v2}}</div>
+              <div>{{flow.v3}}</div>
+              <div>{{flow.v4}}</div>
             </div>
-          </template>
-        </van-cell>
-      </van-cell-group>
+            <div class="van-step__circle-container">
+              <i class="van-step__circle"
+                 :class="flow.type === 'pass'? 'pass': flow.type=== 'notpass'? 'notpass' : 'todo'"></i>
+            </div>
+            <div class="van-step__line"
+                 :class="flow.type === 'pass'? 'pass': flow.type=== 'notpass'? 'notpass' : 'todo'"></div>
+          </div>
+        </template>
+      </div>
     </div>
   </van-popup>
 </template>
@@ -20,7 +66,7 @@
 import { inject, ref } from 'vue'
 
 export default {
-  setup (props) {
+  setup () {
     const state = ref(false)
     const show = () => {
       state.value = true
@@ -43,9 +89,56 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .ep-workflow-log-panel-wrapper {
   width: 297px;
   height: 475px;
+}
+
+.van-step__circle {
+  width: 6px;
+  height: 6px;
+}
+
+.van-step__circle {
+  background-color: #D4D4D4;
+  box-shadow: 0 0 0 3px #EBEDF1;
+}
+
+.van-step__line {
+  background: repeating-linear-gradient(
+    1deg, #D4D4D4, #D4D4D4 4px, #fff 0, #fff 8px);
+}
+
+.van-step__title {
+  border: 1px solid #EEEEEEFF;
+  padding: 0.21333rem;
+  box-shadow: 0 0 20px 1px #eeeeeeff;
+}
+
+.van-step__title > div:first-child {
+  font-size: 16px;
+  color: #333333FF;
+}
+
+.van-step__title > div:nth-of-type(n+2) {
+  font-size: 12px;
+  color: #666666FF;
+}
+
+.van-step__title > div:nth-child(3) {
+  border-bottom: 1px solid #F3F3F3FF;
+}
+
+.van-step--vertical .van-step__circle-container {
+  top: 26px;
+}
+
+.van-step__line {
+  top: 31px;
+}
+
+h2{
+  text-align: center;
 }
 </style>

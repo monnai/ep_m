@@ -76,6 +76,7 @@ export default {
             duration: 1,
             forbidClick: true
           })
+          // todo 改为状态码判断
           if (result.body.message !== '登录成功,需要选择登陆角色！') {
             router.push('index')
             return

@@ -1,9 +1,23 @@
 <template>
   <div>
     <van-tab title="文档">
-      <!--      <van-empty image="error" description="无文档"/>-->
+      <template v-if="resArray.length===0">
+        <van-empty image="default" description="未上传文档"/>
+      </template>
       <template v-for="item in resArray" :key="item.name">
-        <van-cell :title="item.v1" :value="item.v2"></van-cell>
+        <van-cell :title="item.v1" center>
+          <template #icon>
+            <ep-svg-icon class="icon" :icon-name="item.v3"></ep-svg-icon>
+          </template>
+          <template #label>
+            {{item.v2}}
+          </template>
+          <template #right-icon>
+            <div @click="selectedId=item.v0">
+              <ep-pop-over :actions="actions" :on-select="callbackPopover"></ep-pop-over>
+            </div>
+          </template>
+        </van-cell>
       </template>
     </van-tab>
   </div>
@@ -11,25 +25,79 @@
 
 <script>
 import { ref } from 'vue'
+import EpSvgIcon from '@/components/EpSvgIcon'
+import EpPopOver from '@/components/EpPopOver'
 
 export default {
+  components: {
+    EpSvgIcon,
+    EpPopOver
+  },
   props: {
-    request: Function,
-    callback: Function
+    request: {
+      type: Function,
+      required: true
+    },
+    callback: {
+      type: Function,
+      required: true
+    }
   },
   setup (props) {
     const resArray = ref([])
+    const empty = ref(false)
     const load = () => {
       props.request().then(res => {
-        props.callback(res, resArray.value)
+        props.callback(res, resArray.value, empty.value)
       })
     }
+    const selectedId = ref()
     load()
-    return { resArray }
+    const actions = [
+      {
+        text: '下载',
+        icon: 'down'
+      },
+      {
+        text: '转发',
+        icon: 'share'
+      }]
+    const doDownLoad = () => {
+
+    }
+    const doShare = () => {
+
+    }
+    const callbackPopover = (id) => {
+      switch (id.text) {
+        case '下载':
+          doDownLoad(id)
+          break
+        case '转发':
+          doShare(id)
+          break
+        default:
+          break
+      }
+    }
+    return {
+      resArray,
+      callbackPopover,
+      actions,
+      selectedId,
+      empty
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
+::v-deep(.van-cell__title ) {
+  margin-right: 20px;
+}
 
+svg.svg-icon.icon {
+  width: 80px;
+  height: 55px;
+}
 </style>

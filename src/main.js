@@ -18,6 +18,7 @@ import {
   Tabbar,
   TabbarItem,
   Popup,
+  Popover,
   Divider,
   Icon,
   Badge,
@@ -46,7 +47,7 @@ import '@/assets/css/common.css'
 import 'lib-flexible'
 import '@vant/touch-emulator'
 import '@/common/css/common.css'
-
+import EpSvgIcon from '@/components/EpSvgIcon'
 const app = createApp(App)
   .use(Button)
   .use(Field)
@@ -65,6 +66,7 @@ const app = createApp(App)
   .use(Tabbar)
   .use(TabbarItem)
   .use(Popup)
+  .use(Popover)
   .use(Divider)
   .use(Icon)
   .use(Badge)
@@ -86,6 +88,10 @@ const app = createApp(App)
   .use(IndexAnchor)
   .use(ContactCard)
   .use(EpDivider)
+  .use(EpSvgIcon)
+// 让icons/svg下面的图片自动导入
+const req = require.context('@/assets/img/icons', false, /\.svg$/)
+req.keys().map(req)
 // app.config.devtools = process.env.NODE_ENV === 'development'
 // window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor
 // app.config.devtools = process.env.NODE_ENV === 'development'

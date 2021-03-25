@@ -3,11 +3,13 @@
     <van-tab title="成员">
       <ul>
         <template v-for="item in dataArray" :key="item.name">
-          <div class="van-cell van-cell--center van-cell--borderless van-contact-card van-contact-card--edit">
-            <i class="van-badge__wrapper van-icon van-icon-contact van-cell__left-icon"></i>
-            <div class="van-cell__value van-cell__value--alone van-contact-card__value">
-              <div>{{item.v1}} ({{item.v2}})</div>
-              <div>{{item.v3}} {{item.v4}}</div>
+          <div class="van-cell">
+            <div>
+              <ep-svg-icon :iconName="item.v5 === '女'? 'sex_woman' :'sex_man_professor'" icon-color="#2494f2"/>
+            </div>
+            <div>
+              <div class="member-title">{{item.v1}} ({{item.v2}})</div>
+              <div class="member-content">{{item.v3}} {{item.v4}}</div>
             </div>
           </div>
         </template>
@@ -18,8 +20,12 @@
 
 <script>
 import { ref } from 'vue'
+import EpSvgIcon from '@/components/EpSvgIcon'
 
 export default {
+  components: {
+    EpSvgIcon
+  },
   props: {
     request: Function,
     callback: Function
@@ -73,5 +79,24 @@ export default {
     -45deg, #cecece 0, #e5e5e5 20%, transparent 0, transparent 25%, #eaeaea 0, #e2e2e2 45%, transparent 0, transparent 50%);
   background-size: 2.13333rem;
   content: '';
+}
+
+svg.svg-icon {
+  height: 60px;
+  width: 90px;
+  margin-left: 35px;
+}
+
+.member-title {
+  color: #333333FF;
+  padding: 6px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.member-content {
+  color: #666666FF;
+  font-size: 13px;
+  font-weight: lighter;
 }
 </style>

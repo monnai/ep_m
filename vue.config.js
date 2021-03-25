@@ -5,6 +5,25 @@ function resolve (dir) {
 }
 
 module.exports = {
+  // test
+  chainWebpack (config) {
+    // 排除icons目录中svg文件处理
+    config.module.rule('svg')
+      .exclude
+      .add(resolve('src/assets/img/icons'))
+      .end()
+    // 设置svg-sprite-loader处理icons目录中的svg
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include
+      .add(resolve('src/assets/img/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({ symbolId: 'icon-[name]' })
+      .end()
+  },
   runtimeCompiler: true,
   // todo 全局sass公共样式，现在直接使用没装sass-loader和node-sass 安装报
   // visual studio 错误
@@ -34,7 +53,7 @@ module.exports = {
     // 跨域配置
     proxy: {
       '/api': {
-        target: 'http://172.16.3.144:8083/test/mobileTerminal/',
+        target: 'http://172.16.2.143:8083/test/mobileTerminal/',
         ws: true,
         changeOrigin: true, // 允许跨域
         pathRewrite: {

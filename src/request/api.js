@@ -85,16 +85,16 @@ export const workflow = () => {
     { id: itemId })
 }
 
-// 审核流程
+// 审核日志
 
-export const workflowLog = (modelId) => {
+export const workflowLog = () => {
   const itemId = sessionStorage.getItem('itemId')
   if (!itemId) {
     console.error('itemId格式不正确')
     return
   }
   return get(sessionStorage.getItem('apiPrefix') + '/getCheckLogs.json',
-    { id: modelId })
+    { id: itemId })
 }
 
 // 代办数
