@@ -48,6 +48,16 @@ export const member = () => {
     { projectId: itemId })
 }
 
+export const author = () => {
+  const itemId = sessionStorage.getItem('itemId')
+  if (!itemId) {
+    console.error('itemId 格式不正确')
+    return
+  }
+  return get(sessionStorage.getItem('apiPrefix') + '-author/list.json',
+    { projectId: itemId })
+}
+
 // 详情页 预算信息
 
 export const budget = () => {
@@ -70,6 +80,27 @@ export const document = () => {
   }
   const url = sessionStorage.getItem('apiPrefix') + '-document/list.json'
   return get(url, { projectId: itemId })
+}
+
+// 详情页-用印 文档
+export const inchapterDocument = () => {
+  const itemId = sessionStorage.getItem('itemId')
+  if (!itemId) {
+    console.error('itemId格式不正确')
+    return
+  }
+  const url = 'inchapter-detail/list.json'
+  return get(url, { projectId: itemId })
+}
+// 详情页-论文投稿 文档
+export const paperSubmissionDocument = () => {
+  const itemId = sessionStorage.getItem('itemId')
+  if (!itemId) {
+    console.error('itemId格式不正确')
+    return
+  }
+  const url = sessionStorage.getItem('apiPrefix') + '-document/list.json'
+  return get(url, { productId: itemId })
 }
 
 // 审核流程

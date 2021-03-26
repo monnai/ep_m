@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { provide, ref, onMounted, nextTick } from 'vue'
+import { provide, ref, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { base, member, budget, document, workflow, workflowLog } from '@/request/api'
 import { fileTypeFormat } from '@/util/formatUtil'
@@ -192,13 +192,7 @@ export default {
       epBase.value.refresh()
       flowPanel.value.refresh()
     }
-    const resizeCss = () => {
-    }
     const offTop = ref()
-    onMounted(() => {
-      offsetTop.value = offTop.value.$el.offsetHeight
-      resizeCss()
-    })
     return {
       title,
       onClickLeft,

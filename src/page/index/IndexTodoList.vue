@@ -8,7 +8,7 @@
       @load="onLoad">
       <div style="background: #F5F5F5;">
         <van-cell-group v-for="(item) in state.list" :key="item">
-          <van-cell is-link to="/zxDetail">
+          <van-cell is-link @click="toDetail(item.v0, item.v4)">
             <template #title>
               <div class="ep-list-wrapper">
                 <div class="todo_title">{{item.v1}}</div>
@@ -40,6 +40,8 @@
 import { reactive } from 'vue'
 import { todoList } from '@/request/api'
 import { dateFormat } from '@/util/formatUtil'
+import { useRouter } from 'vue-router'
+import { getInfoByModelId } from '@/assets/js/common'
 
 export default {
   setup () {
@@ -69,7 +71,8 @@ export default {
             v0: resData[i].dataId,
             v1: resData[i].title,
             v2: dateFormat(resData[i].lastEditDate),
-            v3: resData[i].checkStatus
+            v3: resData[i].checkStatus,
+            v4: resData[i].moduleId
           })
         }
         // 更新列表的页数和加载状态
@@ -89,11 +92,21 @@ export default {
       state.pageNo = 1
       onLoad()
     }
-
+    const router = useRouter()
+    // 跳转详情页
+    const toDetail = (itemId, modelId) => {
+      const modelInfo = getInfoByModelId(modelId)
+      sessionStorage.setItem('itemId', itemId)
+      sessionStorage.setItem('modelName', modelInfo.title)
+      sessionStorage.setItem('apiPrefix', modelInfo.apiPrefix)
+      sessionStorage.setItem('detailRouter', modelInfo.router[1])
+      router.push(modelInfo.router[0])
+    }
     return {
       state,
       onRefresh,
-      onLoad
+      onLoad,
+      toDetail
     }
   }
 }

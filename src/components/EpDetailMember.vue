@@ -94,12 +94,14 @@ svg.svg-icon {
   color: #333333FF;
   font-size: 15px;
   font-weight: bold;
+  text-align: left;
 }
 
 .member-content {
   color: #666666FF;
   font-size: 13px;
   font-weight: lighter;
+  text-align: left;
 }
 
 </style>

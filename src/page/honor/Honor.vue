@@ -1,11 +1,11 @@
-<!--纵向项目列表页面-->
+<!--获奖列表页面-->
 <template>
   <div>
     <!--吸顶： 列表页头，搜索栏进行吸顶处理-->
     <van-sticky>
       <!--页头-->
       <van-nav-bar
-        title="纵向项目"
+        :title="title"
         left-arrow
         @click-left="onClickLeft"
         @click-right="onClickRight">
@@ -26,7 +26,7 @@
       <!--筛选：包括开始时间、结束时间、条件筛选-->
       <ep-screen ref="epScreen" :begin="begin" :end="end"/>
       <!--总计-->
-      <zx-project-total-bar :total="total"/>
+      <ep-total-bar :total="total"/>
     </van-sticky>
     <ep-list :request="epListRequest" ref="listRef"/>
   </div>
@@ -36,7 +36,7 @@
 import { ref, provide } from 'vue'
 import { useRouter } from 'vue-router'
 import EpScreen from '@/components/EpScreen'
-import ZxProjectTotalBar from '@/page/zxProject/ZxProjectTotalBar'
+import EpTotalBar from '@/components/EpTotalBar'
 import EpList from '@/components/EpList'
 import { getListByModel } from '@/request/api'
 import { dateFormat } from '@/util/formatUtil'
@@ -45,7 +45,7 @@ import { mobileResultCode } from '@/assets/js/common'
 export default {
   components: {
     EpScreen,
-    ZxProjectTotalBar,
+    EpTotalBar,
     EpList
   },
   setup () {
@@ -59,6 +59,7 @@ export default {
     const begin = ref()
     // 结束时间
     const end = ref()
+    const title = sessionStorage.getItem('modelName')
     provide('begin', begin)
     provide('end', end)
     // 子组件记录基本的total finish等 父组件记录 筛选条件
@@ -106,6 +107,7 @@ export default {
       router.push('/index')
     }
     return {
+      title,
       name,
       total,
       begin,

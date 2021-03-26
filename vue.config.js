@@ -53,7 +53,7 @@ module.exports = {
     // 跨域配置
     proxy: {
       '/api': {
-        target: 'http://172.16.2.143:8083/test/mobileTerminal/',
+        target: 'http://172.16.1.145:8083/test/mobileTerminal/',
         ws: true,
         changeOrigin: true, // 允许跨域
         pathRewrite: {

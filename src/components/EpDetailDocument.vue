@@ -27,6 +27,7 @@
 import { ref } from 'vue'
 import EpSvgIcon from '@/components/EpSvgIcon'
 import EpPopOver from '@/components/EpPopOver'
+import { getSessionStorage } from '@/util/storageUtil'
 
 export default {
   components: {
@@ -62,8 +63,8 @@ export default {
         text: '转发',
         icon: 'share'
       }]
-    const doDownLoad = () => {
-
+    const doDownLoad = (id) => {
+      window.location.href = ('/servFileDownLoad?fId = ' + id + '&token-key=' + getSessionStorage('key'))
     }
     const doShare = () => {
 

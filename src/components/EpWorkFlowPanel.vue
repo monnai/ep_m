@@ -72,8 +72,7 @@ export default {
     }
     load()
     const refresh = () => {
-      debugger
-      flowDataArray.value = []
+      // flowDataArray.value = []
       if (logPanel.value) {
         logPanel.value.refresh()
       }

@@ -1,3 +1,5 @@
+import * as config from '../../../public/static/config/serverConfig.json'
+
 export const mobileResultCode = {
   SUCCESS: '200',
   NEED_ROLE_SELECT: '20012',
@@ -9,4 +11,9 @@ export const mobileResultCode = {
   INTERNAL_ERROR: '500',
   NO_DATA: '20010',
   NO_JURISDICTION: '20011'
+}
+const modelInfoArray = config.menu
+
+export const getInfoByModelId = (modelId) => {
+  return modelInfoArray.filter(model => model.name === modelId)[0]
 }
