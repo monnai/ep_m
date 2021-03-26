@@ -53,13 +53,17 @@ export default {
       refreshing: false
     })
 
+    // 数据加载事件
     const onLoad = () => {
+      // 如果是刷新触发，清空过往数据再进行请求
       if (state.refreshing) {
         state.list = []
         state.refreshing = false
       }
+      // 请求代办列表接口后自定义数据绑定和回调
       todoList().then(res => {
-        const resData = res.body.data
+        // 获取返回的代办内容数组
+        const resData = res.body.data.item
         for (let i = 0; i < resData.length; i++) {
           state.list.push({
             v0: resData[i].dataId,
@@ -68,26 +72,28 @@ export default {
             v3: resData[i].checkStatus
           })
         }
+        // 更新列表的页数和加载状态
         state.pageNo++
         state.loading = false
+        // 设置是否到底部
         if (state.list.length >= state.total) {
           state.finished = true
         }
       })
     }
-
-    const onRefresh = async () => {
+    // 数据刷新事件
+    const onRefresh = () => {
       state.finished = false
       state.refreshing = true
       state.loading = true
       state.pageNo = 1
-      await onLoad()
+      onLoad()
     }
 
     return {
       state,
-      onLoad,
-      onRefresh
+      onRefresh,
+      onLoad
     }
   }
 }

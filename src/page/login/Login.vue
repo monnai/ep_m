@@ -1,16 +1,14 @@
 <!--用户登录页面-->
-<!--suppress ALL -->
 <template>
   <div class="login-wrap _th_cover-all-show-times">
-
     <!--公司图标-->
     <div class="login-slogan-wrap">
       <div class="login-slogan"></div>
     </div>
-
     <!--登录信息填写表单-->
     <div class="login-form">
       <van-form @submit="doLogin">
+        <!--用户名输入框-->
         <van-field
           v-model="username"
           placeholder="请输入用户名"
@@ -22,7 +20,7 @@
             </div>
           </template>
         </van-field>
-
+        <!--密码输入框-->
         <van-field
           v-model="password"
           type="password"
@@ -35,7 +33,6 @@
             </div>
           </template>
         </van-field>
-
         <!--登录按钮-->
         <div class="login-btn-wrap">
           <van-button type="primary" block @click="doLogin">登录</van-button>
@@ -49,9 +46,11 @@
 <script>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Toast } from 'vant'
-import { Login } from '@/request/api'
+import { login } from '@/request/api'
 import LoginRoleSelect from '@/page/login/LoginRoleSelect'
+import { Toast } from 'vant'
+import { setSessionStorage } from '@/util/storageUtil'
+import { mobileResultCode } from '@/assets/js/common'
 
 export default {
   components: { LoginRoleSelect },
@@ -65,44 +64,28 @@ export default {
     const roleSelect = ref([])
     const router = useRouter()
     const doLogin = function () {
-      Login({
+      login({
         account: username.value,
         password: password.value
       }).then(result => {
-        if (result.body.code === '200') {
-          doCache(result.body.data.key)
-          Toast({
-            message: result.body.message,
-            duration: 1,
-            forbidClick: true
-          })
-          // todo 改为状态码判断
-          if (result.body.message !== '登录成功,需要选择登陆角色！') {
+        if (result.body.code.indexOf(mobileResultCode.SUCCESS) >= 0) {
+          setSessionStorage('session_key', result.body.data.item.key)
+          Toast({ message: result.body.message })
+          if (result.body.code !== mobileResultCode.NEED_ROLE_SELECT) {
             router.push('index')
             return
           }
           roleSelect.value.show = true
-          roleSelect.value.roleList = result.body.data.userGroups
+          roleSelect.value.roleList = result.body.data.item.userGroups
         } else {
-          Toast({
-            message: result.body.message,
-            duration: 1000,
-            forbidClick: true
-          })
+          Toast({ message: result.body.message })
         }
       })
-    }
-
-    const doCache = function (key) {
-      if (key) {
-        sessionStorage.setItem('session_key', key)
-      }
     }
     return {
       username,
       password,
       doLogin,
-      doCache,
       roleSelect
     }
   }
@@ -111,9 +94,6 @@ export default {
 
 <style scoped>
 .login-wrap {
-  /*width: 100%;*/
-  /*height: 667px;*/
-  /*display: block;*/
   background-image: url("../../image/login/background_login.png");
   background-size: cover;
   background-position: center;
@@ -135,8 +115,7 @@ export default {
 .login-form {
   width: 315px;
   height: auto;
-  margin: 0 auto;
-  margin-top: 87px;
+  margin: 87px auto 0;
   background: #ffffff;
   border-radius: 14px;
   box-shadow: 11px 12px 0 0 #77baf5;

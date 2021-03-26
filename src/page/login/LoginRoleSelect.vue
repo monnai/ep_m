@@ -26,8 +26,9 @@
 <script>
 import { ref } from 'vue'
 import { selectRole } from '@/request/api'
-import Toast from 'vant'
+import { Toast } from 'vant'
 import { useRouter } from 'vue-router'
+import { mobileResultCode } from '@/assets/js/common'
 
 export default {
   setup () {
@@ -39,13 +40,11 @@ export default {
         switchGroupId: roleId,
         refreshToken: sessionStorage.getItem('session_key')
       }).then(result => {
-        if (result.body.code === '200') {
+        Toast(result.body.message)
+        if (result.body.code === mobileResultCode.SUCCESS) {
           sessionStorage.setItem('session_model_authority', result.body.data.joinCheckModules)
           router.push('/index')
-          return
         }
-        Toast(result.body.message)
-        console.log(result)
       })
     }
     return {

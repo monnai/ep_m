@@ -3,6 +3,7 @@ import axios from 'axios'
 // import store from '../store/index'
 import router from '../route'
 import { Toast } from 'vant'
+import { mobileResultCode } from '@/assets/js/common'
 
 // let process = $config
 // 环境的切换
@@ -40,6 +41,22 @@ axios.interceptors.response.use(
     // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
     // 否则的话抛出错误
     if (response.status === 200) {
+      // 登录失效，返回登录页面
+      if (response.data.body.code === mobileResultCode.INVALID_LOGIN_INFORMATION) {
+        sessionStorage.clear()
+        Toast({
+          message: response.data.body.data.message,
+          duration: 1500,
+          forbidClick: true
+        })
+        router.replace({
+          path: '/login',
+          query: {
+            redirect: router.currentRoute.fullPath
+          }
+        })
+        return false
+      }
       return Promise.resolve(response)
     } else {
       return Promise.reject(response)
@@ -120,7 +137,8 @@ export function get (url, params) {
     axios.get(url, {
       params: params,
       headers: {
-        'token-key': sessionStorage.getItem('session_key') ? sessionStorage.getItem('session_key')
+        'token-key': sessionStorage.getItem('session_key')
+          ? sessionStorage.getItem('session_key')
           : ''
       }
     }).then(res => {

@@ -37,7 +37,6 @@ export function dateFormat (value, format) {
  * for vue: 根据文件全名称获取文件扩展名
  */
 export function fileTypeFormat (fileName) {
-  debugger
   const fileType = fileName.split('.')
   return fileType.pop()
 }

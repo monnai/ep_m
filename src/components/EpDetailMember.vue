@@ -1,6 +1,9 @@
 <template>
-  <div>
+  <div class="main-wrap">
     <van-tab title="成员">
+      <template v-if="dataArray.length ===0">
+        <van-empty image="default" description="未查询到成员信息"/>
+      </template>
       <ul>
         <template v-for="item in dataArray" :key="item.name">
           <div class="van-cell">
@@ -82,14 +85,13 @@ export default {
 }
 
 svg.svg-icon {
-  height: 60px;
-  width: 90px;
+  height: 44px;
+  width: 80px;
   margin-left: 35px;
 }
 
 .member-title {
   color: #333333FF;
-  padding: 6px;
   font-size: 15px;
   font-weight: bold;
 }
@@ -99,4 +101,5 @@ svg.svg-icon {
   font-size: 13px;
   font-weight: lighter;
 }
+
 </style>

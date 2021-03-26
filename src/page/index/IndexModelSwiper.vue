@@ -17,18 +17,21 @@
 <script>
 import { menu, todoCount } from '@/request/api'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { setSessionStorage } from '@/util/storageUtil'
 
 export default {
   setup () {
+    // 菜单数据数组
     const menuData = ref([])
+    // 请求菜单接口，进行菜单相关数据绑定
     const loadMenu = () => {
       // if (sessionStorage.getItem('session_model_authority')) {
       // todo: 1 加入用户权限筛选  2 加入状态管理，记录用户当前浏览的swiper序号返回后继续展示
       menuData.value = menu()
       todoCount().then(res => {
-        const resData = res.body.data
+        debugger
+        const resData = res.body.data.item
         for (let i = 0; i < menuData.value.length; i++) {
           if (resData[menuData.value[i].name]) {
             menuData.value[i].badge = resData[menuData.value[i].name]
@@ -39,16 +42,18 @@ export default {
     }
     const router = useRouter()
     const toList = (menu) => {
-      // 模块接口前缀
+      // 设置模块接口前缀
       setSessionStorage('apiPrefix', menu.apiPrefix)
-      // 详情页路由
+      // 设置详情页路由地址
       setSessionStorage('detailRouter', menu.router[1])
       router.push(menu.router[0])
     }
-    loadMenu()
+    // 组件加载事件
+    onMounted(() => {
+      loadMenu()
+    })
     return {
       menuData,
-      loadMenu,
       toList
     }
   }
@@ -56,14 +61,14 @@ export default {
 </script>
 
 <style scoped>
-.my-swipe .van-swipe-item {
+::v-deep(.my-swipe .van-swipe-item ) {
   color: #fff;
   font-size: 20px;
   line-height: 150px;
   text-align: center;
 }
 
-.van-swipe.my-swipe {
+::v-deep(.van-swipe.my-swipe) {
   min-height: 200px;
   background: white;
 }

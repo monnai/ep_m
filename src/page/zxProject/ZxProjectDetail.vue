@@ -1,59 +1,56 @@
+<!--详情页页面-->
 <template>
   <div>
-    <van-sticky>
+    <!--吸顶操作：页头、审核提示、标题进行吸顶-->
+    <van-sticky ref="offTop">
+      <!--页头-->
       <van-nav-bar
         title="纵向项目详情"
         left-arrow
         @click-left="onClickLeft"
         @click-right="onClickRight"
       >
+        <!--页头-右侧按钮点击-->
         <template #right>
           <van-icon name="wap-home-o" size="18"/>
         </template>
       </van-nav-bar>
-      <ep-notice-bar :check-status="checkStatus" :click="openAuditFlow"/>
+      <!--审核状态提示栏-->
+      <ep-notice-bar v-model:check-status="checkStatus" :click="openAuditFlow"/>
+      <!--标题栏-->
       <div class="detail-title-wrap">
         <div class="detail-title">{{title}}</div>
       </div>
     </van-sticky>
-    <van-tabs sticky offset-top="2.293339rem" animated swipeable>
-      <ep-detail-base :request="getBase" :callback="callBackBase"/>
+    <!--详情页信息展示：分为基础信息、人员信息、预算信息、档案信息-->
+    <van-tabs sticky animated swipeable :offset-top="offsetTop">
+      <ep-detail-base :request="getBase" :callback="callBackBase" ref="epBase"/>
       <ep-detail-member :request="getMember" :callback="callBackMember"/>
       <ep-detail-budget :request="getBudget" :callback="callBackBudget"/>
       <ep-detail-document :request="getDocument" :callback="callBackDocument"/>
     </van-tabs>
-    <!--请求的zxProject接口名能够本地存储或者传递参数，可是因为数据不规范需要特殊处理-->
+    <!--审核流程弹出层-->
     <template @click="openAuditFlow">
       <ep-work-flow-panel ref="flowPanel" :request="getWorkFlow" :callback="callBackWorkFlow"
                           :check-status="checkStatus"/>
     </template>
+    <!--页脚-审核操作栏-->
+    <ep-audit-bar :callback="callbackAudit" :show="auditShow"/>
   </div>
-  <van-tabbar active-color="#000" inactive-color="#000">
-    <van-tabbar-item>
-      <van-button icon="clear" type="primary" color="#CCCCCCFF" block>
-        驳回
-      </van-button>
-    </van-tabbar-item>
-    <van-tabbar-item>
-      <van-button icon="clear" type="primary"  color="#EE3845FF"  block>不通过</van-button>
-    </van-tabbar-item>
-    <van-tabbar-item>
-      <van-button icon="checked" type="primary"  color="#2494F2FF"  block>通过</van-button>
-    </van-tabbar-item>
-  </van-tabbar>
 </template>
 
 <script>
+import { provide, ref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
+import { base, member, budget, document, workflow, workflowLog } from '@/request/api'
+import { fileTypeFormat } from '@/util/formatUtil'
+import EpNoticeBar from '@/components/EpNoticeBar'
 import EpDetailBase from '@/components/EpDetailBase'
 import EpDetailMember from '@/components/EpDetailMember'
 import EpDetailBudget from '@/components/EpDetailBudget'
 import EpDetailDocument from '@/components/EpDetailDocument'
 import EpWorkFlowPanel from '@/components/EpWorkFlowPanel'
-import { provide, ref } from 'vue'
-import { base, member, budget, document, workflow, workflowLog } from '@/request/api'
-import { fileTypeFormat } from '@/util/formatUtil'
-import EpNoticeBar from '@/components/EpNoticeBar'
+import EpAuditBar from '@/components/EpAuditBar'
 
 export default {
   components: {
@@ -62,13 +59,15 @@ export default {
     EpDetailMember,
     EpDetailBudget,
     EpDetailDocument,
-    EpWorkFlowPanel
+    EpWorkFlowPanel,
+    EpAuditBar
   },
   setup () {
     const title = ref()
     const flowPanel = ref()
     const checkStatus = ref()
     const router = useRouter()
+    const auditShow = ref(false)
     const onClickLeft = function () {
       router.go(-1)
     }
@@ -78,15 +77,22 @@ export default {
     const openAuditFlow = function () {
       flowPanel.value.show()
     }
+    const epBase = ref()
+    const offsetTop = ref()
     // 基本
     const getBase = function () {
       return base()
     }
     const callBackBase = (res, resObj) => {
       // 根据业务模块对结果进行分类处理后放入数组
-      const resData = res.body.data.dataMap
+      const resData = res.body.data.item
       title.value = res.body.data.title
-      checkStatus.value = res.body.data.lastCheckStatuString
+      nextTick(() => {
+        offsetTop.value = offTop.value.$el.offsetHeight
+      }
+      )
+      auditShow.value = res.body.data.isCanCheck
+      checkStatus.value = res.body.data.checkstatus
       for (const k in resData) {
         const current = resData[k + '']
         const currentArray = []
@@ -108,14 +114,14 @@ export default {
       return member()
     }
     const callBackMember = (res, resArray) => {
-      const items = res.body.data.items
-      for (let i = 0; i < items.length; i++) {
+      const item = res.body.data.item
+      for (let i = 0; i < item.length; i++) {
         resArray.push({
-          v1: items[i].personName,
-          v2: items[i].personCode,
-          v3: items[i].titleId,
-          v4: items[i].bearTypeId,
-          v5: items[i].sexId
+          v1: item[i].personName,
+          v2: item[i].personCode,
+          v3: item[i].titleId,
+          v4: item[i].bearTypeId,
+          v5: item[i].sexId
         })
       }
     }
@@ -125,11 +131,11 @@ export default {
       return budget()
     }
     const callBackBudget = (res, resArray) => {
-      const items = res.body.data
-      for (let i = 0; i < items.length; i++) {
+      const item = res.body.data.item
+      for (let i = 0; i < item.length; i++) {
         resArray.push({
-          v1: items[i].subjectName,
-          v2: items[i].totalFee
+          v1: item[i].subjectName,
+          v2: item[i].totalFee
         })
       }
     }
@@ -140,13 +146,13 @@ export default {
     }
 
     const callBackDocument = (res, resArray) => {
-      const items = res.body.data.items
-      for (let i = 0; i < items.length; i++) {
+      const item = res.body.data.item
+      for (let i = 0; i < item.length; i++) {
         resArray.push({
-          v0: items[i].fileId,
-          v1: items[i].fileName,
-          v2: items[i].lastEditDate,
-          v3: fileTypeFormat(items[i].fileName)
+          v0: item[i].fileId,
+          v1: item[i].fileName,
+          v2: item[i].lastEditDate,
+          v3: fileTypeFormat(item[i].fileName)
         })
       }
     }
@@ -155,7 +161,7 @@ export default {
       return workflow()
     }
     const callBackWorkFlow = (res, dataArray) => {
-      const resArray = JSON.parse(res.body.data)
+      const resArray = JSON.parse(res.body.data.item)
       for (let i = 0; i < resArray.length; i++) {
         dataArray.push({
           name: resArray[i].name,
@@ -167,7 +173,7 @@ export default {
       return workflowLog()
     }
     const callBackWorkFlowLog = (res, dataArray) => {
-      const resArray = res.body.data
+      const resArray = res.body.data.item
       for (let i = 0; i < resArray.length; i++) {
         dataArray.push({
           // 结果
@@ -181,6 +187,18 @@ export default {
     }
     provide('log', getWorkFlowLog)
     provide('logCallback', callBackWorkFlowLog)
+
+    const callbackAudit = () => {
+      epBase.value.refresh()
+      flowPanel.value.refresh()
+    }
+    const resizeCss = () => {
+    }
+    const offTop = ref()
+    onMounted(() => {
+      offsetTop.value = offTop.value.$el.offsetHeight
+      resizeCss()
+    })
     return {
       title,
       onClickLeft,
@@ -199,7 +217,12 @@ export default {
       getWorkFlow,
       callBackWorkFlow,
       getWorkFlowLog,
-      callBackWorkFlowLog
+      callBackWorkFlowLog,
+      auditShow,
+      callbackAudit,
+      epBase,
+      offTop,
+      offsetTop
     }
   }
 }
@@ -254,7 +277,6 @@ export default {
   font-size: 14px;
 }
 
-/*底部*/
 ::v-deep(.van-tabbar-item__text) {
   width: 100%;
 }

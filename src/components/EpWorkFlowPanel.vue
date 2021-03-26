@@ -66,16 +66,24 @@ export default {
     }
     const flowDataArray = ref([])
     const load = () => {
-      props.request('2c908ae873e019360173e0891fd60003').then(res => {
+      props.request().then(res => {
         props.callback(res, flowDataArray.value)
       })
     }
     load()
+    const refresh = () => {
+      debugger
+      flowDataArray.value = []
+      if (logPanel.value) {
+        logPanel.value.refresh()
+      }
+    }
     return {
       state,
       show,
       openAuditLog,
       logPanel,
+      refresh,
       flowDataArray
     }
   }

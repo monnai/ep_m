@@ -80,10 +80,15 @@ export default {
       })
     }
     load()
+    const refresh = () => {
+      dataArray.value = []
+      load()
+    }
     return {
       state,
       show,
-      dataArray
+      dataArray,
+      refresh
     }
   }
 }
@@ -138,7 +143,7 @@ export default {
   top: 31px;
 }
 
-h2{
+h2 {
   text-align: center;
 }
 </style>

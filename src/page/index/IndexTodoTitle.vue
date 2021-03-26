@@ -1,13 +1,24 @@
+<!--首页代办标题显示-->
 <template>
   <!--标题-->
   <div class="ep_todo_title_wrapper">
     <img class="ep_todo_icon" :src="require('../../../public/static/image/icon_clock.png')" alt="代办"/>
-    <span class="ep_todo_title">代办事项</span>
+    <span class="ep_todo_title">{{title}}</span>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    title: {
+      type: String,
+      required: true
+    }
+  },
+  setup () {
+
+  }
+}
 </script>
 
 <style scoped>

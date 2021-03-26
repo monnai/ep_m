@@ -1,8 +1,7 @@
 <!--首页-->
 <template>
-  <div style="background: #F5F5F5;">
+  <div class="index-main-wrap">
     <van-sticky>
-      <!--      @click-left="onClickLeft"-->
       <van-nav-bar
         title="高校科研创新服务平台"
         @click-right="onClickRight"
@@ -22,7 +21,8 @@
       <index-model-swiper/>
       <!--分割线-->
       <ep-divider/>
-      <index-todo-title/>
+      <!--代办标题-->
+      <index-todo-title title="代办事项"/>
       <ep-divider/>
     </van-sticky>
     <!--代办组件-->
@@ -50,7 +50,6 @@ export default {
     IndexTodoTitle
   },
   setup () {
-    // const onClickLeft = () => Toast('返回')
     const onClickRight = () => {
       Toast('开发中')
       // todo 提醒模块
@@ -64,5 +63,7 @@ export default {
 </script>
 
 <style>
-
+.index-main-wrap {
+  background: #F5F5F5;
+}
 </style>

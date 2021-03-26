@@ -1,6 +1,9 @@
 <template>
-  <div class="ep-detail-panel-wrapper">
+  <div class="ep-detail-panel-wrapper main-wrap">
     <van-tab title="基本">
+      <template v-if="Object.keys(baseDataObject).length === 0">
+        <van-empty image="default" description="未查询到基本信息"/>
+      </template>
       <template v-for="(value, title) in baseDataObject" :key="title">
         <van-cell-group :title="title">
           <template v-for="item in value" :key="item.name">
@@ -31,9 +34,14 @@ export default {
       })
     }
     load()
+    const refresh = () => {
+      baseDataObject.value = {}
+      load()
+    }
     return {
       active,
-      baseDataObject
+      baseDataObject,
+      refresh
     }
   }
 }

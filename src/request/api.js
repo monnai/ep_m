@@ -8,7 +8,7 @@ import * as config from '../../public/static/config/serverConfig.json'
 import { getSessionStorage } from '@/util/storageUtil'
 
 // 登录
-export const Login = loginParams => get('login.json', loginParams)
+export const login = loginParams => get('login.json', loginParams)
 // 角色选择
 export const selectRole = p => get('login/switchGroup.json', p)
 
@@ -16,13 +16,12 @@ export const menu = () => {
   return config.menu
 }
 
-// 项目列表
+// 根据模块类型获取模块列表
 export const getListByModel = (p) => {
   const apiPrefix = getSessionStorage('apiPrefix')
   if (!apiPrefix) {
     console.error('modelId不可为空')
   }
-  debugger
   return get(apiPrefix + '/list.json', p)
 }
 
@@ -82,7 +81,7 @@ export const workflow = () => {
     return
   }
   return get(sessionStorage.getItem('apiPrefix') + '/getWrokFlow.json',
-    { id: itemId })
+    { dataId: itemId })
 }
 
 // 审核日志
@@ -94,7 +93,7 @@ export const workflowLog = () => {
     return
   }
   return get(sessionStorage.getItem('apiPrefix') + '/getCheckLogs.json',
-    { id: itemId })
+    { dataId: itemId })
 }
 
 // 代办数
@@ -105,4 +104,14 @@ export const todoCount = () => {
 // 代办列表
 export const todoList = () => {
   return get('todo-content/getTodoList.json', { pageSize: 20000 })
+}
+
+// 审核操作
+export const audit = (checkType, message) => {
+  const itemId = sessionStorage.getItem('itemId')
+  return get(sessionStorage.getItem('apiPrefix') + '/' + itemId + '/check.json',
+    {
+      checkType: checkType,
+      checkInfo: message
+    })
 }

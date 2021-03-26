@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-wrap">
     <van-tab title="文档">
       <template v-if="resArray.length===0">
         <van-empty image="default" description="未上传文档"/>
