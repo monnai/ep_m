@@ -99,8 +99,7 @@ export default {
       sessionStorage.setItem('itemId', itemId)
       sessionStorage.setItem('modelName', modelInfo.title)
       sessionStorage.setItem('apiPrefix', modelInfo.apiPrefix)
-      sessionStorage.setItem('detailRouter', modelInfo.router[1])
-      router.push(modelInfo.router[0])
+      router.push(modelInfo.router[1])
     }
     return {
       state,

@@ -2,7 +2,7 @@
   <van-tabbar active-color="#000" inactive-color="#000" v-if="show">
     <van-tabbar-item>
       <van-button icon="clear" type="primary" color="#CCCCCCFF" block @click="handleAudit('tovoid')">
-        驳回
+        作废
       </van-button>
     </van-tabbar-item>
     <van-tabbar-item>

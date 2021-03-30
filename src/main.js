@@ -48,6 +48,7 @@ import 'lib-flexible'
 import '@vant/touch-emulator'
 import '@/common/css/common.css'
 import EpSvgIcon from '@/components/EpSvgIcon'
+import '../public/static/config/serverConfig.json'
 const app = createApp(App)
   .use(Button)
   .use(Field)
@@ -92,14 +93,4 @@ const app = createApp(App)
 // 让icons/svg下面的图片自动导入
 const req = require.context('@/assets/img/icons', false, /\.svg$/)
 req.keys().map(req)
-// app.config.devtools = process.env.NODE_ENV === 'development'
-// window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor
-// app.config.devtools = process.env.NODE_ENV === 'development'
 app.mount('#app')
-// window.onresize = setHtmlFontSize
-// function setHtmlFontSize () {
-//   const htmlWidth = document.documentElement.clientWidth || document.body.clientWidth
-//   const htmlDom = document.getElementsByTagName('html')[0]
-//   htmlDom.style.fontSize = htmlWidth / 10 + 'px'
-// }
-// setHtmlFontSize()

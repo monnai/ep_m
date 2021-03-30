@@ -5,7 +5,6 @@ function resolve (dir) {
 }
 
 module.exports = {
-  // test
   chainWebpack (config) {
     // 排除icons目录中svg文件处理
     config.module.rule('svg')
@@ -25,15 +24,6 @@ module.exports = {
       .end()
   },
   runtimeCompiler: true,
-  // todo 全局sass公共样式，现在直接使用没装sass-loader和node-sass 安装报
-  // visual studio 错误
-  // css: {
-  //   sass: {
-  //     additionalData: '@import "~@/common/css/common.scss";'
-  //   }
-  // },
-  // todo pluginOptions
-  // 路径别名
   configureWebpack: {
     resolve: {
       alias: {
@@ -53,7 +43,8 @@ module.exports = {
     // 跨域配置
     proxy: {
       '/api': {
-        target: 'http://172.16.1.145:8083/test/mobileTerminal/',
+        target: 'http://172.16.2.144:8083/test/mobileTerminal/',
+        // target: 'http://172.16.2.144:8085/RDSYSEDUV8-8.5.0/mobileTerminal/',
         ws: true,
         changeOrigin: true, // 允许跨域
         pathRewrite: {

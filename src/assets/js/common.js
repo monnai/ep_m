@@ -17,3 +17,7 @@ const modelInfoArray = config.menu
 export const getInfoByModelId = (modelId) => {
   return modelInfoArray.filter(model => model.name === modelId)[0]
 }
+
+export const getFileServer = () => {
+  return config.fileServer
+}

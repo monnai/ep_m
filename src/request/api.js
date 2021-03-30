@@ -146,3 +146,11 @@ export const audit = (checkType, message) => {
       checkInfo: message
     })
 }
+
+// 筛选条件数据字典
+export const category = () => {
+  return get('category/getCategoryList.json', {
+    categoryName: 'DM_CHECK_CHECKSTATUS',
+    beanId: 'zXProject'
+  })
+}

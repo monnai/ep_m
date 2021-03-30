@@ -27,7 +27,8 @@
 import { ref } from 'vue'
 import EpSvgIcon from '@/components/EpSvgIcon'
 import EpPopOver from '@/components/EpPopOver'
-import { getSessionStorage } from '@/util/storageUtil'
+import { getFileServer } from '@/assets/js/common'
+// import { getSessionStorage } from '@/util/storageUtil'
 
 export default {
   components: {
@@ -58,13 +59,20 @@ export default {
       {
         text: '下载',
         icon: 'down'
-      },
-      {
-        text: '转发',
-        icon: 'share'
-      }]
+      }
+      // {
+      //   text: '转发',
+      //   icon: 'share'
+      // }
+    ]
     const doDownLoad = (id) => {
-      window.location.href = ('/servFileDownLoad?fId = ' + id + '&token-key=' + getSessionStorage('key'))
+      debugger
+      var a = document.createElement('a')
+      a.id = 'test'
+      a.href = getFileServer() + '?fId=' + id + '&token-key=' + sessionStorage.getItem('session_key')
+      document.getElementsByTagName('body')[0].append(a) // 修复firefox中无法触发click
+      a.click()
+      document.getElementById('test').remove()
     }
     const doShare = () => {
 
@@ -72,10 +80,10 @@ export default {
     const callbackPopover = (id) => {
       switch (id.text) {
         case '下载':
-          doDownLoad(id)
+          doDownLoad(selectedId.value)
           break
         case '转发':
-          doShare(id)
+          doShare(selectedId.value)
           break
         default:
           break

@@ -1,18 +1,17 @@
 import QueryString from 'qs'
 import axios from 'axios'
-// import store from '../store/index'
+import * as config from '../../public/static/config/serverConfig.json'
 import router from '../route'
 import { Toast } from 'vant'
 import { mobileResultCode } from '@/assets/js/common'
 
-// let process = $config
 // 环境的切换
 if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = '/api'
+  axios.defaults.baseURL = config.devServer
 } else if (process.env.NODE_ENV === 'debug') {
-  axios.defaults.baseURL = '/api'
+  axios.defaults.baseURL = config.debugServer
 } else if (process.env.NODE_ENV === 'production') {
-  axios.defaults.baseURL = 'http://localhost:8080/RDSYSEDUV8-8.5.0/mobileTerminal/'
+  axios.defaults.baseURL = config.prodServer
 }
 
 // 默认十秒超时

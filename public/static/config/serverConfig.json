@@ -1,5 +1,8 @@
 {
-  "baseServer": "localhost:8080",
+  "devServer": "/api",
+  "debugServer": "localhost:8081",
+  "prodServer": "http://epmobile.ngrok2.xiaomiqiu.cn/RDSYSEDUV8-8.5.0/mobileTerminal",
+  "fileServer": "http://172.16.1.145:8083/test/servFileDownLoad",
   "menu": [
     {
       "name": "zXProject",
@@ -133,6 +136,13 @@
       "icon": "static/image/index/icon_paper_submission.png",
       "router": ["/paperSubmission","/paperSubmissionDetail"],
       "apiPrefix": "papersubmission"
+    },
+    {
+      "name": "fundClaim",
+      "title": "经费认领",
+      "icon": "static/image/index/icon_fund_claim.png",
+      "router": ["/fundClaim","/fundClaimDetail"],
+      "apiPrefix": "cwincome"
     }
   ]
 }

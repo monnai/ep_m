@@ -89,8 +89,8 @@ export default {
       const resData = res.body.data.item
       title.value = res.body.data.title
       nextTick(() => {
-          offsetTop.value = offTop.value.$el.offsetHeight
-        }
+        offsetTop.value = offTop.value.$el.offsetHeight
+      }
       )
       auditShow.value = res.body.data.isCanCheck
       checkStatus.value = res.body.data.checkstatus

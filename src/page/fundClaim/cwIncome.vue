@@ -1,4 +1,4 @@
-<!--纵向项目列表页面-->
+<!--项目入账列表页面-->
 <template>
   <div>
     <!--吸顶： 列表页头，搜索栏进行吸顶处理-->
@@ -10,6 +10,7 @@
         @click-left="onClickLeft"
         @click-right="onClickRight">
         <!--页头右侧按钮-->
+
         <template #right>
           <van-icon name="wap-home-o" size="18"/>
         </template>
@@ -24,7 +25,7 @@
         </template>
       </van-search>
       <!--筛选：包括开始时间、结束时间、条件筛选-->
-      <ep-screen ref="screen" :begin="begin" :end="end"/>
+      <ep-screen ref="epScreen" :begin="begin" :end="end"/>
       <!--总计-->
       <ep-total-bar :total="total"/>
     </van-sticky>
@@ -59,19 +60,18 @@ export default {
     const begin = ref()
     // 结束时间
     const end = ref()
-    const screen = ref()
     const title = sessionStorage.getItem('modelName')
     provide('begin', begin)
     provide('end', end)
     // 子组件记录基本的total finish等 父组件记录 筛选条件
     const epListRequest = (state) => {
-      getListByModel(Object.assign({
+      getListByModel({
         pageNo: state.pageNo,
         pageSize: state.pageSize,
         name: name.value,
-        beginDate: dateFormat(begin.value),
-        endDate: dateFormat(end.value)
-      }, screen.value.getCriteriaString())).then(res => {
+        begin: dateFormat(begin.value),
+        end: dateFormat(end.value)
+      }).then(res => {
         if (res.body.code === mobileResultCode.SUCCESS) {
           const totals = res.body.data.totals
           const data = res.body.data.item
@@ -117,8 +117,7 @@ export default {
       onClickRight,
       epListRequest,
       onSearch,
-      listRef,
-      screen
+      listRef
     }
   }
 }

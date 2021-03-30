@@ -228,6 +228,12 @@ const router = createRouter({
       name: 'paperSubmissionDetail',
       component: () => import('page/paperSubmission/PaperSubmissionDetail')
     },
+    // 经费认领
+    {
+      path: '/fundClaim',
+      name: 'fundClaim',
+      component: () => import('page/fundClaim/cwIncome')
+    },
     {
       path: '/mine',
       name: 'mine',
