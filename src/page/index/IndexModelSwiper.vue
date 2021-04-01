@@ -74,12 +74,12 @@ export default {
   text-align: center;
 }
 
-::v-deep(.van-swipe.my-swipe) {
+.van-swipe.my-swipe {
   min-height: 200px;
   background: white;
 }
 
-::v-deep(.van-swipe) {
-  background: whitesmoke;
-}
+/*::v-deep(.van-swipe) {*/
+/*  background: red;*/
+/*}*/
 </style>

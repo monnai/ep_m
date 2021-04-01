@@ -38,7 +38,7 @@ import {
   CheckboxGroup,
   IndexBar,
   IndexAnchor,
-  ContactCard, RadioGroup, Radio
+  ContactCard, RadioGroup, Radio, Switch
 } from 'vant'
 import 'vant/lib/index.css'
 import './request/api'
@@ -92,6 +92,7 @@ const app = createApp(App)
   .use(EpSvgIcon)
   .use(RadioGroup)
   .use(Radio)
+  .use(Switch)
 // 让icons/svg下面的图片自动导入
 const req = require.context('@/assets/img/icons', false, /\.svg$/)
 req.keys().map(req)

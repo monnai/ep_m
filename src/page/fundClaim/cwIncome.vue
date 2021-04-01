@@ -1,99 +1,92 @@
-<!--经费认领添加页面-->
+<!--【经费认领】-添加页面-->
 <template>
-  <div>
-    <!--吸顶： 列表页头，搜索栏进行吸顶处理-->
-    <van-sticky>
-      <!--页头-->
-      <van-nav-bar
-        :title="title"
-        left-arrow
-        @click-left="onClickLeft"
-        @click-right="onClickRight">
-        <!--页头右侧按钮-->
-        <template #right>
-          <van-icon name="wap-home-o" size="18"/>
+  <van-sticky>
+    <!--页头-->
+    <van-nav-bar :title="title" left-arrow @click-left="goBack" @click-right="toIndex">
+      <!--右侧插槽-->
+      <template #right>
+        <van-icon name="wap-home-o" size="18"/>
+      </template>
+    </van-nav-bar>
+  </van-sticky>
+  <!--经费认领表单-->
+  <div class="cwIncome-wrap">
+    <!--来款信息-->
+    <van-cell-group title="来款信息">
+      <!--来款单位-->
+      <van-cell title="来款单位" is-link :value="incomeState.choose.incomeUnit"
+                @click="incomeState.show = !incomeState.show"/>
+      <!--对冲号-->
+      <van-field label="对冲号" v-model="incomeState.choose.dch" readonly/>
+      <!--来款时间-->
+      <van-field label="来款时间" v-model="incomeState.choose.incomeDate" readonly/>
+      <!--来款金额-->
+      <van-field label="来款金额" v-model="incomeState.choose.feeValue" readonly/>
+      <!--可领金额-->
+      <van-field label="可领金额" v-model="incomeState.choose.notClaimFee" readonly/>
+    </van-cell-group>
+    <!--项目信息-->
+    <van-cell-group title="项目信息">
+      <!--项目名称-->
+      <van-cell title="项目名称" is-link :value="projectState.choose.name"
+                @click="projectState.show = !projectState.show"/>
+      <!--负责人-->
+      <van-field label="负责人" v-model="projectState.choose.chargerName" readonly/>
+      <!--项目性质-->
+      <van-field label="项目性质" v-model="projectState.choose.projectType" readonly/>
+      <!--项目金额-->
+      <van-field label="项目分类" v-model="projectState.choose.projectClass" readonly/>
+      <!--可领金额-->
+      <van-field label="合同金额" v-model="projectState.choose.feeValue" readonly/>
+      <van-field label="入账信息" v-model="projectState.choose.availableFee" readonly/>
+      <van-field label="所属单位" v-model="projectState.choose.unitId" readonly/>
+    </van-cell-group>
+    <!--认领信息-->
+    <van-cell-group title="认领信息">
+      <!--可认领限制-->
+      <van-field label="认领金额" placeholder="输入认领金额（万元）" v-model="submitState.claimFee"/>
+      <!--来款类型-->
+      <van-field label="来款类型">
+        <template #input>
+          <van-radio-group direction="horizontal" v-model="submitState.incomeType">
+            <van-radio name="direct">直接经费</van-radio>
+            <van-radio name="indirect">间接经费</van-radio>
+            <van-radio name="mixed">混合经费</van-radio>
+          </van-radio-group>
         </template>
-      </van-nav-bar>
-    </van-sticky>
-    <!--经费认领表单-->
-    <div class="cwIncome-wrap">
-      <!--来款信息-->
-      <van-cell-group title="来款信息">
-        <!--来款单位-->
-        <van-cell title="来款单位" is-link :value="incomeState.choose.incomeUnit" @click="incomeState.show = !incomeState.show" />
-        <!--对冲号-->
-        <van-field label="对冲号" v-model="incomeState.choose.dch" readonly/>
-        <!--来款时间-->
-        <van-field label="来款时间" v-model="incomeState.choose.incomeDate" readonly/>
-        <!--来款金额-->
-        <van-field label="来款金额" v-model="incomeState.choose.feeValue" readonly/>
-        <!--可领金额-->
-        <van-field label="可领金额" v-model="incomeState.choose.notClaimFee" readonly/>
-      </van-cell-group>
-      <!--项目信息-->
-      <van-cell-group title="项目信息">
-        <!--项目名称-->
-        <van-cell title="项目名称" is-link :value="projectState.choose.name" @click="projectState.show = !projectState.show" />
-        <!--负责人-->
-        <van-field label="负责人" v-model="projectState.choose.chargerName" readonly/>
-        <!--项目性质-->
-        <van-field label="项目性质" v-model="projectState.choose.projectType" readonly/>
-        <!--项目金额-->
-        <van-field label="项目分类" v-model="projectState.choose.projectClass" readonly/>
-        <!--可领金额-->
-        <van-field label="合同金额" v-model="projectState.choose.feeValue" readonly/>
-        <van-field label="入账信息" v-model="projectState.choose.availableFee" readonly/>
-        <van-field label="所属单位" v-model="projectState.choose.unitId" readonly/>
-      </van-cell-group>
-      <!--认领信息-->
-      <van-cell-group title="认领信息">
-        <!--可认领限制-->
-        <van-field label="认领金额" placeholder="输入认领金额（万元）" v-model="incomeFormField.claimFee"/>
-        <!--直接经费间接经费混合经费-->
-        <!--来款类型-->
-        <van-field label="来款类型">
-          <template #input>
-            <van-radio-group  v-model="incomeFormField.incomeType">
-              <van-radio name="direct">直接经费</van-radio>
-              <van-radio name="indirect">间接经费</van-radio>
-              <van-radio name="mixed">混合经费</van-radio>
-            </van-radio-group>
-          </template>
-        </van-field>
-        <!--是否外拨-->
-        <van-field label="是否外拨">
-          <template #input>
-            <van-radio-group  v-model="incomeFormField.haveOutBoundFee">
-              <van-radio name="1">是</van-radio>
-              <van-radio name="0">否</van-radio>
-            </van-radio-group>
-          </template>
-        </van-field>
-        <van-field label="经办人" placeholder="输入经办人" v-model="incomeFormField.transactor"/>
-        <van-field label="经办人手机" placeholder="输入经办人手机" v-model="incomeFormField.transactorPhone"/>
-      </van-cell-group>
-    </div>
-    <!--经费认领表单结束-->
-    <van-tabbar active-color="#000" inactive-color="#000">
-      <van-tabbar-item>
-        <van-button icon="checked" type="primary" block @click="doIncomeFormSubmit()">
-          提交
-        </van-button>
-      </van-tabbar-item>
-    </van-tabbar>
-    <!--入账信息选择弹出层-->
-    <van-popup v-model:show="incomeState.show" teleport="body">
-      <div class="incomeSelector-panel">
-        <van-search :show-action="true" v-model="incomeState.searchKey">
-          <template #action>
-            <van-button @click="loadCompany">搜索</van-button>
-          </template>
-        </van-search>
-        <van-list :finished="incomeState.finished" finished-text="">
-          <div>
-            <van-cell-group v-for="(item) in incomeState.list" :key="item.id">
-              <van-cell is-link @click="doIncomeChoose(item)">
-                <template #title>
+      </van-field>
+      <!--是否外拨-->
+      <van-field label="是否外拨">
+        <template #input>
+          <van-switch v-model="submitState.haveOutBoundFee" size="20px" active-value="1" inactive-value="0"/>
+        </template>
+      </van-field>
+      <van-field label="经办人" placeholder="输入经办人" v-model="submitState.transactor"/>
+      <van-field label="经办人手机" placeholder="输入经办人手机" v-model="submitState.transactorPhone"/>
+    </van-cell-group>
+  </div>
+  <!--经费认领表单结束-->
+  <van-tabbar active-color="#000" inactive-color="#000">
+    <van-tabbar-item>
+      <van-button icon="checked" type="primary" block @click="doSubmit()">
+        提交
+      </van-button>
+    </van-tabbar-item>
+  </van-tabbar>
+  <!--入账信息选择弹出层-->
+  <van-popup v-model:show="incomeState.show" teleport="body">
+    <div class="incomeSelector-panel">
+      <van-search :show-action="true" v-model="incomeState.searchKey" placeholder="请输入到账编号或名称">
+        <template #action>
+          <van-button @click="loadIncome" size="small">搜索</van-button>
+        </template>
+      </van-search>
+      <van-list :finished="incomeState.finished" finished-text="">
+        <div>
+          <van-cell-group v-for="(item) in incomeState.list" :key="item.id">
+            <van-cell is-link @click="doIncomeChoose(item)">
+              <template #title>
+                <div class="search_list_wrap">
                   <div>{{item.incomeUnit}}</div>
                   <div><span>摘要：{{item.note}}</span><span>内冲号： {{item.dch}}</span></div>
                   <div>
@@ -103,97 +96,105 @@
                   <div>
                     <span>来款时间:{{item.incomeDate}}</span>
                   </div>
-                </template>
-              </van-cell>
-            </van-cell-group>
-          </div>
-        </van-list>
-      </div>
-    </van-popup>
-    <!--项目信息选择弹出层-->
-    <van-popup v-model:show="projectState.show" teleport="body">
-      <div class="projectSelector-panel">
-        <van-search :show-action="true" v-model="projectState.searchKey">
-          <template #action>
-            <van-button @click="loadProject">搜索</van-button>
-          </template>
-        </van-search>
-        <van-list>
-          <div>
-            <van-cell-group v-for="(item) in projectState.list" :key="item.id">
-              <van-cell is-link @click="doProjectChoose(item)">
-                <template #title>
+                </div>
+              </template>
+            </van-cell>
+          </van-cell-group>
+        </div>
+      </van-list>
+    </div>
+  </van-popup>
+  <!--项目信息选择弹出层-->
+  <van-popup v-model:show="projectState.show" teleport="body">
+    <div class="projectSelector-panel">
+      <van-search :show-action="true" v-model="projectState.searchKey" placeholder="请输入项目名称或编号">
+        <template #action>
+          <van-button @click="loadProject" size="small">搜索</van-button>
+        </template>
+      </van-search>
+      <van-list>
+        <div>
+          <van-cell-group v-for="(item) in projectState.list" :key="item.id">
+            <van-cell is-link @click="doProjectChoose(item)">
+              <template #title>
+                <div class="search_list_wrap">
                   <div>{{item.name}}</div>
-                  <div><span>{{item.name}}</span><span>内冲号： {{item.dch}}</span></div>
+                  <div><span>项目编号： {{item.code}}</span></div>
                   <div>
-                    <span>来款金额：{{item.feeValue}}</span>
-                    <span>可认金额：{{item.notClaimFee}}</span>
+                    <span>负责人：{{item.chargerName}}</span>
                   </div>
-                  <div>
-                    <span>来款时间:{{item.incomeDate}}</span>
-                  </div>
-                </template>
-              </van-cell>
-            </van-cell-group>
-          </div>
-        </van-list>
-      </div>
-    </van-popup>
-    <!--提交结果弹出层-->
-  </div>
+                </div>
+              </template>
+            </van-cell>
+          </van-cell-group>
+        </div>
+      </van-list>
+    </div>
+  </van-popup>
+  <!--提交结果弹出层-->
 </template>
 
 <script>
+import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { ref, reactive } from 'vue'
-import { income, incomeFormSubmit, incomeProject } from '@/request/api'
-// 公司名称选择器
+import { income, fundClaimFormSubmit, incomeProject } from '@/request/api'
+import { Toast } from 'vant'
+
+let incomeId = ''
+let projectId = ''
 export default {
   setup () {
-    // 属性
     const router = useRouter()
-    const title = sessionStorage.getItem('modelName')
-    const projectSelectorShow = ref(false)
-    // 方法
-    const onClickLeft = () => {
+    // 页头标题
+    const title = sessionStorage.getItem('title')
+    // 回退方法
+    const goBack = () => {
       router.go(-1)
     }
-    const onClickRight = () => {
+    // 跳转首页
+    const toIndex = () => {
       router.push('index')
     }
-    const handleSubmit = () => {
-    }
-    const { incomeState, loadCompany, doIncomeChoose } = companySelector()
+    // 入账相关
+    const { incomeState, loadIncome, doIncomeChoose } = incomeSelector()
+    // 项目相关
     const { projectState, loadProject, doProjectChoose } = projectSelector()
-    const { incomeFormField, doIncomeFormSubmit } = incomeForm()
+    // 表单相关
+    const { submitState, doSubmit } = fundClaimForm()
     return {
+      // 页头相关
       title,
-      projectSelectorShow,
-      onClickLeft,
-      onClickRight,
-      handleSubmit,
+      goBack,
+      toIndex,
+      // 入账相关
       incomeState,
-      loadCompany,
+      loadIncome,
       doIncomeChoose,
-      // 项目筛选
+      // 项目相关
       projectState,
       loadProject,
       doProjectChoose,
-      incomeFormField,
-      doIncomeFormSubmit
+      // 表单相关
+      submitState,
+      doSubmit
     }
   }
 }
-let incomeId = ''
-let projectId = ''
 
-function companySelector () {
-  // 公司筛选列表状态
+/**
+ * 入账筛选
+ * @returns {{loadIncome: loadIncome, doIncomeChoose: doIncomeChoose, incomeState: *}}
+ */
+function incomeSelector () {
+  // 公司筛选字段状态
   const incomeState = reactive({
-    searchKey: '',
-    companyName: '',
+    // 搜索是否展示
     show: false,
+    // 搜索框条件
+    searchKey: '',
+    // 搜索结果
     list: [],
+    // 被选中入账数据
     choose: {
       incomeUnit: '',
       dch: '-',
@@ -203,11 +204,10 @@ function companySelector () {
       unitId: '-'
     }
   })
-  const loadCompany = () => {
+  // 请求入账信息列表接口
+  const loadIncome = () => {
     income(incomeState.searchKey).then(res => {
       incomeState.list = []
-      incomeState.loading = false
-      incomeState.finished = false
       const resData = res.body.data
       for (let i = 0; i < resData.length; i++) {
         incomeState.list.push({
@@ -222,6 +222,7 @@ function companySelector () {
       }
     })
   }
+  // 选择入账信息
   const doIncomeChoose = (item) => {
     incomeState.choose = item
     incomeId = item.id
@@ -229,11 +230,15 @@ function companySelector () {
   }
   return {
     incomeState,
-    loadCompany,
+    loadIncome,
     doIncomeChoose
   }
 }
 
+/**
+ * 项目筛选
+ * @returns {{loadProject: loadProject, doProjectChoose: doProjectChoose, projectState: *}}
+ */
 function projectSelector () {
   // 公司筛选列表状态
   const projectState = reactive({
@@ -252,17 +257,15 @@ function projectSelector () {
       availableFee: '-'
     }
   })
-  // 请求项目查询接口
+  // 请求经费项目查询接口
   const loadProject = () => {
     incomeProject(incomeId, projectState.searchKey).then(res => {
       projectState.list = []
-      projectState.loading = false
-      projectState.finished = false
       const resData = res.body.data
       for (let i = 0; i < resData.length; i++) {
         projectState.list.push({
           name: resData[i].name, // 项目名称
-          projectCode: resData[i].name, // 项目编号
+          code: resData[i].code, // 项目编号
           chargerName: resData[i].chargerName, // 负责人
           projectClass: resData[i].projectClass, // 项目性质
           projectType: resData[i].projectType, // 项目分类
@@ -286,9 +289,12 @@ function projectSelector () {
   }
 }
 
-// cwIncomeId & projectId & claimFee & incomeType & haveOutboundFee & transactor & transactorPhone
-function incomeForm () {
-  const incomeFormField = reactive({
+/**
+ * 经费认领表单
+ * @returns {{doSubmit: doSubmit, submitState: *}}
+ */
+function fundClaimForm () {
+  const submitState = reactive({
     // 认领经费
     claimFee: '',
     // 入账类型
@@ -301,17 +307,20 @@ function incomeForm () {
     transactorPhone: ''
   })
   // 经费认领表单提交
-  const doIncomeFormSubmit = () => {
-    incomeFormSubmit(Object.assign(incomeFormField, {
+  const doSubmit = () => {
+    fundClaimFormSubmit(Object.assign(submitState, {
       projectId: projectId,
       incomeId: incomeId
     })).then(res => {
-      debugger
+      Toast({
+        message: '提交成功',
+        icon: 'checked'
+      })
     })
   }
   return {
-    incomeFormField,
-    doIncomeFormSubmit
+    submitState,
+    doSubmit
   }
 }
 </script>
@@ -361,9 +370,28 @@ function incomeForm () {
   background: rgb(25 137 250);
   border-color: rgb(25 137 250);
 }
+
 ::v-deep(.van-cell.van-cell--clickable) {
   text-align: left;
   font-size: 14px;
   font-weight: bold;
+}
+
+::v-deep(.van-radio) {
+  margin-left: auto;
+}
+
+::v-deep(.van-switch) {
+  margin-left: auto;
+}
+
+::v-deep(.van-cell__value.van-cell__value--alone.van-field__value > div >input) {
+  text-align: left;
+}
+
+.search_list_wrap {
+  color: #666666FF;
+  font-size: 12px
+
 }
 </style>

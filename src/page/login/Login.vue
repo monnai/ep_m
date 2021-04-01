@@ -1,6 +1,6 @@
 <!--用户登录页面-->
 <template>
-  <div class="login-wrap _th_cover-all-show-times">
+  <div class="login-wrap _th_cover-all-show-time">
     <!--公司图标-->
     <div class="login-slogan-wrap">
       <div class="login-slogan"></div>
@@ -69,6 +69,14 @@ export default {
         password: password.value
       }).then(result => {
         if (result.body.code.indexOf(mobileResultCode.SUCCESS) >= 0) {
+          if (result.body.code === mobileResultCode.NO_JURISDICTION) {
+            Toast('无访问权限')
+            return false
+          }
+          if (result.body.code === mobileResultCode.NO_DATA) {
+            Toast('用户名或密码错误，请重新输入')
+            return false
+          }
           setSessionStorage('session_key', result.body.data.item.key)
           Toast({ message: result.body.message })
           if (result.body.code !== mobileResultCode.NEED_ROLE_SELECT) {
@@ -174,4 +182,20 @@ export default {
   margin: 0 auto;
 }
 
+::v-deep(.van-popup.van-popup--center.van-toast.van-toast--middle.van-toast--text) {
+  z-index: 99999;
+}
+
+._th_cover-all-show-time {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  font-weight: 900;
+  font-size: 30px;
+  color: #4f4f4f;
+  background-color: rgba(0,0,0,0.1);
+}
 </style>

@@ -171,6 +171,6 @@ export const incomeProject = (cwIncomeId, projectName) => {
 }
 
 // 经费认领提交
-export const incomeFormSubmit = (params) => {
+export const fundClaimFormSubmit = (params) => {
   return post('cwincomeclaim/save.json', params)
 }
