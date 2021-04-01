@@ -78,4 +78,8 @@ export default {
   min-height: 200px;
   background: white;
 }
+
+::v-deep(.van-swipe) {
+  background: whitesmoke;
+}
 </style>

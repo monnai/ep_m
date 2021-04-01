@@ -115,7 +115,6 @@ export default {
     }
     const criteria = ref({})
     const getCriteriaString = () => {
-      debugger
       const result = {}
       for (const k in criteria.value) {
         const currentArray = []

@@ -1,7 +1,7 @@
 /**
  * api接口统一管理
  */
-import { get } from './http'
+import { get, post } from './http'
 
 // 菜单获取
 import * as config from '../../public/static/config/serverConfig.json'
@@ -153,4 +153,24 @@ export const category = () => {
     categoryName: 'DM_CHECK_CHECKSTATUS',
     beanId: 'zXProject'
   })
+}
+
+// 经费认领： 查询来款信息
+export const income = (searchKey) => {
+  return get('cwincome/list.json', {
+    searchKey: searchKey
+  })
+}
+
+// 经费认领： 查询项目信息
+export const incomeProject = (cwIncomeId, projectName) => {
+  return get('project/getCWIncomeClaimProjects.json', {
+    cwIncomeId: cwIncomeId,
+    name: projectName
+  })
+}
+
+// 经费认领提交
+export const incomeFormSubmit = (params) => {
+  return post('cwincomeclaim/save.json', params)
 }
