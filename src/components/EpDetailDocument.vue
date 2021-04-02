@@ -66,7 +66,6 @@ export default {
       // }
     ]
     const doDownLoad = (id) => {
-      debugger
       var a = document.createElement('a')
       a.id = 'test'
       a.href = getFileServer() + '?fId=' + id + '&token-key=' + sessionStorage.getItem('session_key')
