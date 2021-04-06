@@ -23,9 +23,10 @@ export default {
 
 <style scoped>
 .ep_todo_title_wrapper {
-  height: 22px;
-  text-align: left;
+  padding: 3px;
   background: white;
+  vertical-align: middle;
+  display: flex;
 }
 
 .ep_todo_icon {

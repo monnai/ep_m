@@ -1,39 +1,41 @@
 <!--首页代办列表子组件-->
 <template>
-  <van-pull-refresh v-model="state.refreshing" @refresh="onRefresh">
-    <van-list
-      v-model:loading="state.loading"
-      :finished="state.finished"
-      finished-text="没有更多了"
-      @load="onLoad">
-      <div style="background: #F5F5F5;">
-        <van-cell-group v-for="(item) in state.list" :key="item">
-          <van-cell is-link @click="toDetail(item.v0, item.v4)">
-            <template #title>
-              <div class="ep-list-wrapper">
-                <div class="todo_title">{{item.v1}}</div>
-                <div class="todo_content">
-                  <div>{{item.v2}}</div>
-                  <div
-                    :class="item.v3 === '科研处通过' ? 'ep_pass'
+  <div class="ep_todo_list_wrap">
+    <van-pull-refresh v-model="state.refreshing" @refresh="onRefresh">
+      <van-list
+        v-model:loading="state.loading"
+        :finished="state.finished"
+        finished-text="没有更多了"
+        @load="onLoad">
+        <div style="background: #F5F5F5;">
+          <van-cell-group v-for="(item) in state.list" :key="item">
+            <van-cell is-link @click="toDetail(item.v0, item.v4)">
+              <template #title>
+                <div class="ep-list-wrapper">
+                  <div class="todo_title">{{item.v1}}</div>
+                  <div class="todo_content">
+                    <div>{{item.v2}}</div>
+                    <div
+                      :class="item.v3 === '科研处通过' ? 'ep_pass'
                     :item.v3 === '审核中'? 'ep_wait'
                     : item.v3 === '暂存'? 'ep_save'
                     : 'ep_not_pass'">
-                    {{item.v3}}
+                      {{item.v3}}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </template>
-            <template #right-icon>
-              <div>
-                <van-tag type="primary">{{item.checkStatus}}</van-tag>
-              </div>
-            </template>
-          </van-cell>
-        </van-cell-group>
-      </div>
-    </van-list>
-  </van-pull-refresh>
+              </template>
+              <template #right-icon>
+                <div>
+                  <van-tag type="primary">{{item.checkStatus}}</van-tag>
+                </div>
+              </template>
+            </van-cell>
+          </van-cell-group>
+        </div>
+      </van-list>
+    </van-pull-refresh>
+  </div>
 </template>
 <script>
 
@@ -160,5 +162,10 @@ export default {
     background-color: #fff;
     color: #000;
   }
+}
+
+.ep_todo_list_wrap{
+  min-height: 357px;
+  background: whitesmoke;
 }
 </style>

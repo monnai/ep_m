@@ -230,9 +230,20 @@ const router = createRouter({
     },
     // 经费认领
     {
-      path: '/fundClaim',
-      name: 'fundClaim',
-      component: () => import('page/fundClaim/cwIncome')
+      path: '/cWIncomeClaim',
+      name: 'cWIncomeClaim',
+      component: () => import('page/cWIncomeClaim/CWIncomeClaim')
+    },
+    // 项目入账
+    {
+      path: '/projectIncome',
+      name: 'projectIncome',
+      component: () => import('page/projectIncome/ProjectIncome')
+    },
+    {
+      path: '/projectIncomeDetail',
+      name: 'projectIncomeDetail',
+      component: () => import('page/projectIncome/ProjectIncomeDetail')
     },
     {
       path: '/mine',

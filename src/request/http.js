@@ -66,7 +66,6 @@ axios.interceptors.response.use(
   // 然后根据返回的状态码进行一些操作，例如登录过期提示，错误提示等等
   // 下面列举几个常见的操作，其他需求可自行扩展
   error => {
-    debugger
     if (error.response.status) {
       switch (error.response.status) {
         // 401: 未登录
@@ -116,7 +115,7 @@ axios.interceptors.response.use(
         // 其他错误，直接抛出错误提示
         default:
           Toast({
-            message: error.response.data.message,
+            message: '错误信息：' + error.response.data,
             duration: 1500,
             forbidClick: true
           })

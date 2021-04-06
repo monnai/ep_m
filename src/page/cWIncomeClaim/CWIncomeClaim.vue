@@ -44,7 +44,7 @@
     <!--认领信息-->
     <van-cell-group title="认领信息">
       <!--可认领限制-->
-      <van-field label="认领金额" placeholder="输入认领金额（万元）" type="number" v-model="submitState.claimFee"/>
+      <van-field label="认领金额" placeholder="输入认领金额（万元）" type="number" v-model="submitState.claimFee" required />
       <!--来款类型-->
       <van-field label="来款类型">
         <template #input>
@@ -315,7 +315,7 @@ function fundClaimForm () {
     // 入账类型
     incomeType: 'direct',
     // 有无外拨经费
-    haveOutBoundFee: '',
+    haveOutBoundFee: 0,
     // 经办人
     transactor: '',
     // 经办人手机号
@@ -324,10 +324,13 @@ function fundClaimForm () {
   // 经费认领表单提交
   const doSubmit = () => {
     if (!incomeId) {
-      Toast('请选择入账信息')
+      Toast('请选择来款信息')
       return false
     } else if (!projectId) {
       Toast('请选择项目信息')
+      return false
+    } else if (!submitState.claimFee) {
+      Toast('请输入认领金额')
       return false
     }
     fundClaimFormSubmit(Object.assign(submitState, {

@@ -138,11 +138,18 @@
       "apiPrefix": "papersubmission"
     },
     {
-      "name": "fundClaim",
-      "title": "经费认领",
+      "name": "cWIncomeClaim",
+      "title": "入账办理",
       "icon": "static/image/index/icon_fund_claim.png",
-      "router": ["/fundClaim","/fundClaimDetail"],
+      "router": ["/cWIncomeClaim","/"],
       "apiPrefix": "cwincome"
+    },
+    {
+      "name": "projectIncome",
+      "title": "项目入账",
+      "icon": "static/image/index/icon_fund_claim.png",
+      "router": ["/projectIncome","/projectIncomeDetail"],
+      "apiPrefix": "cwincomeclaim"
     }
   ]
 }
