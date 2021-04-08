@@ -89,7 +89,6 @@ export default {
     })
     // 开始选择器change事件
     const beginChange = (value) => {
-      debugger
       state.beginText = dateFormat(value)
     }
     // 结束选择器change事件

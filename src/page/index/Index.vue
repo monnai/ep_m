@@ -2,9 +2,9 @@
 <template>
   <div class="index-main-wrap">
     <van-sticky>
+      <!--      @click-right="onClickRight"-->
       <van-nav-bar
         title="高校科研创新服务平台"
-        @click-right="onClickRight"
         :safe-area-inset-top="true">
         <!--左侧图标-->
         <template #left>
@@ -12,9 +12,9 @@
         </template>
         <!--右侧图标-->
         <template #right>
-          <van-badge dot>
-            <van-icon :name="require('../../../public/static/image/icon_bell.png')" size="18"/>
-          </van-badge>
+          <!--          <van-badge dot>-->
+          <!--            <van-icon :name="require('../../../public/static/image/icon_bell.png')" size="18"/>-->
+          <!--          </van-badge>-->
         </template>
       </van-nav-bar>
       <!--模块图标-->
@@ -36,7 +36,7 @@
 
 <script>
 
-import { Toast } from 'vant'
+// import { Toast } from 'vant'
 import IndexModelSwiper from '@/page/index/IndexModelSwiper'
 import EpDivider from '@/components/EpDivider'
 import IndexTodoList from '@/page/index/IndexTodoList'
@@ -50,12 +50,12 @@ export default {
     IndexTodoTitle
   },
   setup () {
-    const onClickRight = () => {
-      Toast('开发中')
-      // todo 提醒模块
-    }
+    // const onClickRight = () => {
+    //   Toast('开发中')
+    //   // todo 提醒模块
+    // }
     return {
-      onClickRight
+      // onClickRight
     }
   }
 }
@@ -65,6 +65,7 @@ export default {
 .index-main-wrap {
   background: #F5F5F5;
 }
+
 ::v-deep(.van-swipe.my-swipe) {
   min-height: 200px;
   background: white;
