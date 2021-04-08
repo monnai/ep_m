@@ -4,7 +4,6 @@
 import { get } from './http'
 
 // 菜单获取
-import * as config from '../../public/static/config/serverConfig.json'
 import { getSessionStorage } from '@/util/storageUtil'
 
 // 登录
@@ -12,9 +11,9 @@ export const login = loginParams => get('login.json', loginParams)
 // 角色选择
 export const selectRole = p => get('login/switchGroup.json', p)
 
-export const menu = () => {
-  return config.menu
-}
+// export const menu = () => {
+//   return axios.get('./static/config/serverConfig.json')
+// }
 
 // 根据模块类型获取模块列表
 export const getListByModel = (p) => {
@@ -174,3 +173,10 @@ export const incomeProject = (cwIncomeId, projectName) => {
 export const fundClaimFormSubmit = (params) => {
   return get('cwincomeclaim/save.json', params)
 }
+
+// 我的：用户信息
+export const getPersonDetail = () => {
+  return get('person/getPersonDetail.json')
+}
+
+// 我的：

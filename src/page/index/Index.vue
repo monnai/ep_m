@@ -29,7 +29,7 @@
     <index-todo-list/>
     <van-tabbar route>
       <van-tabbar-item icon="wap-home-o" to="/index">首页</van-tabbar-item>
-      <van-tabbar-item icon="contact" dot to="/mine">我的</van-tabbar-item>
+      <van-tabbar-item icon="contact" to="/mine">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>

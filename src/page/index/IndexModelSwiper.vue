@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { menu, todoCount } from '@/request/api'
+import { todoCount } from '@/request/api'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { getSessionStorage, setSessionStorage } from '@/util/storageUtil'
@@ -33,7 +33,7 @@ export default {
         const authorityFilter = authority.split(',')
         todoCount().then(res => {
           const todoCounts = res.body.data.item
-          const menuItem = menu()
+          const menuItem = JSON.parse(sessionStorage.getItem('menu'))
           for (const index in menuItem) {
             const modelName = menuItem[index].name
             if (authorityFilter.indexOf(modelName) !== -1) {

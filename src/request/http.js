@@ -1,17 +1,25 @@
 import QueryString from 'qs'
 import axios from 'axios'
-import * as config from '../../public/static/config/serverConfig.json'
 import router from '../route'
 import { Toast } from 'vant'
 import { mobileResultCode } from '@/assets/js/common'
 
 // 环境的切换
 if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = config.devServer
+  axios.get('./static/config/serverConfig.json').then(res => {
+    axios.defaults.baseURL = res.data.devServer
+    sessionStorage.setItem('menu', JSON.stringify(res.data.menu))
+  })
 } else if (process.env.NODE_ENV === 'debug') {
-  axios.defaults.baseURL = config.debugServer
+  axios.get('./static/config/serverConfig.json').then(res => {
+    axios.defaults.baseURL = res.data.debugServer
+    sessionStorage.setItem('menu', JSON.stringify(res.data.menu))
+  })
 } else if (process.env.NODE_ENV === 'production') {
-  axios.defaults.baseURL = config.prodServer
+  axios.get('./static/config/serverConfig.json').then(res => {
+    axios.defaults.baseURL = res.data.prodServer
+    sessionStorage.setItem('menu', JSON.stringify(res.data.menu))
+  })
 }
 
 // 默认十秒超时
