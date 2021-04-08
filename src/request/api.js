@@ -1,7 +1,7 @@
 /**
  * api接口统一管理
  */
-import { get, post } from './http'
+import { get } from './http'
 
 // 菜单获取
 import * as config from '../../public/static/config/serverConfig.json'
@@ -172,5 +172,5 @@ export const incomeProject = (cwIncomeId, projectName) => {
 
 // 经费认领提交
 export const fundClaimFormSubmit = (params) => {
-  return post('cwincomeclaim/save.json', params)
+  return get('cwincomeclaim/save.json', params)
 }

@@ -26,18 +26,25 @@ export default {
     const menuData = ref([])
     // 请求菜单接口，进行菜单相关数据绑定
     const loadMenu = () => {
-      // if (sessionStorage.getItem('session_model_authority')) {
-      // todo: 1 加入用户权限筛选  2 加入状态管理，记录用户当前浏览的swiper序号返回后继续展示
-      menuData.value = menu()
-      todoCount().then(res => {
-        const resData = res.body.data.item
-        for (let i = 0; i < menuData.value.length; i++) {
-          if (resData[menuData.value[i].name]) {
-            menuData.value[i].badge = resData[menuData.value[i].name]
+      // 获取配置文件中菜单配置，和缓存中用户权限进行比对，如果有权限，添加进menuData.value中，并且把代办条数赋值到badge属性
+      // 作为角标气泡展示
+      const authority = sessionStorage.getItem('session_model_authority')
+      if (authority) {
+        const authorityFilter = authority.split(',')
+        todoCount().then(res => {
+          const todoCounts = res.body.data.item
+          const menuItem = menu()
+          for (const index in menuItem) {
+            const modelName = menuItem[index].name
+            if (authorityFilter.indexOf(modelName) !== -1) {
+              if (todoCounts[modelName]) {
+                menuItem[index].badge = todoCounts[modelName]
+              }
+              menuData.value.push(menuItem[index])
+            }
           }
-        }
-      })
-      // }
+        })
+      }
     }
     const router = useRouter()
     const toList = (menu) => {
@@ -74,12 +81,16 @@ export default {
   text-align: center;
 }
 
-.van-swipe.my-swipe {
+::v-deep(.van-swipe.my-swipe) {
   min-height: 200px;
   background: white;
 }
 
-/*::v-deep(.van-swipe) {*/
-/*  background: red;*/
-/*}*/
+::v-deep(.van-sticky.van-sticky--fixed) {
+  background: whitesmoke;
+}
+
+::v-deep(.van-swipe__track ) {
+  background: white;
+}
 </style>

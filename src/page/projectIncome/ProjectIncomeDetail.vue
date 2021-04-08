@@ -25,8 +25,6 @@
     <!--详情页信息展示：分为基础信息、人员信息、预算信息、档案信息-->
     <van-tabs sticky animated swipeable :offset-top="offsetTop">
       <ep-detail-base :request="getBase" :callback="callBackBase" ref="epBase"/>
-      <ep-detail-member :request="getMember" :callback="callBackMember"/>
-      <ep-detail-document :request="getDocument" :callback="callBackDocument"/>
     </van-tabs>
     <!--审核流程弹出层-->
     <template @click="openAuditFlow">
@@ -41,12 +39,10 @@
 <script>
 import { provide, ref, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
-import { base, author, paperSubmissionDocument, workflow, workflowLog } from '@/request/api'
+import { base, workflow, workflowLog } from '@/request/api'
 import { fileTypeFormat } from '@/util/formatUtil'
 import EpNoticeBar from '@/components/EpNoticeBar'
 import EpDetailBase from '@/components/EpDetailBase'
-import EpDetailMember from '@/components/EpDetailMember'
-import EpDetailDocument from '@/components/EpDetailDocument'
 import EpWorkFlowPanel from '@/components/EpWorkFlowPanel'
 import EpAuditBar from '@/components/EpAuditBar'
 
@@ -54,8 +50,6 @@ export default {
   components: {
     EpNoticeBar,
     EpDetailBase,
-    EpDetailMember,
-    EpDetailDocument,
     EpWorkFlowPanel,
     EpAuditBar
   },
@@ -105,28 +99,6 @@ export default {
         }
         resObj[k + ''] = currentArray
       }
-    }
-
-    // 成员
-    const getMember = () => {
-      return author()
-    }
-    const callBackMember = (res, resArray) => {
-      const item = res.body.data.item
-      for (let i = 0; i < item.length; i++) {
-        resArray.push({
-          v1: item[i].authorName,
-          v2: item[i].titleIdCode_,
-          v3: item[i].titleId,
-          v4: item[i].bearTypeId,
-          v5: item[i].sexId
-        })
-      }
-    }
-
-    // 文档
-    const getDocument = () => {
-      return paperSubmissionDocument()
     }
 
     const callBackDocument = (res, resArray) => {
@@ -187,9 +159,6 @@ export default {
       checkStatus,
       getBase,
       callBackBase,
-      getMember,
-      callBackMember,
-      getDocument,
       callBackDocument,
       getWorkFlow,
       callBackWorkFlow,

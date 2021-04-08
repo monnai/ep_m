@@ -55,15 +55,18 @@ export default {
       // todo 提醒模块
     }
     return {
-      // onClickLeft,
       onClickRight
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .index-main-wrap {
   background: #F5F5F5;
+}
+::v-deep(.van-swipe.my-swipe) {
+  min-height: 200px;
+  background: white;
 }
 </style>

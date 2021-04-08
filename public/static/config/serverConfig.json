@@ -85,8 +85,8 @@
       "name": "standard",
       "title": "标准",
       "icon": "static/image/index/icon_standard.png",
-      "router": ["/patent","/patentDetail"],
-      "apiPrefix": "patent"
+      "router": ["/standard","/standardDetail"],
+      "apiPrefix": "standard"
     },
     {
       "name": "medicine",

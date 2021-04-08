@@ -7,7 +7,7 @@
 <script>
 export default {
   props: {
-    total: String
+    total: Number
   },
   setup () {
   }
@@ -16,10 +16,10 @@ export default {
 
 <style scoped>
 .total {
-  font-size: 11px;
-  color: #999999;
+  font-size: 12px;
+  color: #adadad;
   text-align: left;
-  margin-left: 12px;
-  background: white;
+  background: #f7f7f7;
+  padding: 0 0 6px 12px;
 }
 </style>

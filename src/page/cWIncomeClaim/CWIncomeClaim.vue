@@ -44,7 +44,7 @@
     <!--认领信息-->
     <van-cell-group title="认领信息">
       <!--可认领限制-->
-      <van-field label="认领金额" placeholder="输入认领金额（万元）" type="number" v-model="submitState.claimFee" required />
+      <van-field label="认领金额" placeholder="输入认领金额（万元）" type="number" v-model="submitState.claimFee" required/>
       <!--来款类型-->
       <van-field label="来款类型">
         <template #input>
@@ -148,7 +148,7 @@ import { useRouter } from 'vue-router'
 import { income, fundClaimFormSubmit, incomeProject } from '@/request/api'
 import { Toast } from 'vant'
 
-let incomeId = ''
+let cwIncomeId = ''
 let projectId = ''
 export default {
   setup () {
@@ -233,7 +233,7 @@ function incomeSelector () {
   // 选择入账信息
   const doIncomeChoose = (item) => {
     incomeState.choose = item
-    incomeId = item.id
+    cwIncomeId = item.id
     incomeState.show = !incomeState.show
   }
   return {
@@ -266,7 +266,7 @@ function projectSelector () {
     }
   })
   const openProjectSelector = () => {
-    if (!incomeId) {
+    if (!cwIncomeId) {
       Toast('请先选择入账')
       return false
     }
@@ -274,7 +274,7 @@ function projectSelector () {
   }
   // 请求经费项目查询接口
   const loadProject = () => {
-    incomeProject(incomeId, projectState.searchKey).then(res => {
+    incomeProject(cwIncomeId, projectState.searchKey).then(res => {
       projectState.list = []
       const resData = res.body.data
       for (let i = 0; i < resData.length; i++) {
@@ -323,7 +323,7 @@ function fundClaimForm () {
   })
   // 经费认领表单提交
   const doSubmit = () => {
-    if (!incomeId) {
+    if (!cwIncomeId) {
       Toast('请选择来款信息')
       return false
     } else if (!projectId) {
@@ -335,12 +335,16 @@ function fundClaimForm () {
     }
     fundClaimFormSubmit(Object.assign(submitState, {
       projectId: projectId,
-      incomeId: incomeId
+      cwIncomeId: cwIncomeId
     })).then(res => {
-      Toast({
-        message: '提交成功',
-        icon: 'checked'
-      })
+      if (res.body.code === '200') {
+        Toast({
+          message: '提交成功',
+          icon: 'checked'
+        })
+      } else {
+        Toast(res.body.message)
+      }
     })
   }
   return {

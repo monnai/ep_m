@@ -44,7 +44,7 @@ axios.interceptors.response.use(
       if (response.data.body.code === mobileResultCode.INVALID_LOGIN_INFORMATION) {
         sessionStorage.clear()
         Toast({
-          message: response.data.body.data.message,
+          message: response.data.body.message,
           duration: 1500,
           forbidClick: true
         })
