@@ -29,7 +29,7 @@
     <index-todo-list/>
     <van-tabbar route>
       <van-tabbar-item icon="wap-home-o" to="/index">首页</van-tabbar-item>
-      <van-tabbar-item icon="contact" to="/mine">我的</van-tabbar-item>
+      <van-tabbar-item icon="contact" @click="toMine">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -41,7 +41,7 @@ import IndexModelSwiper from '@/page/index/IndexModelSwiper'
 import EpDivider from '@/components/EpDivider'
 import IndexTodoList from '@/page/index/IndexTodoList'
 import IndexTodoTitle from '@/page/index/IndexTodoTitle'
-
+import { useRouter } from 'vue-router'
 export default {
   components: {
     IndexModelSwiper,
@@ -54,7 +54,12 @@ export default {
     //   Toast('开发中')
     //   // todo 提醒模块
     // }
+    const router = useRouter()
+    const toMine = () => {
+      router.push('/mine')
+    }
     return {
+      toMine
       // onClickRight
     }
   }

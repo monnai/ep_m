@@ -45,13 +45,14 @@
 </template>
 
 <script>
-import { reactive, onMounted } from 'vue'
-import * as echarts from 'echarts'
+import { reactive, onMounted, inject } from 'vue'
+// import * as echarts from 'echarts'
 import { getPersonDetail } from '@/request/api'
 import { Toast, Dialog } from 'vant'
 import { useRouter } from 'vue-router'
 export default {
   setup () {
+    const echarts = inject('echarts')
     const state = reactive({
       personName: '',
       unitName: '',
@@ -74,8 +75,6 @@ export default {
       // 请求用户信息接口，并进行数据处理
       getPersonDetail().then(res => {
         const resultData = res.body.data.item.resultData
-        console.log(resultData)
-        debugger
         state.personName = resultData.personName
         state.unitName = resultData.unitName
         state.incomeFeeSum = resultData.incomeFeeSum
@@ -101,9 +100,11 @@ export default {
         renderProjectCharts()
       })
       const renderProductCharts = () => {
+        document.getElementById('product').setAttribute('_echarts_instance_', '')
         ecInit(document.getElementById('product'), 'product')
       }
       const renderProjectCharts = () => {
+        document.getElementById('project').setAttribute('_echarts_instance_', '')
         ecInit(document.getElementById('project'), 'project')
       }
       const ecInit = (dom, modelId) => {

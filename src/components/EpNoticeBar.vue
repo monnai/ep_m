@@ -55,11 +55,11 @@ export default {
     const computeIconColor = computed(() => {
       switch (props.checkStatus) {
         case '审核通过':
-          return '#1DC791FF'
+          return '#1dc791'
         case '审核不通过':
-          return '#EE3845FF'
+          return '#ee3845'
         case '审核中':
-          return '#FFB016FF'
+          return '#ffc24b'
         case '已作废':
           return '#999999'
         default :
@@ -88,7 +88,7 @@ svg.svg-icon {
 }
 
 ::v-deep(.check_not_pass > .van-cell__title) {
-  color: #EE3845FF !important;
+  color: #ee3845 !important;
 }
 
 .check_pass {
@@ -97,7 +97,7 @@ svg.svg-icon {
 }
 
 ::v-deep(.check_pass > .van-cell__title) {
-  color: #1DC791FF;
+  color: #1dc791;
 }
 
 .check_waiting {
@@ -106,7 +106,7 @@ svg.svg-icon {
 }
 
 ::v-deep(.check_waiting > .van-cell__title) {
-  color: #FFB016FF;
+  color: #ffc24b;
 }
 
 .check_ban {
@@ -124,7 +124,7 @@ svg.svg-icon {
 }
 
 ::v-deep(.check_auditing > .van-cell__title) {
-  color: #FFB016FF;
+  color: #ffc24b;
 }
 
 /*.van-cell.van-cell--center.van-cell--clickable.xx > .van-cell__title {*/

@@ -1,15 +1,15 @@
 <template>
   <van-tabbar active-color="#000" inactive-color="#000" v-if="show">
     <van-tabbar-item>
-      <van-button icon="clear" type="primary" color="#CCCCCCFF" block @click="handleAudit('tovoid')">
+      <van-button icon="clear" type="primary" color="#cccccc" block @click="handleAudit('tovoid')">
         作废
       </van-button>
     </van-tabbar-item>
     <van-tabbar-item>
-      <van-button icon="clear" type="primary" color="#EE3845FF" block @click="handleAudit('refuse')">不通过</van-button>
+      <van-button icon="clear" type="primary" color="#ee3845" block @click="handleAudit('refuse')">不通过</van-button>
     </van-tabbar-item>
     <van-tabbar-item>
-      <van-button icon="checked" type="primary" color="#2494F2FF" block @click="handleAudit('pass')">通过</van-button>
+      <van-button icon="checked" type="primary" color="#2494f2" block @click="handleAudit('pass')">通过</van-button>
     </van-tabbar-item>
   </van-tabbar>
   <van-popup v-model:show="auditContentPanelShow" position="bottom" :style="{ height: '20%' }">

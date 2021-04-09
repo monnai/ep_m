@@ -149,11 +149,15 @@ export default {
     const computeExtraColor = (checkStatus) => {
       switch (checkStatus) {
         case '科研处通过':
-          return '#1DC791FF'
+          return '#1dc791'
+        case '科室通过':
+          return '#1dc791'
+        case '科研处退回':
+          return '#ee3845'
         case '科室退回':
-          return '#EE3845FF'
+          return '#ee3845'
         case '已提交':
-          return '#FFB016FF'
+          return '#ffc24b'
         case '已作废':
           return '#999999'
         default :
