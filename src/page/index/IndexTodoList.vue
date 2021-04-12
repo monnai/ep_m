@@ -2,10 +2,13 @@
 <template>
   <div class="ep_todo_list_wrap">
     <van-pull-refresh v-model="state.refreshing" @refresh="onRefresh">
+      <template v-if="state.finished && state.list.length === 0">
+        <van-empty description="无代办内容"></van-empty>
+      </template>
       <van-list
         v-model:loading="state.loading"
         :finished="state.finished"
-        finished-text="没有更多了"
+        finished-text=""
         @load="onLoad">
         <div style="background: #F5F5F5;">
           <van-cell-group v-for="(item) in state.list" :key="item">
@@ -166,6 +169,7 @@ export default {
 
 .ep_todo_list_wrap{
   min-height: 357px;
-  background: whitesmoke;
+  background: white;
+  margin-bottom: 42px;
 }
 </style>

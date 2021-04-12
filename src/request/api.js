@@ -110,7 +110,7 @@ export const workflow = () => {
     console.error('itemId格式不正确')
     return
   }
-  return get(sessionStorage.getItem('apiPrefix') + '/getWrokFlow.json',
+  return get(sessionStorage.getItem('apiPrefix') + '/getWorkFlow.json',
     { dataId: itemId })
 }
 

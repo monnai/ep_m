@@ -58,7 +58,7 @@
       <!--是否外拨-->
       <van-field label="是否外拨">
         <template #input>
-          <van-switch v-model="submitState.haveOutBoundFee" size="20px" active-value="1" inactive-value="0"/>
+          <van-switch v-model="submitState.haveOutBoundFee" size="20px" active-value="1" inactive-value="0"/>{{submitState.haveOutBoundFee === '1'? '是': '否'}}
         </template>
       </van-field>
       <van-field label="经办人" placeholder="输入经办人" v-model="submitState.transactor"/>

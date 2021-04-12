@@ -64,6 +64,13 @@ export default {
     const roleSelect = ref([])
     const router = useRouter()
     const doLogin = function () {
+      if (!username.value) {
+        Toast('请输入用户名')
+        return false
+      } else if (!password.value) {
+        Toast('请输入密码')
+        return false
+      }
       login({
         account: username.value,
         password: password.value
