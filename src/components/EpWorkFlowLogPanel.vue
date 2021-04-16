@@ -1,41 +1,6 @@
 <template>
   <van-popup teleport="body" v-model:show="state">
     <div class="ep-workflow-log-panel-wrapper">
-      <!--      <van-cell-group v-for="item in dataArray" :key="item.v0">-->
-      <!--        <van-cell>-->
-      <!--          <template #title>-->
-      <!--            <div class="ep-list-wrapper">-->
-      <!--              <div>{{item.v1}}</div>-->
-      <!--              <div>{{item.v2}}</div>-->
-      <!--              <div>{{item.v3}} {{item.v4}}</div>-->
-      <!--            </div>-->
-      <!--          </template>-->
-      <!--        </van-cell>-->
-      <!--      </van-cell-group>-->
-      <!--      <van-cell-group v-for="item in dataArray" :key="item.v0">-->
-      <!--        <van-cell>-->
-      <!--          <template #title>-->
-      <!--            <div class="ep-list-wrapper">-->
-      <!--              <div class="todo_title">{{item.v1}}</div>-->
-      <!--              <div class="todo_content">-->
-      <!--                <div>{{item.v2}}</div>-->
-      <!--                <div-->
-      <!--                  :class="item.v3 === '科研处通过' ? 'ep_pass'-->
-      <!--                    :item.v3 === '审核中'? 'ep_wait'-->
-      <!--                    : item.v3 === '暂存'? 'ep_save'-->
-      <!--                    : 'ep_not_pass'">-->
-      <!--                  {{item.v3}}-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </template>-->
-      <!--          <template #right-icon>-->
-      <!--            <div>-->
-      <!--              <van-tag type="primary">{{item.checkStatus}}</van-tag>-->
-      <!--            </div>-->
-      <!--          </template>-->
-      <!--        </van-cell>-->
-      <!--      </van-cell-group>-->
       <h2>审核记录</h2>
       <template v-if="0===dataArray.length">
         <van-empty description="无审核日志"></van-empty>
@@ -117,6 +82,7 @@ export default {
 
 .van-step__title {
   border: 1px solid #EEEEEEFF;
+  border-radius: 4px;
   padding: 0.21333rem;
   box-shadow: 0 0 20px 1px #eeeeeeff;
 }
@@ -145,5 +111,9 @@ export default {
 
 h2 {
   text-align: center;
+  padding: 19px
+}
+.van-step__title > div {
+  padding: 6px 0 0 0
 }
 </style>

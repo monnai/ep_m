@@ -11,10 +11,6 @@ export const login = loginParams => get('login.json', loginParams)
 // 角色选择
 export const selectRole = p => get('login/switchGroup.json', p)
 
-// export const menu = () => {
-//   return axios.get('./static/config/serverConfig.json')
-// }
-
 // 根据模块类型获取模块列表
 export const getListByModel = (p) => {
   const apiPrefix = getSessionStorage('apiPrefix')
@@ -178,5 +174,3 @@ export const fundClaimFormSubmit = (params) => {
 export const getPersonDetail = () => {
   return get('person/getPersonDetail.json')
 }
-
-// 我的：

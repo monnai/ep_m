@@ -27,7 +27,9 @@
       <ep-detail-base :request="getBase" :callback="callBackBase" ref="epBase"/>
       <ep-detail-member :request="getMember" :callback="callBackMember"/>
       <ep-detail-budget :request="getBudget" :callback="callBackBudget"/>
-      <ep-detail-document :request="getDocument" :callback="callBackDocument"/>
+      <ep-detail-document
+        :request="getDocument"
+        :callback="callBackDocument"/>
     </van-tabs>
     <!--审核流程弹出层-->
     <template @click="openAuditFlow">

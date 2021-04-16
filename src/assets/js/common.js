@@ -35,3 +35,37 @@ export const getInfoByModelId = (modelId) => {
 export const getFileServer = () => {
   return config.fileServer
 }
+
+/**
+ * 判断是否是安卓浏览器
+ */
+const isAndroid = () => {
+  return navigator.userAgent.indexOf('Android') > -1 ||
+    navigator.userAgent.indexOf('Adr') > -1
+}
+
+// 判断是否是微信
+const isWeiXin = () => {
+  return /micromessenger/i.test(window.navigator.userAgent.toLowerCase())
+}
+
+// 判断是否是QQ浏览器
+const isQQ = () => {
+  const userAgent = window.navigator.userAgent.toLowerCase()
+  return (userAgent.indexOf('qq') > -1) && !/micromessenger/i.test(userAgent)
+}
+
+export const upFrame = () => {
+  if (isAndroid() && !isWeiXin() && !isQQ()) {
+    const app = document.getElementById('app')
+    app.style.height = app.offsetHeight + 300 + 'px'
+    window.scrollTo(0, 999999)
+  }
+}
+
+export const rollBackFrame = () => {
+  if (isAndroid() && !isWeiXin() && !isQQ()) {
+    const app = document.getElementById('app')
+    app.style.height = app.offsetHeight - 300 + 'px'
+  }
+}

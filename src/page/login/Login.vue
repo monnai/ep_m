@@ -1,6 +1,6 @@
 <!--用户登录页面-->
 <template>
-  <div class="login-wrap _th_cover-all-show-time">
+  <div class="login-wrap">
     <!--公司图标-->
     <div class="login-slogan-wrap">
       <div class="login-slogan"></div>
@@ -13,6 +13,8 @@
           v-model="username"
           placeholder="请输入用户名"
           clearable
+          @focusin="upFrame"
+          @focusout="rollBackFrame"
           :rules="[{ required: true, message: '请填写用户名' }]">
           <template #left-icon>
             <div class="icon_wrap">
@@ -26,6 +28,8 @@
           type="password"
           placeholder="请输入密码"
           clearable
+          @focusin="upFrame"
+          @focusout="rollBackFrame"
           :rules="[{ required: true, message: '请填写密码' }]">
           <template #left-icon>
             <div class="icon_wrap">
@@ -35,7 +39,7 @@
         </van-field>
         <!--登录按钮-->
         <div class="login-btn-wrap">
-          <van-button type="primary" block @click="doLogin">登录</van-button>
+          <van-button type="primary" block @mousedown="doLogin">登录</van-button>
         </div>
       </van-form>
       <login-role-select ref="roleSelect"/>
@@ -50,11 +54,9 @@ import { login } from '@/request/api'
 import LoginRoleSelect from '@/page/login/LoginRoleSelect'
 import { Toast } from 'vant'
 import { setSessionStorage } from '@/util/storageUtil'
-import { mobileResultCode } from '@/assets/js/common'
-
+import { upFrame, rollBackFrame, mobileResultCode } from '@/assets/js/common'
 export default {
   components: { LoginRoleSelect },
-
   setup () {
     // 用户名
     const username = ref()
@@ -101,18 +103,22 @@ export default {
       username,
       password,
       doLogin,
-      roleSelect
+      roleSelect,
+      upFrame,
+      rollBackFrame
     }
   }
 }
 </script>
 
 <style scoped>
-.login-wrap {
-  background-image: url("../../image/login/background_login.png");
-  background-size: cover;
+.login-wrap{
+  background-image:  url("../../image/login/background_login.png");
+  background-size: inherit;
   background-position: center;
   background-repeat: no-repeat;
+  width: 100%;
+  height: 667px;
 }
 
 .login-slogan-wrap {
@@ -130,7 +136,7 @@ export default {
 .login-form {
   width: 315px;
   height: auto;
-  margin: 87px auto 0;
+  margin: 87px auto 75px;
   background: #ffffff;
   border-radius: 14px;
   box-shadow: 11px 12px 0 0 #77baf5;
@@ -204,5 +210,9 @@ export default {
   font-size: 30px;
   color: #4f4f4f;
   background-color: rgba(0,0,0,0.1);
+}
+
+body{
+  background: #2494f2;
 }
 </style>

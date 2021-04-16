@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import('page/login/Login')
     },
     {
+      path: '/test',
+      name: 'test',
+      component: () => import('page/login/LoginTest')
+    },
+    {
       path: '/index',
       name: 'index',
       component: () => import('page/index/Index')
@@ -229,6 +234,11 @@ const router = createRouter({
       component: () => import('page/paperSubmission/PaperSubmissionDetail')
     },
     // 经费认领
+    // {
+    //   path: '/cWIncomeClaim',
+    //   name: 'cWIncomeClaim',
+    //   component: () => import('page/cWIncomeClaim/CWIncomeClaim')
+    // },
     {
       path: '/cWIncomeClaim',
       name: 'cWIncomeClaim',
