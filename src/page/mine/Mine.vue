@@ -7,9 +7,7 @@
       </template>
       <!--右侧图标-->
       <template #right>
-                  <van-badge>
-                    <van-icon :name="require('../../../public/static/image/mine/mine_log_out.png')" size="18" @click="logout"/>
-                  </van-badge>
+                    <van-icon :name="require('../../../public/static/image/mine/mine_logout_full.svg')" size=".5rem" @click="logout"/>
       </template>
       </van-nav-bar>
     </van-sticky>
@@ -19,8 +17,7 @@
         <div>
           <div class="user-photo"></div>
           <div class="user-info-content">
-            <span>{{state.personName}}<van-badge :content="state.unitName"/> </span>
-            <!--            <span>bbbb</span>-->
+            <span>{{state.personName}} </span><span><van-badge :content="state.unitName"/></span>
           </div>
         </div>
         <div class="fee">
@@ -238,7 +235,7 @@ export default {
   background-position: center;
   border-radius: 50%;
   background-repeat: no-repeat;
-  box-shadow: 0px 13px 1rem 6px rgb(127 98 98 / 30%);
+  box-shadow: 0 13px 1rem 6px rgb(229 231 231);
 }
 
 .fee {
@@ -263,7 +260,7 @@ export default {
 }
 
 .user-info-content > span {
-  display: block;
+  vertical-align: middle;
 }
 
 .fee > span {

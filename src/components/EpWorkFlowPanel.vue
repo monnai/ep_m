@@ -1,5 +1,7 @@
 <template>
-  <van-popup teleport="body" v-model:show="state">
+  <van-popup teleport="body"
+             closeable
+             v-model:show="state">
     <div class="ep-workflow-panel-wrapper">
       <div class="ep-workflow-panel-title" :class="checkStatus === '审核不通过'? 'notpass': 'pass'">
         <div class="ep-audit-logo">

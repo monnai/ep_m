@@ -165,7 +165,7 @@ export default {
           v1: resArray[i].checkStatus,
           v2: '审核人:' + resArray[i].checker,
           v3: resArray[i].checkDate,
-          v4: resArray[i].checkInfo ? '审核意见：' + resArray[i].checkInfo : '无'
+          v4: resArray[i].checkInfo
         })
       }
     }

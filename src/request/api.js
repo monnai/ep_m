@@ -14,19 +14,12 @@ export const selectRole = p => get('login/switchGroup.json', p)
 // 根据模块类型获取模块列表
 export const getListByModel = (p) => {
   const apiPrefix = getSessionStorage('apiPrefix')
-  if (!apiPrefix) {
-    console.error('modelId不可为空')
-  }
   return get(apiPrefix + '/list.json', p)
 }
 
 // 详情页 基础信息
 export const base = () => {
   const itemId = sessionStorage.getItem('itemId')
-  if (!itemId) {
-    console.error('itemId 格式不正确')
-    return
-  }
   return get(sessionStorage.getItem('apiPrefix') + '/' + itemId + '/get.json',
     {})
 }
@@ -35,20 +28,12 @@ export const base = () => {
 
 export const member = () => {
   const itemId = sessionStorage.getItem('itemId')
-  if (!itemId) {
-    console.error('itemId 格式不正确')
-    return
-  }
   return get(sessionStorage.getItem('apiPrefix') + '-member/list.json',
     { projectId: itemId })
 }
 
 export const author = () => {
   const itemId = sessionStorage.getItem('itemId')
-  if (!itemId) {
-    console.error('itemId 格式不正确')
-    return
-  }
   return get(sessionStorage.getItem('apiPrefix') + '-author/list.json',
     { projectId: itemId })
 }
@@ -57,10 +42,6 @@ export const author = () => {
 
 export const budget = () => {
   const itemId = sessionStorage.getItem('itemId')
-  if (!itemId) {
-    console.error('itemId格式不正确')
-    return
-  }
   return get(sessionStorage.getItem('apiPrefix') + '/getBudget.json',
     { projectId: itemId })
 }
@@ -69,10 +50,6 @@ export const budget = () => {
 
 export const document = () => {
   const itemId = sessionStorage.getItem('itemId')
-  if (!itemId) {
-    console.error('itemId格式不正确')
-    return
-  }
   const url = sessionStorage.getItem('apiPrefix') + '-document/list.json'
   return get(url, { projectId: itemId })
 }
@@ -80,20 +57,12 @@ export const document = () => {
 // 详情页-用印 文档
 export const inchapterDocument = () => {
   const itemId = sessionStorage.getItem('itemId')
-  if (!itemId) {
-    console.error('itemId格式不正确')
-    return
-  }
   const url = 'inchapter-detail/list.json'
   return get(url, { projectId: itemId })
 }
 // 详情页-论文投稿 文档
 export const paperSubmissionDocument = () => {
   const itemId = sessionStorage.getItem('itemId')
-  if (!itemId) {
-    console.error('itemId格式不正确')
-    return
-  }
   const url = sessionStorage.getItem('apiPrefix') + '-document/list.json'
   return get(url, { productId: itemId })
 }
@@ -102,10 +71,6 @@ export const paperSubmissionDocument = () => {
 
 export const workflow = () => {
   const itemId = sessionStorage.getItem('itemId')
-  if (!itemId) {
-    console.error('itemId格式不正确')
-    return
-  }
   return get(sessionStorage.getItem('apiPrefix') + '/getWorkFlow.json',
     { dataId: itemId })
 }
@@ -114,10 +79,6 @@ export const workflow = () => {
 
 export const workflowLog = () => {
   const itemId = sessionStorage.getItem('itemId')
-  if (!itemId) {
-    console.error('itemId格式不正确')
-    return
-  }
   return get(sessionStorage.getItem('apiPrefix') + '/getCheckLogs.json',
     { dataId: itemId })
 }

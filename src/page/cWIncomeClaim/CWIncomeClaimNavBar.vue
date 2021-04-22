@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, inject } from 'vue'
 import EpSvgIcon from '@/components/EpSvgIcon'
 export default {
   components: {
@@ -39,6 +39,12 @@ export default {
       active: 0,
       title: sessionStorage.getItem('modelName')
     })
+    const test = inject('test')
+    setInterval(() => {
+      // console.log(test)
+      test.value = Math.random()
+      console.log('child' + test.value)
+    }, 3000)
     return {
       state
     }

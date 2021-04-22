@@ -8,7 +8,8 @@
         <template v-for="item in dataArray" :key="item.name">
           <div class="van-cell">
             <div>
-              <ep-svg-icon :iconName="item.v5 === '女'? 'sex_woman' :'sex_man_professor'" icon-color="#2494f2"/>
+<!--              <ep-svg-icon :iconName="item.v5 === '女'? 'sex_woman' :'sex_man_professor'" icon-color="#2494f2"/>-->
+              <ep-svg-icon iconName="member_message" icon-color="#2494f2"/>
             </div>
             <div>
               <div class="member-title">{{item.v1}} ({{item.v2}})</div>
@@ -104,4 +105,12 @@ svg.svg-icon {
   text-align: left;
 }
 
+::v-deep(.van-tab__pane, .van-tab__pane-wrapper){
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+::v-deep(.van-tab__pane, .van-tab__pane-wrapper) {
+  padding-bottom: 44px;
+}
 </style>

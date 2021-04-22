@@ -119,6 +119,7 @@ export default {
 .todo_title {
   color: #333333;
   font-size: 14px;
+  line-height: 31px;
   font-weight: bold;
   text-align: left;
   border-bottom: 1px solid #F3F3F3;
@@ -171,5 +172,12 @@ export default {
   min-height: 357px;
   background: white;
   margin-bottom: 42px;
+}
+
+::v-deep(.van-cell) {
+  width: 100%;
+  padding: 0 12px 0 12px;
+}
+.todo_content {
 }
 </style>

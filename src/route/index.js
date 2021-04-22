@@ -234,11 +234,6 @@ const router = createRouter({
       component: () => import('page/paperSubmission/PaperSubmissionDetail')
     },
     // 经费认领
-    // {
-    //   path: '/cWIncomeClaim',
-    //   name: 'cWIncomeClaim',
-    //   component: () => import('page/cWIncomeClaim/CWIncomeClaim')
-    // },
     {
       path: '/cWIncomeClaim',
       name: 'cWIncomeClaim',

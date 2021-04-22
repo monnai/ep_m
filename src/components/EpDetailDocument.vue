@@ -28,7 +28,6 @@ import { ref } from 'vue'
 import EpSvgIcon from '@/components/EpSvgIcon'
 import EpPopOver from '@/components/EpPopOver'
 import { getFileServer } from '@/assets/js/common'
-// import { getSessionStorage } from '@/util/storageUtil'
 
 export default {
   components: {
@@ -107,5 +106,11 @@ export default {
 svg.svg-icon.icon {
   width: 80px;
   height: 55px;
+}
+::v-deep(.van-tab__pane, .van-tab__pane-wrapper) {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 55px;
 }
 </style>

@@ -34,9 +34,13 @@ export function dateFormat (value, format) {
 }
 
 /**
+ * 允许上传的附件格式，用于svg图标展示判断
+ */
+const fileInclude = ['bmp', 'docx', 'xls', 'png', 'gif', 'jpeg', 'jpg', 'pdf', 'ppt', 'pptx', 'psd', 'rar', 'swf', 'txt', 'wmv', 'word', 'xlsx', 'zip']
+/**
  * for vue: 根据文件全名称获取文件扩展名
  */
 export function fileTypeFormat (fileName) {
-  const fileType = fileName.split('.')
-  return fileType.pop()
+  const fileSuffix = fileName.split('.').pop()
+  return fileInclude.indexOf(fileSuffix) !== -1 ? fileSuffix : 'file_default'
 }
