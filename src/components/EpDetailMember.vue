@@ -13,7 +13,7 @@
             </div>
             <div>
               <div class="member-title">{{item.v1}} ({{item.v2}})</div>
-              <div class="member-content">{{item.v3}} {{item.v4}}</div>
+              <div class="member-content">{{item.v3}} {{item.v4}} {{item.v5}}</div>
             </div>
           </div>
         </template>

@@ -35,7 +35,7 @@ export const member = () => {
 export const author = () => {
   const itemId = sessionStorage.getItem('itemId')
   return get(sessionStorage.getItem('apiPrefix') + '-author/list.json',
-    { projectId: itemId })
+    { productId: itemId })
 }
 
 // 详情页 预算信息

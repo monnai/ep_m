@@ -26,8 +26,6 @@
     <van-tabs sticky animated swipeable :offset-top="offsetTop">
       <ep-detail-base :request="getBase" :callback="callBackBase" ref="epBase"/>
       <ep-detail-member :request="getMember" :callback="callBackMember"/>
-      <ep-detail-budget :request="getBudget" :callback="callBackBudget"/>
-      <ep-detail-document :request="getDocument" :callback="callBackDocument"/>
     </van-tabs>
     <!--审核流程弹出层-->
     <template @click="openAuditFlow">
@@ -42,13 +40,10 @@
 <script>
 import { provide, ref, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
-import { base, member, budget, document, workflow, workflowLog } from '@/request/api'
-import { fileTypeFormat } from '@/util/formatUtil'
+import { base, author, workflow, workflowLog } from '@/request/api'
 import EpNoticeBar from '@/components/EpNoticeBar'
 import EpDetailBase from '@/components/EpDetailBase'
 import EpDetailMember from '@/components/EpDetailMember'
-import EpDetailBudget from '@/components/EpDetailBudget'
-import EpDetailDocument from '@/components/EpDetailDocument'
 import EpWorkFlowPanel from '@/components/EpWorkFlowPanel'
 import EpAuditBar from '@/components/EpAuditBar'
 
@@ -57,8 +52,6 @@ export default {
     EpNoticeBar,
     EpDetailBase,
     EpDetailMember,
-    EpDetailBudget,
-    EpDetailDocument,
     EpWorkFlowPanel,
     EpAuditBar
   },
@@ -112,48 +105,17 @@ export default {
 
     // 成员
     const getMember = () => {
-      return member()
+      return author()
     }
     const callBackMember = (res, resArray) => {
       const item = res.body.data.item
       for (let i = 0; i < item.length; i++) {
         resArray.push({
-          v1: item[i].personName,
-          v2: item[i].personCode,
-          v3: item[i].titleId,
-          v4: item[i].bearTypeId,
-          v5: item[i].sexId
-        })
-      }
-    }
-
-    // 预算
-    const getBudget = () => {
-      return budget()
-    }
-    const callBackBudget = (res, resArray) => {
-      const item = res.body.data.item
-      for (let i = 0; i < item.length; i++) {
-        resArray.push({
-          v1: item[i].subjectName,
-          v2: item[i].totalFee
-        })
-      }
-    }
-
-    // 文档
-    const getDocument = () => {
-      return document()
-    }
-
-    const callBackDocument = (res, resArray) => {
-      const item = res.body.data.item
-      for (let i = 0; i < item.length; i++) {
-        resArray.push({
-          v0: item[i].fileId,
-          v1: item[i].fileName,
-          v2: item[i].lastEditDate,
-          v3: fileTypeFormat(item[i].fileName)
+          v1: item[i].authorName,
+          v2: item[i].authorAccount,
+          v3: item[i].eduDegreeId,
+          v4: item[i].authorType,
+          v5: item[i].authorUnitId
         })
       }
     }
@@ -206,10 +168,6 @@ export default {
       callBackBase,
       getMember,
       callBackMember,
-      getBudget,
-      callBackBudget,
-      getDocument,
-      callBackDocument,
       getWorkFlow,
       callBackWorkFlow,
       getWorkFlowLog,
