@@ -87,8 +87,8 @@ export default {
             return false
           }
           setSessionStorage('session_key', result.body.data.item.key)
-          // Toast({ message: result.body.message })
           if (result.body.code !== mobileResultCode.NEED_ROLE_SELECT) {
+            setSessionStorage('session_model_authority', result.body.data.item.joinCheckModules)
             router.push('index')
             return
           }
