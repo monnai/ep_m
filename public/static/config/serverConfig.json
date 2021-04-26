@@ -2,7 +2,7 @@
   "devServer": "/api",
   "debugServer": "localhost:8081",
   "prodServer": "http://epmobile.ngrok2.xiaomiqiu.cn/RDSYSEDUV8-8.5.0/mobileTerminal",
-  "fileServer": "http://172.16.1.151:8085/RDSYSEDUV8-8.5.0/servFileDownLoad",
+  "fileServer": "http://172.16.1.149:8085/RDSYSEDUV8-8.5.0/servFileDownLoad",
   "menu": [
     {
       "name": "zXProject",

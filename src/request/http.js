@@ -9,16 +9,19 @@ if (process.env.NODE_ENV === 'development') {
   axios.get('./static/config/serverConfig.json').then(res => {
     axios.defaults.baseURL = res.data.devServer
     sessionStorage.setItem('menu', JSON.stringify(res.data.menu))
+    sessionStorage.setItem('fileServer', res.data.fileServer)
   })
 } else if (process.env.NODE_ENV === 'debug') {
   axios.get('./static/config/serverConfig.json').then(res => {
     axios.defaults.baseURL = res.data.debugServer
     sessionStorage.setItem('menu', JSON.stringify(res.data.menu))
+    sessionStorage.setItem('fileServer', res.data.fileServer)
   })
 } else if (process.env.NODE_ENV === 'production') {
   axios.get('./static/config/serverConfig.json').then(res => {
     axios.defaults.baseURL = res.data.prodServer
     sessionStorage.setItem('menu', JSON.stringify(res.data.menu))
+    sessionStorage.setItem('fileServer', res.data.fileServer)
   })
 }
 

@@ -27,7 +27,6 @@
 import { ref } from 'vue'
 import EpSvgIcon from '@/components/EpSvgIcon'
 import EpPopOver from '@/components/EpPopOver'
-import { getFileServer } from '@/assets/js/common'
 
 export default {
   components: {
@@ -65,12 +64,14 @@ export default {
       // }
     ]
     const doDownLoad = (id) => {
-      var a = document.createElement('a')
-      a.id = 'test'
-      a.href = getFileServer() + '?fId=' + id + '&token-key=' + sessionStorage.getItem('session_key')
-      document.getElementsByTagName('body')[0].append(a) // 修复firefox中无法触发click
+      const a = document.createElement('a')
+      a.id = 'download'
+      a.href = sessionStorage.getItem('fileServer') + '?fId=' + id +
+        '&token-key=' + sessionStorage.getItem('session_key')
+      // 修复firefox中无法触发click
+      document.getElementsByTagName('body')[0].append(a)
       a.click()
-      document.getElementById('test').remove()
+      document.getElementById('download').remove()
     }
     const doShare = () => {
 

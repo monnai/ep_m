@@ -15,14 +15,23 @@
       <!--用户基础信息-->
       <div class="user-info">
         <div>
-          <div class="user-photo"></div>
+          <van-image
+            round
+            class="user-photo"
+            :src="state.photoPath"
+          >
+            <template v-slot:loading>
+              <van-loading type="spinner" size="20" />
+            </template>
+          </van-image>
           <div class="user-info-content">
             <span>{{state.personName}} </span><span><van-badge :content="state.unitName"/></span>
+            <span>{{state.title}}</span>
           </div>
         </div>
         <div class="fee">
           <span>{{state.incomeFeeSum}}</span>
-          <span>科研到款（元）</span>
+          <span>科研到款（万元）</span>
         </div>
       </div>
       <div class="charts-info">
@@ -43,7 +52,7 @@
 
 <script>
 import { reactive, onMounted, inject } from 'vue'
-// import * as echarts from 'echarts'
+import '@/assets/js/echarts_style'
 import { getPersonDetail } from '@/request/api'
 import { Toast, Dialog } from 'vant'
 import { useRouter } from 'vue-router'
@@ -75,7 +84,8 @@ export default {
         state.personName = resultData.personName
         state.unitName = resultData.unitName
         state.incomeFeeSum = resultData.incomeFeeSum
-        state.photePath = resultData.photePath
+        state.photoPath = resultData.photoPath
+        state.title = resultData.title
         // 科研成果
         state.product.names = resultData.productBeans
         state.product.object = resultData.productCount
@@ -126,11 +136,13 @@ export default {
           },
           tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+            formatter: '{a} <br/>{b}: {c} ({d}%)',
+            extraCssText: 'background: white'
           },
           legend: {
+            type: 'scroll',
             orient: 'vertical',
-            left: 20,
+            left: 40,
             top: 60,
             data: chartsData.names
           },
@@ -139,6 +151,8 @@ export default {
               name: chartsData.title,
               type: 'pie',
               radius: ['50%', '70%'],
+              left: 60,
+              top: 25,
               avoidLabelOverlap: false,
               label: {
                 show: false,
@@ -231,11 +245,12 @@ export default {
   position: absolute;
   left: 24px;
   top: 28px;
-  background-image: url("../../../public/static/image/mine/mine_member.png");
+  /*background-image: url("../../../public/static/image/mine/mine_member.png");*/
   background-position: center;
   border-radius: 50%;
   background-repeat: no-repeat;
-  box-shadow: 0 13px 1rem 6px rgb(229 231 231);
+  /*box-shadow: 0 13px 1rem 6px rgb(229 231 231);*/
+  box-shadow: 0 0 0 4px rgb(228 228 228);
 }
 
 .fee {
@@ -302,5 +317,11 @@ export default {
 
 .charts-info {
   margin-bottom: 51px;
+}
+.user-info-content > span:nth-child(3) {
+  color: #b3b5b5;
+  display: block;
+  font-size: 13px;
+  margin-right: 12px;
 }
 </style>
