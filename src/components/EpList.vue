@@ -152,6 +152,10 @@ export default {
           return '#1dc791'
         case '科室通过':
           return '#1dc791'
+        case '学校通过':
+          return '#1dc791'
+        case '学院通过':
+          return '#1dc791'
         case '科研处退回':
           return '#ee3845'
         case '科室退回':

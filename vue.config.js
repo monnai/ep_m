@@ -44,7 +44,7 @@ module.exports = {
     proxy: {
       '/api': {
         // target: 'http://172.16.1.145:8083/test/mobileTerminal/',
-        target: 'http://172.16.1.151:8085/RDSYSEDUV8-8.5.0/mobileTerminal/',
+        target: 'http://172.16.1.149:8085/RDSYSEDUV8-8.5.0/mobileTerminal/',
         ws: true,
         changeOrigin: true, // 允许跨域
         pathRewrite: {
