@@ -5,10 +5,10 @@ const history = createWebHashHistory()
 const router = createRouter({
   history,
   routes: [
-    {
-      path: '/',
-      component: () => import('page/login/Login')
-    },
+    // {
+    //   path: '/',
+    //   component: () => import('page/login/Login')
+    // },
     {
       path: '/login',
       name: 'login',
@@ -254,6 +254,17 @@ const router = createRouter({
       path: '/mine',
       name: 'mine',
       component: () => import('page/mine/Mine')
+    },
+    // 企业微信对接
+    {
+      path: '/wxAuth',
+      name: 'wxAuth',
+      component: () => import('page/workWxAuth/WorkWxAuth')
+    },
+    {
+      path: '/wxBindAccount',
+      name: 'wxBindAccount',
+      component: () => import('page/workWxAuth/BindAccount')
     }
   ]
 })

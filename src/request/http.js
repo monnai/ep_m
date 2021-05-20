@@ -4,27 +4,22 @@ import router from '../route'
 import { Toast } from 'vant'
 import { mobileResultCode } from '@/assets/js/common'
 
-// 环境的切换
-if (process.env.NODE_ENV === 'development') {
-  axios.get('./static/config/serverConfig.json').then(res => {
-    axios.defaults.baseURL = res.data.devServer
-    sessionStorage.setItem('menu', JSON.stringify(res.data.menu))
-    sessionStorage.setItem('fileServer', res.data.fileServer)
-  })
-} else if (process.env.NODE_ENV === 'debug') {
-  axios.get('./static/config/serverConfig.json').then(res => {
-    axios.defaults.baseURL = res.data.debugServer
-    sessionStorage.setItem('menu', JSON.stringify(res.data.menu))
-    sessionStorage.setItem('fileServer', res.data.fileServer)
-  })
-} else if (process.env.NODE_ENV === 'production') {
-  axios.get('./static/config/serverConfig.json').then(res => {
-    axios.defaults.baseURL = res.data.prodServer
-    sessionStorage.setItem('menu', JSON.stringify(res.data.menu))
-    sessionStorage.setItem('fileServer', res.data.fileServer)
-  })
+// 环境参数初始化
+sessionStorage.setItem('menu', JSON.stringify(window.g.menu))
+sessionStorage.setItem('fileServer', window.g.fileServer)
+switch (process.env.NODE_ENV) {
+  case 'development':
+    axios.defaults.baseURL = window.g.devServer
+    break
+  case 'debug':
+    axios.defaults.baseURL = window.g.debugServer
+    break
+  case 'production':
+    axios.defaults.baseURL = window.g.prodServer
+    break
+  default:
+    break
 }
-
 // 默认十秒超时
 axios.defaults.timeout = 10000
 
@@ -52,7 +47,8 @@ axios.interceptors.response.use(
     // 否则的话抛出错误
     if (response.status === 200) {
       // 登录失效，返回登录页面
-      if (response.data.body.code === mobileResultCode.INVALID_LOGIN_INFORMATION) {
+      if (response.data.body.code ===
+        mobileResultCode.INVALID_LOGIN_INFORMATION) {
         sessionStorage.clear()
         Toast({
           message: response.data.body.message,

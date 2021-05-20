@@ -135,3 +135,8 @@ export const fundClaimFormSubmit = (params) => {
 export const getPersonDetail = () => {
   return get('person/getPersonDetail.json')
 }
+
+// 企业微信授权
+export const workWXAuth = (params) => {
+  return get('login/workWechatLogin.json', params)
+}

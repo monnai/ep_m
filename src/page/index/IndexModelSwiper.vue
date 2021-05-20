@@ -29,6 +29,7 @@ export default {
       // 获取配置文件中菜单配置，和缓存中用户权限进行比对，如果有权限，添加进menuData.value中，并且把代办条数赋值到badge属性
       // 作为角标气泡展示
       const authority = sessionStorage.getItem('session_model_authority')
+      debugger
       if (authority) {
         const authorityFilter = authority.split(',')
         todoCount().then(res => {

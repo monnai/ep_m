@@ -5,7 +5,6 @@ import * as config from '../../../public/static/config/serverConfig.json'
  */
 export const mobileResultCode = {
   SUCCESS: '200', // 接口成功调用
-  NEED_ROLE_SELECT: '20012', // 需要选择角色
   MISSING_PARAMETER: '400', // 缺少参数
   LOGIN_NOT: '401', // 没登录
   INVALID_PARAMETER: '402', // 非法的参数
@@ -13,7 +12,10 @@ export const mobileResultCode = {
   INVALID_INTERFACE: '404', // 非法的接口
   INTERNAL_ERROR: '500', // 内部错误
   NO_DATA: '20010', // 未找到数据
-  NO_JURISDICTION: '20011' // 无权限
+  NO_JURISDICTION: '20011', // 无权限
+  NEED_ROLE_SELECT: '20012', // 需要选择角色
+  // 企业微信相关：
+  WX_NEED_BIND_ACCOUNT: '20013' // 需要绑定
 }
 
 // 模块信息（从serverConfig.json中获取）
@@ -68,4 +70,10 @@ export const rollBackFrame = () => {
     const app = document.getElementById('app')
     app.style.height = app.offsetHeight - 300 + 'px'
   }
+}
+
+export const getUrlParam = function (name) {
+  return decodeURIComponent(
+    (new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) ||
+      [undefined, ''])[1].replace(/\+/g, '%20')) || null
 }

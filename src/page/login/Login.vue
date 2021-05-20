@@ -75,7 +75,8 @@ export default {
       }
       login({
         account: username.value,
-        password: password.value
+        password: password.value,
+        wechatUserId: sessionStorage.getItem('wechatUserId')
       }).then(result => {
         if (result.body.code.indexOf(mobileResultCode.SUCCESS) >= 0) {
           if (result.body.code === mobileResultCode.NO_JURISDICTION) {
@@ -94,6 +95,7 @@ export default {
           }
           roleSelect.value.show = true
           roleSelect.value.roleList = result.body.data.item.userGroups
+          sessionStorage.setItem('roleList', JSON.stringify(result.body.data.item.userGroups))
         } else {
           Toast({ message: result.body.message })
         }
