@@ -1,5 +1,3 @@
-import * as config from '../../../public/static/config/serverConfig.json'
-
 /**
  * 接口请求返回参数
  */
@@ -19,7 +17,7 @@ export const mobileResultCode = {
 }
 
 // 模块信息（从serverConfig.json中获取）
-const modelInfoArray = config.menu
+const modelInfoArray = window.g.menu
 
 /**
  * 根据模块id获取模块配置信息
@@ -35,7 +33,7 @@ export const getInfoByModelId = (modelId) => {
  * @returns {string}
  */
 export const getFileServer = () => {
-  return config.fileServer
+  return window.g.fileServer
 }
 
 /**

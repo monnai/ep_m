@@ -12,7 +12,6 @@ import './request/api'
 import '@/assets/css/common.css'
 // 移动端自适应插件
 import 'lib-flexible'
-import '../public/static/config/serverConfig.json'
 const app = createApp(App)
 app.use(Vant).use(router)
 // 让icons/svg下面的图片自动导入
