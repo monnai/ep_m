@@ -55,6 +55,7 @@ import LoginRoleSelect from '@/page/login/LoginRoleSelect'
 import { Toast } from 'vant'
 import { setSessionStorage } from '@/util/storageUtil'
 import { upFrame, rollBackFrame, mobileResultCode } from '@/assets/js/common'
+import md5 from 'js-md5'
 export default {
   components: { LoginRoleSelect },
   setup () {
@@ -75,7 +76,7 @@ export default {
       }
       login({
         account: username.value,
-        password: password.value,
+        password: md5(password.value).toUpperCase(),
         wechatUserId: sessionStorage.getItem('wechatUserId')
       }).then(result => {
         if (result.body.code.indexOf(mobileResultCode.SUCCESS) >= 0) {

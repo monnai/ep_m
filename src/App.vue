@@ -27,6 +27,7 @@ export default {
             sessionStorage.setItem('roleList', JSON.stringify(res.body.data.item.userGroups))
             router.push('index')
           } else if (code === mobileResultCode.WX_NEED_BIND_ACCOUNT) {
+            // 非绑定状态，跳转登录进行账号绑定
             sessionStorage.setItem('wechatUserId', res.body.data.item.wechatUserId)
             router.push('login')
           }
