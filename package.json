@@ -15,6 +15,7 @@
     "dingtalk-jsapi": "^2.13.40",
     "echarts": "^5.0.2",
     "graceful-fs": "^4.1.0",
+    "js-md5": "^0.7.3",
     "lib-flexible": "^0.3.2",
     "mitt": "^1.1.2",
     "qs": "^6.5.2",
@@ -22,7 +23,8 @@
     "vant": "^3.0.9",
     "vue": "^3.0.0",
     "vue-axios": "^3.2.4",
-    "vue-router": "^4.0.0-beta.9"
+    "vue-router": "^4.0.0-beta.9",
+    "weixin-js-sdk": "^1.6.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

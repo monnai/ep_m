@@ -165,7 +165,7 @@ export default {
       const resArray = JSON.parse(res.body.data.item)
       for (let i = 0; i < resArray.length; i++) {
         dataArray.push({
-          name: resArray[i].name,
+          name: resArray[i].role,
           checkStatus: resArray[i].type
         })
       }

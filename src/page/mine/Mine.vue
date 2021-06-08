@@ -2,13 +2,13 @@
   <div>
     <van-sticky>
       <van-nav-bar title="我的">
-      <template #left>
-        <van-icon :name="require('../../../public/static/image/icon_ep.png')" size="18"/>
-      </template>
-      <!--右侧图标-->
-      <template #right>
-                    <van-icon :name="require('../../../public/static/image/mine/mine_logout_full.svg')" size=".5rem" @click="logout"/>
-      </template>
+        <template #left>
+          <van-icon :name="require('../../../public/static/image/icon_ep.png')" size="18"/>
+        </template>
+        <template #right>
+          <van-icon :name="require('../../../public/static/image/mine/mine_setting.png')" size=".5rem"
+                    @click="state.popShow = true"/>
+        </template>
       </van-nav-bar>
     </van-sticky>
     <div class="mine-wrapper">
@@ -21,7 +21,7 @@
             :src="state.photoPath"
           >
             <template v-slot:loading>
-              <van-loading type="spinner" size="20" />
+              <van-loading type="spinner" size="20"/>
             </template>
           </van-image>
           <div class="user-info-content">
@@ -36,13 +36,29 @@
       </div>
       <div class="charts-info">
         <div id="project">
-
         </div>
         <div id="product">
-
         </div>
       </div>
     </div>
+  </div>
+  <div>
+    <van-popup
+      v-model:show="state.popShow"
+      closeable
+      position="right"
+      :style="{ height: '100%', width:'70%' }">
+      <div class="pop-cloud-wrap">
+        <div class="pop-cloud" v-if="state.roleShow">
+          <div class="pop-cloud-title">角色切换</div>
+          <div class="pop-cloud-content">
+            <template v-for="(val, key, i) in state.roleList" :key="i">
+              <van-cell :title="val" is-link @click="doSelectRole(key)"/>
+            </template>
+          </div>
+        </div>
+      </div>
+    </van-popup>
   </div>
   <van-tabbar route>
     <van-tabbar-item icon="wap-home-o" to="/index">首页</van-tabbar-item>
@@ -53,13 +69,18 @@
 <script>
 import { reactive, onMounted, inject } from 'vue'
 import '@/assets/js/echarts_style'
-import { getPersonDetail } from '@/request/api'
+import { getPersonDetail, selectRole } from '@/request/api'
 import { Toast, Dialog } from 'vant'
 import { useRouter } from 'vue-router'
+import { mobileResultCode } from '@/assets/js/common'
+
 export default {
   setup () {
     const echarts = inject('echarts')
     const state = reactive({
+      popShow: false,
+      roleShow: !!sessionStorage.getItem('roleList'),
+      roleList: JSON.parse(sessionStorage.getItem('roleList')),
       personName: '',
       unitName: '',
       incomeFeeSum: '',
@@ -77,6 +98,20 @@ export default {
         title: '科研项目'
       }
     })
+    const doSelectRole = function (roleId) {
+      selectRole({
+        switchGroupId: roleId,
+        refreshToken: sessionStorage.getItem('session_key')
+      }).then(result => {
+        if (result.body.code === mobileResultCode.SUCCESS) {
+          Toast('角色切换成功')
+          sessionStorage.setItem('session_model_authority', result.body.data.item.joinCheckModules)
+          setTimeout(() => {
+            router.push('/index')
+          }, 500)
+        }
+      })
+    }
     onMounted(() => {
       // 请求用户信息接口，并进行数据处理
       getPersonDetail().then(res => {
@@ -185,18 +220,34 @@ export default {
         })
         TrendCharts.setOption(option)
         TrendCharts.dispatchAction(
-          { type: 'highlight', seriesIndex: 0, dataIndex: 0 })
+          {
+            type: 'highlight',
+            seriesIndex: 0,
+            dataIndex: 0
+          })
         TrendCharts.hideLoading()
         TrendCharts.on('mouseover', function (e) {
           TrendCharts.dispatchAction(
-            { type: 'downplay', seriesIndex: 0, dataIndex: 0 })
+            {
+              type: 'downplay',
+              seriesIndex: 0,
+              dataIndex: 0
+            })
           if (e.dataIndex !== index) {
             TrendCharts.dispatchAction(
-              { type: 'downplay', seriesIndex: 0, dataIndex: index })
+              {
+                type: 'downplay',
+                seriesIndex: 0,
+                dataIndex: index
+              })
           }
           if (e.dataIndex === 0) {
             TrendCharts.dispatchAction(
-              { type: 'highlight', seriesIndex: 0, dataIndex: e.dataIndex })
+              {
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: e.dataIndex
+              })
           }
         })
 
@@ -204,7 +255,11 @@ export default {
         TrendCharts.on('mouseout', function (e) {
           index = e.dataIndex
           TrendCharts.dispatchAction(
-            { type: 'highlight', seriesIndex: 0, dataIndex: e.dataIndex })
+            {
+              type: 'highlight',
+              seriesIndex: 0,
+              dataIndex: e.dataIndex
+            })
         })
       }
     })
@@ -216,15 +271,16 @@ export default {
       }).then(() => {
         sessionStorage.setItem('session_model_authority', '')
         sessionStorage.setItem('session_key', '')
+        sessionStorage.setItem('roleList', '')
         Toast('注销成功')
         router.push('/login')
       }).catch(() => {
-        // on cancel
       })
     }
     return {
       state,
-      logout
+      logout,
+      doSelectRole
     }
   }
 }
@@ -245,17 +301,14 @@ export default {
   position: absolute;
   left: 24px;
   top: 28px;
-  /*background-image: url("../../../public/static/image/mine/mine_member.png");*/
   background-position: center;
   border-radius: 50%;
   background-repeat: no-repeat;
-  /*box-shadow: 0 13px 1rem 6px rgb(229 231 231);*/
   box-shadow: 0 0 0 4px rgb(228 228 228);
 }
 
 .fee {
   bottom: 0;
-  /* top: 200px; */
   position: absolute;
   width: 90%;
   margin-left: 5%;
@@ -318,10 +371,48 @@ export default {
 .charts-info {
   margin-bottom: 51px;
 }
+
 .user-info-content > span:nth-child(3) {
   color: #b3b5b5;
   display: block;
   font-size: 13px;
   margin-right: 12px;
+}
+
+/*右侧弹出层*/
+::v-deep(.van-popup) {
+  background-color: #F5F5F5;
+}
+.pop-cloud-wrap{
+  display: block;
+  margin-top: 50px;
+  height: 100%;
+  overflow: scroll;
+}
+.pop-cloud{
+  margin: 12px 12px 12px 12px;
+}
+.pop-cloud-title {
+  height: auto;
+  background: #fff;
+  border-radius: 9px 9px 0 0;
+  line-height: 36px;
+  color: #A1A1A1;
+  font-size: 14px;
+  text-align: left;
+  text-indent: 23px;
+}
+::v-deep(.van-cell__title) {
+  text-align: left;
+}
+
+.pop-cloud-content {
+  max-height: 400px;
+  overflow: scroll;
+}
+
+::v-deep(.van-cell--clickable) {
+  cursor: pointer;
+  text-indent: 8px;
 }
 </style>
