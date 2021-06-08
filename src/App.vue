@@ -5,11 +5,15 @@
 <script>
 import * as echarts from 'echarts'
 import { provide } from 'vue'
+import { doInitConfig } from '@/assets/js/initConfig'
+
 export default {
   name: 'App',
   components: {},
   setup () {
     provide('echarts', echarts)
+    // 初始化环境配置信息
+    doInitConfig()
   }
 }
 </script>

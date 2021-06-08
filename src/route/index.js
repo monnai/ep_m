@@ -2,22 +2,17 @@ import { createWebHashHistory, createRouter } from 'vue-router'
 
 const history = createWebHashHistory()
 
-const router = createRouter({
+export const router = createRouter({
   history,
   routes: [
-    {
-      path: '/',
-      component: () => import('page/login/Login')
-    },
+    // {
+    //   path: '/',
+    //   component: () => import('page/login/Login')
+    // },
     {
       path: '/login',
       name: 'login',
       component: () => import('page/login/Login')
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: () => import('page/login/LoginTest')
     },
     {
       path: '/index',
@@ -254,22 +249,28 @@ const router = createRouter({
       path: '/mine',
       name: 'mine',
       component: () => import('page/mine/Mine')
+    },
+    {
+      path: '/testClaim',
+      name: 'testClaim',
+      component: () => import('page/test/TestClaim')
     }
   ]
 })
 
 // router跳转之前做登录拦截
 router.beforeEach((to, from, next) => {
-  if (to.path === '/login') {
-    next()
-  } else {
-    // if (sessionStorage.username) {
-    //   next()
-    // } else {
-    //   next({ path: '/login' })
-    // }
-    next()
-  }
+  // if (to.path === '/login') {
+  //   next()
+  // } else {
+  // if (sessionStorage.username) {
+  //   next()
+  // } else {
+  //   next({ path: '/login' })
+  // }
+  //   next()
+  // }
+  next()
 })
 
 export default router

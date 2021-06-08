@@ -18,7 +18,6 @@
 import { todoCount } from '@/request/api'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import { getSessionStorage, setSessionStorage } from '@/util/storageUtil'
 
 export default {
   setup () {
@@ -30,18 +29,18 @@ export default {
       // 作为角标气泡展示
       const authority = sessionStorage.getItem('session_model_authority')
       if (authority) {
-        const authorityFilter = authority.split(',')
+        // const authorityFilter = authority.split(',')
         todoCount().then(res => {
           const todoCounts = res.body.data.item
           const menuItem = JSON.parse(sessionStorage.getItem('menu'))
           for (const index in menuItem) {
             const modelName = menuItem[index].name
-            if (authorityFilter.indexOf(modelName) !== -1) {
-              if (todoCounts[modelName]) {
-                menuItem[index].badge = todoCounts[modelName]
-              }
-              menuData.value.push(menuItem[index])
+            // if (authorityFilter.indexOf(modelName) !== -1) {
+            if (todoCounts[modelName]) {
+              menuItem[index].badge = todoCounts[modelName]
             }
+            menuData.value.push(menuItem[index])
+            // }
           }
         })
       }
@@ -49,13 +48,13 @@ export default {
     const router = useRouter()
     const toList = (menu) => {
       // 设置模块接口前缀
-      setSessionStorage('apiPrefix', menu.apiPrefix)
+      sessionStorage.setItem('apiPrefix', menu.apiPrefix)
       // 设置详情页路由地址
-      setSessionStorage('detailRouter', menu.router[1])
-      setSessionStorage('modelName', menu.title)
+      sessionStorage.setItem('detailRouter', menu.router[1])
+      sessionStorage.setItem('modelName', menu.title)
       router.push(menu.router[0])
     }
-    const swiperIndex = getSessionStorage('swiperIndex')
+    const swiperIndex = sessionStorage.getItem('swiperIndex')
     const onChange = (index) => {
       sessionStorage.setItem('swiperIndex', index)
     }

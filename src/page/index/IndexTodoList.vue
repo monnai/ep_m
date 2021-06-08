@@ -169,9 +169,10 @@ export default {
 }
 
 .ep_todo_list_wrap{
-  min-height: 357px;
+  height: 400px;
+  overflow: scroll;
   background: white;
-  margin-bottom: 42px;
+  margin-bottom: 44px;
 }
 
 ::v-deep(.van-cell) {

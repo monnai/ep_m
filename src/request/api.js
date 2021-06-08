@@ -3,9 +3,6 @@
  */
 import { get } from './http'
 
-// 菜单获取
-import { getSessionStorage } from '@/util/storageUtil'
-
 // 登录
 export const login = loginParams => get('login.json', loginParams)
 // 角色选择
@@ -13,7 +10,7 @@ export const selectRole = p => get('login/switchGroup.json', p)
 
 // 根据模块类型获取模块列表
 export const getListByModel = (p) => {
-  const apiPrefix = getSessionStorage('apiPrefix')
+  const apiPrefix = sessionStorage.getItem('apiPrefix')
   return get(apiPrefix + '/list.json', p)
 }
 
@@ -90,7 +87,7 @@ export const todoCount = () => {
 
 // 代办列表
 export const todoList = () => {
-  return get('todo-content/getTodoList.json', { pageSize: 20000 })
+  return get('todo-content/getTodoList.json', { pageSize: 5 })
 }
 
 // 审核操作
@@ -134,4 +131,9 @@ export const fundClaimFormSubmit = (params) => {
 // 我的：用户信息
 export const getPersonDetail = () => {
   return get('person/getPersonDetail.json')
+}
+
+// 获取配置
+export const getConfig = () => {
+  return get('category/getMobileTerminalMode.json')
 }

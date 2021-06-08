@@ -1,139 +1,150 @@
-<!--用户登录页面-->
+<!--登录页面-->
 <template>
-  <div class="login-wrap">
-    <!--公司图标-->
-    <div class="login-slogan-wrap">
-      <div class="login-slogan"></div>
+  <div class="g-container">
+    <div class="g-head">
+      <!--企业logo-->
+      <div class="g-logo"></div>
     </div>
-    <!--登录信息填写表单-->
-    <div class="login-form">
-      <van-form @submit="doLogin">
-        <!--用户名输入框-->
+    <!--登录表单-->
+    <div class="g-form">
+      <van-form @submit="handleSubmit">
+        <!--用户名-->
         <van-field
-          v-model="username"
+          v-model="state.username"
           placeholder="请输入用户名"
           clearable
-          @focusin="upFrame"
-          @focusout="rollBackFrame"
-          :rules="[{ required: true, message: '请填写用户名' }]">
+          :rules="[{ required: true, message: '请填写用户名' }]"
+          autocomplete>
           <template #left-icon>
-            <div class="icon_wrap">
-              <div class="icon_account login_icon"></div>
+            <div class="s-icon-bg">
+              <div class="s-icon-account s-login-icon"></div>
             </div>
           </template>
         </van-field>
-        <!--密码输入框-->
+        <!--密码-->
         <van-field
-          v-model="password"
+          v-model="state.password"
           type="password"
           placeholder="请输入密码"
           clearable
-          @focusin="upFrame"
-          @focusout="rollBackFrame"
-          :rules="[{ required: true, message: '请填写密码' }]">
+          :rules="[{ required: true, message: '请填写密码' }]"
+          autocomplete>
           <template #left-icon>
-            <div class="icon_wrap">
-              <div class="icon_password login_icon"></div>
+            <div class="s-icon-bg">
+              <div class="s-icon-password s-login-icon"></div>
             </div>
           </template>
         </van-field>
         <!--登录按钮-->
-        <div class="login-btn-wrap">
-          <van-button type="primary" block @mousedown="doLogin">登录</van-button>
+        <div class="g-login">
+          <van-button type="primary" block native-type="submit">登录</van-button>
         </div>
       </van-form>
-      <login-role-select ref="roleSelect"/>
+      <login-role-select :role-object="state.roleObject" />
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { provide, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { login } from '@/request/api'
+import { dockingBind } from '@/request/docking_uri'
 import LoginRoleSelect from '@/page/login/LoginRoleSelect'
 import { Toast } from 'vant'
-import { setSessionStorage } from '@/util/storageUtil'
-import { upFrame, rollBackFrame, mobileResultCode } from '@/assets/js/common'
+import { mobileResultCode, servModeCode } from '@/assets/js/common'
+import md5 from 'js-md5'
+
 export default {
-  components: { LoginRoleSelect },
+  components: {
+    // 角色筛选组件
+    LoginRoleSelect
+  },
   setup () {
-    // 用户名
-    const username = ref()
-    // 密码
-    const password = ref()
-    // 角色
-    const roleSelect = ref([])
+    const state = reactive({
+      username: '',
+      password: '',
+      roleObject: {}
+    })
+    const selectorShow = ref(false)
+    provide('selectorShow', selectorShow)
     const router = useRouter()
-    const doLogin = function () {
-      if (!username.value) {
-        Toast('请输入用户名')
-        return false
-      } else if (!password.value) {
-        Toast('请输入密码')
-        return false
+    const handleSubmit = function () {
+      const servMode = sessionStorage.getItem('servMode')
+      // 非三方绑定操作，进行用户登录操作
+      if (servMode === servModeCode.SERV_MODE_BROWSER) {
+        login({
+          account: state.username,
+          password: md5(state.password).toUpperCase()
+          // password: state.password
+        }).then(res => {
+          handleResult(res)
+        })
+      } else {
+        // 进行三方账号绑定操作
+        dockingBind({
+          account: state.username,
+          password: md5(state.password).toUpperCase(),
+          bindUserId: sessionStorage.getItem('bindUserId')
+        }).then(res => {
+          handleResult(res)
+        })
       }
-      login({
-        account: username.value,
-        password: password.value
-      }).then(result => {
-        if (result.body.code.indexOf(mobileResultCode.SUCCESS) >= 0) {
-          if (result.body.code === mobileResultCode.NO_JURISDICTION) {
-            Toast('无访问权限')
-            return false
-          }
-          if (result.body.code === mobileResultCode.NO_DATA) {
-            Toast('用户名或密码错误，请重新输入')
-            return false
-          }
-          setSessionStorage('session_key', result.body.data.item.key)
-          if (result.body.code !== mobileResultCode.NEED_ROLE_SELECT) {
-            setSessionStorage('session_model_authority', result.body.data.item.joinCheckModules)
-            router.push('index')
-            return
-          }
-          roleSelect.value.show = true
-          roleSelect.value.roleList = result.body.data.item.userGroups
-        } else {
-          Toast({ message: result.body.message })
+    }
+    const handleResult = (result) => {
+      if (result.body.code.indexOf(mobileResultCode.SUCCESS) >= 0) {
+        if (result.body.code === mobileResultCode.NO_JURISDICTION) {
+          Toast('无访问权限')
+          return false
         }
-      })
+        if (result.body.code === mobileResultCode.NO_DATA) {
+          Toast('用户名或密码错误，请重新输入')
+          return false
+        }
+        sessionStorage.setItem('session_key', result.body.data.item.key)
+        if (result.body.code !== mobileResultCode.NEED_ROLE_SELECT) {
+          sessionStorage.setItem('session_model_authority', result.body.data.item.joinCheckModules)
+          router.push('index')
+          return
+        }
+        selectorShow.value = true
+        state.roleObject = result.body.data.item.userGroups
+      } else {
+        Toast({ message: result.body.message })
+      }
     }
     return {
-      username,
-      password,
-      doLogin,
-      roleSelect,
-      upFrame,
-      rollBackFrame
+      state,
+      handleSubmit
     }
   }
 }
 </script>
 
 <style scoped>
-.login-wrap{
-  background-image:  url("../../image/login/background_login.png");
-  background-size: inherit;
-  background-position: center;
-  background-repeat: no-repeat;
+/* 最外层盒子 */
+.g-container {
   width: 100%;
   height: 667px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: inherit;
+  background-image: url("../../image/login/background_login.png");
 }
 
-.login-slogan-wrap {
+.g-head {
   padding-top: 145px;
 }
 
-.login-slogan {
+.g-logo {
   width: 84px;
   height: 84px;
   margin: 0 auto;
-  background-image: url("../../image/common/logo_company.png") !important;
   background-size: cover;
+  background-image: url("../../image/common/logo_company.png") !important;
 }
 
-.login-form {
+.g-form {
   width: 315px;
   height: auto;
   margin: 87px auto 75px;
@@ -142,28 +153,28 @@ export default {
   box-shadow: 11px 12px 0 0 #77baf5;
 }
 
-.login-btn-wrap {
+.g-login {
   padding-top: 14px;
 }
 
-.login_icon {
+.s-login-icon {
   position: absolute;
   width: 16px;
   height: 16px;
-  background-size: cover;
   margin-top: 14px;
   margin-left: 14px;
+  background-size: cover;
 }
 
-.icon_account {
+.s-icon-account {
   background-image: url("../../../public/static/image/login/icon_account.png");
 }
 
-.icon_password {
+.s-icon-password {
   background-image: url("../../../public/static/image/login/icon_password.png");
 }
 
-.icon_wrap {
+.s-icon-bg {
   width: 44px;
   height: 44px;
   background: #EDECEF;
@@ -209,10 +220,10 @@ export default {
   font-weight: 900;
   font-size: 30px;
   color: #4f4f4f;
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-body{
+body {
   background: #2494f2;
 }
 </style>

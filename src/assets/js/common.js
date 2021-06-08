@@ -1,23 +1,40 @@
-import * as config from '../../../public/static/config/serverConfig.json'
-
 /**
  * 接口请求返回参数
  */
 export const mobileResultCode = {
-  SUCCESS: '200', // 接口成功调用
-  NEED_ROLE_SELECT: '20012', // 需要选择角色
-  MISSING_PARAMETER: '400', // 缺少参数
-  LOGIN_NOT: '401', // 没登录
-  INVALID_PARAMETER: '402', // 非法的参数
-  INVALID_LOGIN_INFORMATION: '403', // 非法的登录信息
-  INVALID_INTERFACE: '404', // 非法的接口
-  INTERNAL_ERROR: '500', // 内部错误
-  NO_DATA: '20010', // 未找到数据
-  NO_JURISDICTION: '20011' // 无权限
+  // 接口成功调用
+  SUCCESS: '200',
+  // 需要选择角色
+  NEED_ROLE_SELECT: '20012',
+  // 缺少参数
+  MISSING_PARAMETER: '400',
+  // 没登录
+  LOGIN_NOT: '401',
+  // 非法的参数
+  INVALID_PARAMETER: '402',
+  // 非法的登录信息
+  INVALID_LOGIN_INFORMATION: '403',
+  // 非法的接口
+  INVALID_INTERFACE: '404',
+  // 内部错误
+  INTERNAL_ERROR: '500',
+  // 未找到数据
+  NO_DATA: '20010',
+  // 无权限
+  NO_JURISDICTION: '20011',
+  // 需要绑定微信账号
+  WX_NEED_BIND_ACCOUNT: '20013'
 }
 
-// 模块信息（从serverConfig.json中获取）
-const modelInfoArray = config.menu
+/**
+ * 三方对接模式码表
+ */
+export const servModeCode = {
+  // 企业微信
+  SERV_MODE_WORK_WX: 'enterprisesWechat',
+  SERV_MODE_BROWSER: 'browser',
+  SERV_MODE_DINGDING: 'dingding'
+}
 
 /**
  * 根据模块id获取模块配置信息
@@ -25,7 +42,7 @@ const modelInfoArray = config.menu
  * @returns {*}
  */
 export const getInfoByModelId = (modelId) => {
-  return modelInfoArray.filter(model => model.name === modelId)[0]
+  return window.g.menu.filter(model => model.name === modelId)[0]
 }
 
 /**
@@ -33,7 +50,7 @@ export const getInfoByModelId = (modelId) => {
  * @returns {string}
  */
 export const getFileServer = () => {
-  return config.fileServer
+  return sessionStorage.getItem('fileServer')
 }
 
 /**

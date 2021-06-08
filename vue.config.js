@@ -43,14 +43,14 @@ module.exports = {
     // 跨域配置
     proxy: {
       '/api': {
-        // target: 'http://172.16.1.145:8083/test/mobileTerminal/',
-        target: 'http://172.16.1.149:8085/RDSYSEDUV8-8.5.0/mobileTerminal/',
+        // target: 'http://172.16.3.154:8085/RDSYSEDUV83010443-8.3.0.1/mobileTerminal/',
+        // target: 'http://172.16.3.154:8085/RDSYSEDUV8-8.5.0/mobileTerminal/',
+        target: 'http://172.16.2.143:8083/test/mobileTerminal/',
         ws: true,
         changeOrigin: true, // 允许跨域
         pathRewrite: {
           '^/api': '' // 请求的时候使用这个api就可以
         }
-
       }
     }
   },

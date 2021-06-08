@@ -54,7 +54,6 @@
 
 <script>
 import { reactive, ref } from 'vue'
-import { getSessionStorage, setSessionStorage } from '@/util/storageUtil'
 import { useRouter } from 'vue-router'
 import EpScreen from '@/components/EpScreen'
 import EpTotalBar from '@/components/EpTotalBar'
@@ -142,8 +141,8 @@ export default {
     }
 
     const toDetail = (itemId) => {
-      setSessionStorage('itemId', itemId)
-      router.push(getSessionStorage('detailRouter'))
+      sessionStorage.setItem('itemId', itemId)
+      router.push(sessionStorage.getItem('detailRouter'))
     }
 
     const computeExtraColor = (checkStatus) => {
