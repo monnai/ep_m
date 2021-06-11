@@ -68,7 +68,10 @@ export default {
         state.refreshing = false
       }
       // 请求代办列表接口后自定义数据绑定和回调
-      todoList().then(res => {
+      todoList({
+        pageNo: state.pageNo,
+        pageSize: state.pageSize
+      }).then(res => {
         // 获取返回的代办内容数组
         const resData = res.body.data.item
         for (let i = 0; i < resData.length; i++) {
@@ -169,11 +172,18 @@ export default {
 }
 
 .ep_todo_list_wrap{
-  height: 400px;
-  overflow: scroll;
+  /*max-height: 200px;*/
+  /*height: 400px;*/
+  /*overflow: scroll;*/
   background: white;
   margin-bottom: 44px;
 }
+/*.ep_todo_list_wrap{*/
+/*  max-height: 200px;*/
+/*  overflow: scroll;*/
+/*  background: white;*/
+/*  margin-bottom: 44px;*/
+/*}*/
 
 ::v-deep(.van-cell) {
   width: 100%;

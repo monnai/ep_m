@@ -1,5 +1,5 @@
 <template>
-  <van-sticky offset-top="44px">
+  <van-sticky offset-top="1.22667rem">
     <!--搜索条件-->
     <van-search v-model="state.name" :placeholder="placeholder" show-action>
       <!--搜索动作区域-->

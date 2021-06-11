@@ -57,7 +57,6 @@ import md5 from 'js-md5'
 
 export default {
   components: {
-    // 角色筛选组件
     LoginRoleSelect
   },
   setup () {
@@ -76,7 +75,6 @@ export default {
         login({
           account: state.username,
           password: md5(state.password).toUpperCase()
-          // password: state.password
         }).then(res => {
           handleResult(res)
         })
@@ -102,8 +100,11 @@ export default {
           return false
         }
         sessionStorage.setItem('session_key', result.body.data.item.key)
+        sessionStorage.setItem('session_model_authority', result.body.data.item.joinCheckModules)
+        sessionStorage.setItem('roleList', result.body.data.item.userGroups
+          ? JSON.stringify(result.body.data.item.userGroups) : JSON.stringify(
+            {}))
         if (result.body.code !== mobileResultCode.NEED_ROLE_SELECT) {
-          sessionStorage.setItem('session_model_authority', result.body.data.item.joinCheckModules)
           router.push('index')
           return
         }
@@ -122,7 +123,6 @@ export default {
 </script>
 
 <style scoped>
-/* 最外层盒子 */
 .g-container {
   width: 100%;
   height: 667px;

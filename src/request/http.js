@@ -2,8 +2,8 @@ import QueryString from 'qs'
 import axios from 'axios'
 import router from '../route'
 import { Toast } from 'vant'
-import { mobileResultCode } from '@/assets/js/common'
-
+import { mobileResultCode, servModeCode } from '@/assets/js/common'
+import { Docking } from '@/assets/js/docking'
 // 环境参数初始化
 sessionStorage.setItem('menu', JSON.stringify(window.g.menu))
 // 业务接口请求后缀
@@ -46,20 +46,30 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     if (response.status === 200) {
-      // 登录失效，返回登录页面
+      /* token过期处理：
+         1.如果是浏览器访问，跳转至登录页重新登录获取token
+         2.如果是三方对接，跳转至授权页，重新获取token
+      */
       if (response.data.body.code === mobileResultCode.INVALID_LOGIN_INFORMATION) {
-        sessionStorage.clear()
-        Toast({
-          message: response.data.body.message,
-          duration: 1500,
-          forbidClick: true
-        })
-        router.replace({
-          path: '/login',
-          query: {
-            redirect: router.currentRoute.fullPath
-          }
-        })
+        // 浏览器访问
+        sessionStorage.removeItem('session_key')
+        if (sessionStorage.getItem('servMode') === servModeCode.SERV_MODE_BROWSER) {
+          Toast({
+            message: response.data.body.message,
+            duration: 1500,
+            forbidClick: true
+          })
+          router.replace({
+            path: '/login',
+            query: {
+              redirect: router.currentRoute.fullPath
+            }
+          })
+        } else {
+          // 对接第三方
+          Docking.doDocking(sessionStorage.getItem('servMode'))
+        }
+
         return false
       }
       return Promise.resolve(response)

@@ -12,7 +12,6 @@ export default {
   components: {},
   setup () {
     provide('echarts', echarts)
-    // 初始化环境配置信息
     doInitConfig()
   }
 }

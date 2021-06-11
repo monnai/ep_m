@@ -1,20 +1,13 @@
 <!--首页-->
 <template>
   <div class="index-main-wrap">
-    <van-sticky>
-      <!--      @click-right="onClickRight"-->
+    <van-sticky class="sticky">
       <van-nav-bar
         title="高校科研创新服务平台"
         :safe-area-inset-top="true">
         <!--左侧图标-->
         <template #left>
           <van-icon :name="require('../../../public/static/image/icon_ep.png')" size="18"/>
-        </template>
-        <!--右侧图标-->
-        <template #right>
-          <!--          <van-badge dot>-->
-          <!--            <van-icon :name="require('../../../public/static/image/icon_bell.png')" size="18"/>-->
-          <!--          </van-badge>-->
         </template>
       </van-nav-bar>
       <!--模块图标-->
@@ -36,7 +29,6 @@
 
 <script>
 
-// import { Toast } from 'vant'
 import IndexModelSwiper from '@/page/index/IndexModelSwiper'
 import EpDivider from '@/components/EpDivider'
 import IndexTodoList from '@/page/index/IndexTodoList'
@@ -50,17 +42,12 @@ export default {
     IndexTodoTitle
   },
   setup () {
-    // const onClickRight = () => {
-    //   Toast('开发中')
-    //   // todo 提醒模块
-    // }
     const router = useRouter()
     const toMine = () => {
       router.push('/mine')
     }
     return {
       toMine
-      // onClickRight
     }
   }
 }
@@ -75,4 +62,5 @@ export default {
   min-height: 200px;
   background: white;
 }
+
 </style>

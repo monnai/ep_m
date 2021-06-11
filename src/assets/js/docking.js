@@ -20,7 +20,7 @@ export const doDockingAuth = (type) => {
   Docking.doDocking(type)
 }
 
-const Docking = (() => {
+export const Docking = (() => {
   // 对接三方平台授权接口默认实现
   const defaultDockingAuth = (code) => {
     dockingAuth({ code: code }).then((res) => {
@@ -29,8 +29,9 @@ const Docking = (() => {
         sessionStorage.setItem('session_key', res.body.data.item.key)
         sessionStorage.setItem('session_model_authority',
           res.body.data.item.joinCheckModules)
-        sessionStorage.setItem('roleList',
-          JSON.stringify(res.body.data.item.userGroups))
+        sessionStorage.setItem('roleList', res.body.data.item.userGroups
+          ? JSON.stringify(res.body.data.item.userGroups) : JSON.stringify(
+            {}))
         router.push('index')
       } else if (res.body.code === mobileResultCode.WX_NEED_BIND_ACCOUNT) {
         // 尚未绑定，跳转至绑定页面
@@ -51,34 +52,30 @@ const Docking = (() => {
      * 钉钉授权对接
      */
     dingding: () => {
-      // todo 后期优化 配置接口中返回钉钉对接参数
-      const corpId = 'ding0b4f2817ea98936dacaaa37764f94726'
+      const corpId = sessionStorage.getItem('corpId')
       if (dd.env.platform === 'notInDingTalk') {
-        console.error('当前配置为企业微信模式，请在企业微信客户端中打开')
+        console.error('当前为钉钉微应用模式，请在钉钉手机客户端中使用')
+        return
       }
       dd.ready(() => {
-        // 使用SDK 获取免登授权码
+        // 获取免登授权码
         dd.runtime.permission.requestAuthCode({
           corpId: corpId,
           onSuccess: info => {
             const code = info.code
             defaultDockingAuth(code)
           },
-          onFail: err => {
-            alert('fail')
-            alert(JSON.stringify(err))
+          onFail: () => {
           }
         })
       })
-
-      // test
-      // const code = 'b1bd4abb023f3b48a6faa65786845c08'
-      // defaultDockingAuth(code)
     },
     /**
      * 微信服务号授权对接
      */
-    wx: () => {
+    wechat: () => {
+      const code = getUrlParam('code')
+      defaultDockingAuth(code)
     },
     /**
      * 浏览器端，不对接三方

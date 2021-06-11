@@ -86,8 +86,8 @@ export const todoCount = () => {
 }
 
 // 代办列表
-export const todoList = () => {
-  return get('todo-content/getTodoList.json', { pageSize: 5 })
+export const todoList = (params) => {
+  return get('todo-content/getTodoList.json', params)
 }
 
 // 审核操作

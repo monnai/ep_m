@@ -5,9 +5,10 @@
         <template #left>
           <van-icon :name="require('../../../public/static/image/icon_ep.png')" size="18"/>
         </template>
-        <!--右侧图标-->
-        <template #right>
-          <van-icon :name="require('../../../public/static/image/mine/mine_logout_full.svg')" size=".5rem" @click="logout"/>
+        <!--设置按钮-->
+        <template #right v-if="editBtnShow">
+          <van-icon :name="require('../../../public/static/image/mine/mine_setting.png')" size=".5rem"
+                    @click="state.popShow = true"/>
         </template>
       </van-nav-bar>
     </van-sticky>
@@ -36,13 +37,36 @@
       </div>
       <div class="charts-info">
         <div id="project">
-
         </div>
         <div id="product">
-
         </div>
       </div>
     </div>
+  </div>
+  <div>
+    <van-popup
+      v-model:show="state.popShow"
+      closeable
+      position="right"
+      :style="{ height: '100%', width:'70%' }">
+      <div class="pop-cloud-wrap">
+        <!--角色切换-->
+        <div class="pop-cloud" v-if="state.roleShow">
+          <div class="pop-cloud-title">角色切换</div>
+          <div class="pop-cloud-content">
+            <template v-for="(val, key, i) in state.roleList" :key="i">
+              <van-cell :title="val" is-link @click="doSelectRole(key)"/>
+            </template>
+          </div>
+        </div>
+        <!--退出登录-->
+        <div class="pop-cloud" v-if="state.logoutShow">
+          <div class="pop-cloud-content">
+            <van-button block @click="logout">退出登录</van-button>
+          </div>
+        </div>
+      </div>
+    </van-popup>
   </div>
   <van-tabbar route>
     <van-tabbar-item icon="wap-home-o" to="/index">首页</van-tabbar-item>
@@ -51,14 +75,16 @@
 </template>
 
 <script>
-import { reactive, onMounted, inject } from 'vue'
+import { reactive, onMounted, inject, computed } from 'vue'
 import '@/assets/js/echarts_style'
-import { getPersonDetail } from '@/request/api'
+import { getPersonDetail, selectRole } from '@/request/api'
+import { mobileResultCode } from '@/assets/js/common'
 import { Toast, Dialog } from 'vant'
 import { useRouter } from 'vue-router'
 export default {
   setup () {
     const echarts = inject('echarts')
+
     const state = reactive({
       personName: '',
       unitName: '',
@@ -75,8 +101,13 @@ export default {
         object: [],
         total: 0,
         title: '科研项目'
-      }
+      },
+      popShow: false,
+      roleShow: sessionStorage.getItem('roleList') !== '{}',
+      logoutShow: (sessionStorage.getItem('servMode') === 'browser'),
+      roleList: JSON.parse(sessionStorage.getItem('roleList'))
     })
+
     onMounted(() => {
       // 请求用户信息接口，并进行数据处理
       getPersonDetail().then(res => {
@@ -208,15 +239,36 @@ export default {
         })
       }
     })
+
     const router = useRouter()
+
+    const doSelectRole = function (roleId) {
+      selectRole({
+        switchGroupId: roleId,
+        refreshToken: sessionStorage.getItem('session_key')
+      }).then(result => {
+        if (result.body.code === mobileResultCode.SUCCESS) {
+          Toast('角色切换成功')
+          sessionStorage.setItem('session_model_authority', result.body.data.item.joinCheckModules)
+          setTimeout(() => {
+            router.push('/index')
+          }, 500)
+        }
+      })
+    }
+
+    const editBtnShow = computed(() => {
+      return sessionStorage.getItem('roleList') !== '{}' || sessionStorage.getItem('servMode') === 'browser'
+    })
+
     const logout = () => {
       Dialog.confirm({
         title: '注销',
         message: '确认注销登录信息并返回登录页面'
       }).then(() => {
-        sessionStorage.setItem('session_model_authority', '')
         sessionStorage.setItem('session_key', '')
-        Toast('注销成功')
+        sessionStorage.setItem('session_model_authority', '')
+        Toast('退出成功')
         router.push('/login')
       }).catch(() => {
         // on cancel
@@ -224,7 +276,9 @@ export default {
     }
     return {
       state,
-      logout
+      doSelectRole,
+      logout,
+      editBtnShow
     }
   }
 }
@@ -323,5 +377,42 @@ export default {
   display: block;
   font-size: 13px;
   margin-right: 12px;
+}
+
+/*右侧弹出层*/
+::v-deep(.van-popup) {
+  background-color: #F5F5F5;
+}
+.pop-cloud-wrap{
+  display: block;
+  margin-top: 50px;
+  height: 100%;
+  overflow: scroll;
+}
+.pop-cloud{
+  margin: 12px 12px 12px 12px;
+}
+.pop-cloud-title {
+  height: auto;
+  background: #fff;
+  border-radius: 9px 9px 0 0;
+  line-height: 36px;
+  color: #A1A1A1;
+  font-size: 14px;
+  text-align: left;
+  text-indent: 23px;
+}
+::v-deep(.van-cell__title) {
+  text-align: left;
+}
+
+.pop-cloud-content {
+  max-height: 400px;
+  overflow: scroll;
+}
+
+::v-deep(.van-cell--clickable) {
+  cursor: pointer;
+  text-indent: 8px;
 }
 </style>

@@ -11,6 +11,10 @@ export const doInitConfig = () => {
     const servMode = res.body.data.item.servMode
     if (servMode) {
       sessionStorage.setItem('servMode', servMode)
+      // 钉钉特殊处理，缓存corpId
+      if (servMode === 'dingding') {
+        sessionStorage.setItem('corpId', res.body.data.item.corpid)
+      }
       doDockingAuth(servMode)
     }
   })

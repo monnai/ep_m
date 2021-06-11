@@ -1,8 +1,8 @@
 window.g = {
   devServer: '/api',
   debugServer: 'localhost:8081',
-  // prodServer: 'http://epmobilet.ngrok2.xiaomiqiu.cn/RDSYSEDUV83010443-8.3.0.1/mobileTerminal',
-  prodServer: 'http://172.16.2.143:8085/RDSYSEDUV83010443-8.3.0.1/mobileTerminal',
+  prodServer: 'http://epmobilet.ngrok2.xiaomiqiu.cn/RDSYSEDUV8-8.5.0',
+  // prodServer: 'http://172.16.2.143:8085/RDSYSEDUV83010443-8.3.0.1/mobileTerminal',
   menu: [
     {
       name: 'zXProject',

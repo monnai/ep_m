@@ -33,7 +33,8 @@ export const servModeCode = {
   // 企业微信
   SERV_MODE_WORK_WX: 'enterprisesWechat',
   SERV_MODE_BROWSER: 'browser',
-  SERV_MODE_DINGDING: 'dingding'
+  SERV_MODE_DINGDING: 'dingding',
+  SERV_MODE_WX: 'wechat'
 }
 
 /**
