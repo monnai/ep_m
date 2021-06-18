@@ -103,7 +103,7 @@ export default {
     })
     const header = sessionStorage.getItem('modelName') + '详情'
     const onClickLeft = function () {
-      router.go(-1)
+      router.push(-1)
     }
     const onClickRight = function () {
       router.push('/index')

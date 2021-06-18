@@ -35,7 +35,7 @@ export default {
           [currentData.createDate, currentData.checkStatus])
         const resultObj = Object()
         // 列表数据内容的标题
-        resultObj.title = currentData.name
+        resultObj.title = currentData.bizObjName
         // 当前数据的id
         resultObj.id = currentData.id
         resultObj.dataArray = dataArray

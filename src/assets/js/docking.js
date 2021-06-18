@@ -32,6 +32,20 @@ export const Docking = (() => {
         sessionStorage.setItem('roleList', res.body.data.item.userGroups
           ? JSON.stringify(res.body.data.item.userGroups) : JSON.stringify(
             {}))
+        // 三方对接直接进入系统有两个入口，客户端按钮绑定跳转至首页，消息推送绑定跳转详情页
+        const modelId = getUrlParam('modelId')
+        if (modelId) {
+          // 消息推送现支持跳转详情页查看审核结果
+          const modelMenu = window.g.menu.filter(m => {
+            return m.name === modelId
+          })
+          sessionStorage.setItem('apiPrefix', modelMenu[0].apiPrefix)
+          sessionStorage.setItem('modelName', modelMenu[0].title)
+          sessionStorage.setItem('detailRouter', modelMenu[0].router[1])
+          sessionStorage.setItem('itemId', getUrlParam('itemId'))
+          router.push(modelMenu[0].router[1])
+          return
+        }
         router.push('index')
       } else if (res.body.code === mobileResultCode.WX_NEED_BIND_ACCOUNT) {
         // 尚未绑定，跳转至绑定页面

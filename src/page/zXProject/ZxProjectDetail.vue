@@ -71,7 +71,7 @@ export default {
     const router = useRouter()
     const auditShow = ref(false)
     const onClickLeft = function () {
-      router.go(-1)
+      router.push('zxProject')
     }
     const onClickRight = function () {
       router.push('/index')

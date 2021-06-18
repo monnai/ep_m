@@ -39,4 +39,7 @@ export default {
 </script>
 
 <style scoped>
+::v-deep(.van-tab__pane, .van-tab__pane-wrapper) {
+  padding-bottom: 44px;
+}
 </style>

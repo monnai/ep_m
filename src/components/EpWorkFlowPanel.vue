@@ -7,7 +7,8 @@
         <div class="ep-audit-logo">
           <ep-svg-icon :icon-name="checkStatus === '审核不通过'?'check_not_pass':
                                    checkStatus === '审核通过'? 'check_pass_single':
-                                   checkStatus === '审核中'? 'check_waiting': 'check_ban'"></ep-svg-icon>
+                                   checkStatus === '审核中'? 'check_waiting':
+                                   checkStatus === '暂存'? 'check_save': 'check_ban'"></ep-svg-icon>
         </div>
         <div class="ep-audit-state">{{checkStatus}}</div>
       </div>

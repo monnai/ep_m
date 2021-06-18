@@ -47,6 +47,8 @@ export default {
           return 'check_auditing'
         case '已作废':
           return 'check_ban'
+        case '暂存':
+          return 'save'
         default :
           return ''
       }
@@ -115,6 +117,15 @@ svg.svg-icon {
 }
 
 ::v-deep(.check_ban > .van-cell__title) {
+  color: #999999;
+}
+
+.save {
+  background: #f7f7f7;
+  -webkit-tap-highlight-color: #b1acac24;
+}
+
+::v-deep(.save > .van-cell__title) {
   color: #999999;
 }
 

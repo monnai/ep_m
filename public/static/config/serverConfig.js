@@ -129,19 +129,12 @@ window.g = {
       icon: 'static/image/index/icon_chapter.png',
       router: ['/chapter', '/chapterDetail'],
       apiPrefix: 'in-chapter'
-    },
-    {
-      name: 'paperSubmission',
-      title: '论文投稿',
-      icon: 'static/image/index/icon_paper_submission.png',
-      router: ['/paperSubmission', '/paperSubmissionDetail'],
-      apiPrefix: 'papersubmission'
-    },
-    {
-      name: 'testClaim',
-      title: '经费认领',
-      icon: 'static/image/index/icon_fund_claim.png',
-      router: ['/testClaim', '/testClaim']
     }
+    // {
+    //   name: 'testClaim',
+    //   title: '经费认领',
+    //   icon: 'static/image/index/icon_fund_claim.png',
+    //   router: ['/testClaim', '/testClaim']
+    // }
   ]
 }

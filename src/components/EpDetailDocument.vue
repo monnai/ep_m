@@ -108,10 +108,8 @@ svg.svg-icon.icon {
   width: 80px;
   height: 55px;
 }
+
 ::v-deep(.van-tab__pane, .van-tab__pane-wrapper) {
-  flex-shrink: 0;
-  box-sizing: border-box;
-  width: 100%;
-  margin-bottom: 55px;
+  padding-bottom: 44px;
 }
 </style>

@@ -218,16 +218,16 @@ export const router = createRouter({
       component: () => import('page/chapter/ChapterDetail')
     },
     // 论文投稿
-    {
-      path: '/paperSubmission',
-      name: 'paperSubmission',
-      component: () => import('page/paperSubmission/PaperSubmission')
-    },
-    {
-      path: '/paperSubmissionDetail',
-      name: 'paperSubmissionDetail',
-      component: () => import('page/paperSubmission/PaperSubmissionDetail')
-    },
+    // {
+    //   path: '/paperSubmission',
+    //   name: 'paperSubmission',
+    //   component: () => import('page/paperSubmission/PaperSubmission')
+    // },
+    // {
+    //   path: '/paperSubmissionDetail',
+    //   name: 'paperSubmissionDetail',
+    //   component: () => import('page/paperSubmission/PaperSubmissionDetail')
+    // },
     // 经费认领
     {
       path: '/cWIncomeClaim',

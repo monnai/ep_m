@@ -64,7 +64,7 @@ export default {
     const auditShow = ref(false)
     const header = sessionStorage.getItem('modelName') + '详情'
     const onClickLeft = function () {
-      router.go(-1)
+      router.push('chapter')
     }
     const onClickRight = function () {
       router.push('/index')

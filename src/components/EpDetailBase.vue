@@ -89,6 +89,9 @@ export default {
   flex: unset;
 }
 
+::v-deep(.van-tab__pane, .van-tab__pane-wrapper) {
+  padding-bottom: 44px;
+}
 .van-cell-group__title {
   text-align: left;
   padding: 12px 25px 9px;

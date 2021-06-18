@@ -142,10 +142,10 @@ export default {
 }
 
 .van-step__title {
-  border: 1px solid #EEEEEEFF;
+  border: 1px solid #fff;
   border-radius: 4px;
-  padding: 0.21333rem;
-  box-shadow: 0 0 8px 0 #c5bbbb;
+  padding: 5px;
+  box-shadow: 0 0 10px 7px rgb(244 244 244);
 }
 
 .van-step__title > div:first-child {
