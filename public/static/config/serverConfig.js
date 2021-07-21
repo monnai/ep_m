@@ -129,12 +129,32 @@ window.g = {
       icon: 'static/image/index/icon_chapter.png',
       router: ['/chapter', '/chapterDetail'],
       apiPrefix: 'in-chapter'
-    }
+    },
     // {
     //   name: 'testClaim',
     //   title: '经费认领',
     //   icon: 'static/image/index/icon_fund_claim.png',
     //   router: ['/testClaim', '/testClaim']
     // }
-  ]
+    {
+      name: 'cwIncome',
+      title: '银行来款',
+      icon: 'static/image/index/icon_chapter.png',
+      router: ['cwIncome', 'cwIncomeClaim'],
+      apiPrefix: 'cwincome'
+    },
+    {
+      name: 'projectincome',
+      title: '经费卡入账',
+      icon: 'static/image/index/icon_chapter.png',
+      router: ['projectIncome', ''],
+      apiPrefix: 'projectincome'
+    }
+  ],
+  status: {
+    暂存: 'save',
+    已提交: 'submit',
+    退回: 'return',
+    学校通过: 'pass'
+  }
 }

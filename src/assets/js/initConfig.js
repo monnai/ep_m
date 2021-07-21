@@ -5,7 +5,7 @@
 import { getConfig } from '@/request/api'
 import { doDockingAuth } from '@/assets/js/docking'
 
-export const doInitConfig = () => {
+export const initConfig = () => {
   getConfig().then(res => {
     // 获取三方对接模式
     const servMode = res.body.data.item.servMode

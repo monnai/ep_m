@@ -4,15 +4,18 @@
 
 <script>
 import * as echarts from 'echarts'
-import { provide } from 'vue'
-import { doInitConfig } from '@/assets/js/initConfig'
-
+import { provide, onMounted } from 'vue'
+import { initConfig } from '@/assets/js/initConfig'
 export default {
   name: 'App',
   components: {},
   setup () {
-    provide('echarts', echarts)
-    doInitConfig()
+    onMounted(() => {
+      // 注入echarts
+      provide('echarts', echarts)
+      // 初始化全局配置
+      initConfig()
+    })
   }
 }
 </script>

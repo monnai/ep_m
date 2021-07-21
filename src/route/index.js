@@ -15,6 +15,11 @@ export const router = createRouter({
       component: () => import('page/login/Login')
     },
     {
+      path: '/loginScan',
+      name: 'loginScan',
+      component: () => import('page/login/LoginScan')
+    },
+    {
       path: '/index',
       name: 'index',
       component: () => import('page/index/Index')
@@ -233,6 +238,17 @@ export const router = createRouter({
       path: '/cWIncomeClaim',
       name: 'cWIncomeClaim',
       component: () => import('page/cWIncomeClaim/CWIncomeClaim')
+    },
+    // 银行到款
+    {
+      path: '/cwIncome',
+      name: 'cwIncome',
+      component: () => import('page/cwIncome/CwIncome')
+    },
+    {
+      path: '/cwIncomeClaimPlus',
+      name: 'cwIncomeClaimPlus',
+      component: () => import('page/cWIncomeClaim/CWIncomeClaim_plus')
     },
     // 项目入账
     {

@@ -50,7 +50,10 @@ export const Docking = (() => {
       } else if (res.body.code === mobileResultCode.WX_NEED_BIND_ACCOUNT) {
         // 尚未绑定，跳转至绑定页面
         sessionStorage.setItem('bindUserId', res.body.data.item.bindUserId)
-        router.push('login')
+        // 为微信平台跳转做特殊处理，微信平台默认hash传递#导致后续router的hash路由异常
+        const originUrl = window.location.href.split('?code')[0] + '#/'
+        window.history.pushState(null, null, originUrl)
+        router.push('loginScan')
       }
     })
   }
@@ -59,14 +62,12 @@ export const Docking = (() => {
      * 企业微信授权对接
      */
     enterprisesWechat: () => {
-      const code = getUrlParam('code')
-      defaultDockingAuth(code)
+      defaultDockingAuth(getUrlParam('code'))
     },
     /**
      * 钉钉授权对接
      */
     dingding: () => {
-      const corpId = sessionStorage.getItem('corpId')
       if (dd.env.platform === 'notInDingTalk') {
         console.error('当前为钉钉微应用模式，请在钉钉手机客户端中使用')
         return
@@ -74,12 +75,12 @@ export const Docking = (() => {
       dd.ready(() => {
         // 获取免登授权码
         dd.runtime.permission.requestAuthCode({
-          corpId: corpId,
+          corpId: sessionStorage.getItem('corpId'),
           onSuccess: info => {
-            const code = info.code
-            defaultDockingAuth(code)
+            defaultDockingAuth(info.code)
           },
-          onFail: () => {
+          onFail: (res) => {
+            alert(JSON.stringify(res))
           }
         })
       })
@@ -88,8 +89,7 @@ export const Docking = (() => {
      * 微信服务号授权对接
      */
     wechat: () => {
-      const code = getUrlParam('code')
-      defaultDockingAuth(code)
+      defaultDockingAuth(getUrlParam('code'))
     },
     /**
      * 浏览器端，不对接三方
