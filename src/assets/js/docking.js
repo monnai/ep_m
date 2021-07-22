@@ -34,6 +34,7 @@ export const Docking = (() => {
             {}))
         // 三方对接直接进入系统有两个入口，客户端按钮绑定跳转至首页，消息推送绑定跳转详情页
         const modelId = getUrlParam('modelId')
+        console.log(modelId)
         if (modelId) {
           // 消息推送现支持跳转详情页查看审核结果
           const modelMenu = window.g.menu.filter(m => {
